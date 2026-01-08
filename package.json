@@ -55,6 +55,7 @@
     "swiper": "^9.2.3"
   },
   "devDependencies": {
+    "detect-port": "^2.1.0",
     "eslint": "^7.16.0",
     "eslint-config-apostrophe": "^3.4.0",
     "eslint-plugin-node": "^11.1.0",
