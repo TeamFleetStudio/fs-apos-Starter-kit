@@ -31,7 +31,10 @@ async function startApp() {
   // Log MongoDB URI (mask credentials for security)
   const appName = 'Thanush-test';
   const shortName = appName.toLowerCase();
-  const mongoURI = process.env.APOS_MONGODB_URI + '/' + shortName;
+
+  const u = new URL(process.env.APOS_MONGODB_URI);
+  u.pathname = `/${shortName}`;           // sets db name correctly
+  const mongoURI = u.toString();
   if (mongoURI) {
     // Mask credentials in URI: mongodb://user:pass@host -> mongodb://***:***@host
     // const maskedURI = mongoURI.replace(/\/\/([^:]+):([^@]+)@/, '//***:***@');
