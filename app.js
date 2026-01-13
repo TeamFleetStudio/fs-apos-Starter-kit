@@ -1,4 +1,7 @@
-require('dotenv').config();
+const path = require('path');
+// Load .env from root monorepo directory (two levels up from app directory)
+const rootDir = path.resolve(__dirname, '../..');
+require('dotenv').config({ path: path.join(rootDir, '.env') });
 
 const DEFAULT_PORT = 3000;
 
@@ -25,11 +28,28 @@ async function startApp() {
   // Build baseUrl dynamically
   const baseUrl = process.env.APOS_BASE_URL || `http://localhost:${port}`;
 
+  // Log MongoDB URI (mask credentials for security)
+  const appName = 'Thanush-test';
+  const shortName = appName.toLowerCase();
+  const mongoURI = process.env.APOS_MONGODB_URI + '/' + shortName;
+  if (mongoURI) {
+    // Mask credentials in URI: mongodb://user:pass@host -> mongodb://***:***@host
+    // const maskedURI = mongoURI.replace(/\/\/([^:]+):([^@]+)@/, '//***:***@');
+    // console.log(`\n🔗 APOS_MONGODB_URI: ${mongoURI}\n`); 
+  } else {
+    console.log('\n⚠️  APOS_MONGODB_URI not set in environment variables\n');
+  }
+
   require('apostrophe')({
-    shortName: 'starter-kit-marketing',
+    shortName: shortName,
     baseUrl,
     nestedModuleSubdirs: true,
     modules: {
+      '@apostrophecms/db': {
+        options: {
+          uri: mongoURI
+        }
+      },
       // Apostrophe module configuration
       // *******************************
       //
