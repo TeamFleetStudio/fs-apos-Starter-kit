@@ -53,7 +53,7 @@ async function startApp() {
   // ----------------------------------------------------
   // App name → DB name
   // ----------------------------------------------------
-  const appName = 'ronnie-app';
+  const appName = 'a3-starter-kit-marketing';
   const shortName = appName.toLowerCase();
 
   // ----------------------------------------------------
@@ -76,7 +76,7 @@ async function startApp() {
   // Start Apostrophe
   // ----------------------------------------------------
   require('apostrophe')({
-    shortName,
+    shortName: shortName,
     baseUrl,
     nestedModuleSubdirs: true,
     modules: {
