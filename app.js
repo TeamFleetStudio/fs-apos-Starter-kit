@@ -1,36 +1,11 @@
-const path = require('path');
-const { MongoClient } = require('mongodb');
-
-// ----------------------------------------------------
-// Load .env from monorepo root
-// ----------------------------------------------------
-const rootDir = path.resolve(__dirname, '../..');
-require('dotenv').config({ path: path.join(rootDir, '.env') });
+require('dotenv').config();
 
 const DEFAULT_PORT = 3000;
 
-// ----------------------------------------------------
-// Ensure MongoDB database exists (forces creation)
-// ----------------------------------------------------
-async function ensureDbExists(uri) {
-  const client = new MongoClient(uri);
-  await client.connect();
-
-  const url = new URL(uri);
-  const dbName = url.pathname.replace(/^\//, '') || 'test';
-
-  const db = client.db(dbName);
-  await db.collection('__apos_init').insertOne({
-    createdAt: new Date()
-  });
-
-  await client.close();
-}
-
-// ----------------------------------------------------
-// Start Apostrophe app
-// ----------------------------------------------------
 async function startApp() {
+  // ---------------------------------------------
+  // Port handling 
+  // ---------------------------------------------
   let port = process.env.PORT || DEFAULT_PORT;
 
   if (process.env.NODE_ENV !== 'production') {
@@ -47,45 +22,27 @@ async function startApp() {
   }
 
   process.env.PORT = port;
-
+  const appName = 'a3-starter-kit-marketing';
   const baseUrl = process.env.APOS_BASE_URL || `http://localhost:${port}`;
 
-  // ----------------------------------------------------
-  // App name → DB name
-  // ----------------------------------------------------
-  const appName = 'a3-starter-kit-marketing';
-  const shortName = appName.toLowerCase();
+  if (!process.env.APOS_MONGODB_URI) {
+    throw new Error(
+      'APOS_MONGODB_URI is missing. Add it to your app .env (include /<dbName>?authSource=admin&tls=false).'
+    );
+  }
 
-  // ----------------------------------------------------
-  // Build Mongo URI correctly
-  // ----------------------------------------------------
-  const u = new URL(process.env.APOS_MONGODB_URI);
-  u.pathname = `/${shortName}`;
-  const mongoURI = u.toString();
+  console.log('\n🔗 MongoDB URI being used (from .env):');
+  console.log(process.env.APOS_MONGODB_URI);
+  console.log('');
 
-  console.log('\n🔗 MongoDB URI being used:');
-  console.log(mongoURI);
-  console.log('📦 Expected DB:', shortName, '\n');
-
-  // ----------------------------------------------------
-  // Force DB creation (no more "test" confusion)
-  // ----------------------------------------------------
-  await ensureDbExists(mongoURI);
-
-  // ----------------------------------------------------
+  // ---------------------------------------------
   // Start Apostrophe
-  // ----------------------------------------------------
+  // ---------------------------------------------
   require('apostrophe')({
-    shortName: shortName,
+    shortName: appName,
     baseUrl,
     nestedModuleSubdirs: true,
     modules: {
-      '@apostrophecms/db': {
-        options: {
-          uri: mongoURI
-        }
-      },
-
       '@apostrophecms/rich-text-widget': {},
       '@apostrophecms/image-widget': {
         options: { className: 'img-fluid' }
@@ -107,7 +64,7 @@ async function startApp() {
 
       '@apostrophecms/sitemap': {
         options: {
-          excludeTypes: [ 'team-member', 'product' ]
+          excludeTypes: ['team-member', 'product']
         }
       },
       '@apostrophecms/seo': {},
@@ -128,7 +85,7 @@ async function startApp() {
   });
 }
 
-startApp().catch(err => {
+startApp().catch((err) => {
   console.error('❌ Failed to start app:', err);
   process.exit(1);
 });
