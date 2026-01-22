@@ -89,6 +89,24 @@ module.exports = {
             }
           }
         }
+      },
+      customJavaScript: {
+        type: 'codeEditor',
+        label: 'Custom JavaScript',
+        defaultLanguage: 'javascript',
+        theme: 'dark',
+        languages: [
+          { label: 'JavaScript', value: 'javascript' }
+        ]
+      },
+      customCSS: {
+        type: 'codeEditor',
+        label: 'Custom CSS',
+        defaultLanguage: 'css',
+        theme: 'dark',
+        languages: [
+          { label: 'CSS', value: 'css' }
+        ]
       }
     },
     group: {
@@ -99,6 +117,10 @@ module.exports = {
       navigations: {
         label: 'Navigations',
         fields: ['headerNav', 'footerNav', 'headerBtns']
+      },
+      custom: {
+        label: 'Custom Code',
+        fields: ['customJavaScript', 'customCSS']
       }
     }
   }
