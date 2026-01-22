@@ -13,9 +13,9 @@ async function startApp() {
     const detectedPort = await detectPort(DEFAULT_PORT);
 
     if (detectedPort !== DEFAULT_PORT) {
-      console.log(`\n⚠️  Port ${DEFAULT_PORT} is in use, starting on ${detectedPort}\n`);
+      console.log(`\nPort ${DEFAULT_PORT} is in use, starting on ${detectedPort}\n`);
     } else {
-      console.log(`\n🚀 Starting on ${detectedPort}\n`);
+      console.log(`\nStarting on ${detectedPort}\n`);
     }
 
     port = detectedPort;
@@ -31,7 +31,7 @@ async function startApp() {
     );
   }
 
-  console.log('\n🔗 MongoDB URI being used (from .env):');
+  console.log('\nMongoDB URI being used (from .env):');
   console.log(process.env.APOS_MONGODB_URI);
   console.log('');
 
@@ -92,6 +92,6 @@ async function startApp() {
 }
 
 startApp().catch((err) => {
-  console.error('❌ Failed to start app:', err);
+  console.error('Failed to start app:', err);
   process.exit(1);
 });
