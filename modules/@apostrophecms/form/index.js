@@ -66,10 +66,10 @@ module.exports = {
 
           // Include subscription set up below
           try {
-            self.apos.util.log('⚠️ You need to set up a custom subscription service here');
+            self.apos.util.log('You need to set up a custom subscription service here');
             return null;
           } catch (err) {
-            self.apos.util.error('⚠️ @apostrophecms/form submission email subscription error: ', err);
+            self.apos.util.error('@apostrophecms/form submission email subscription error: ', err);
 
             return null;
           }
