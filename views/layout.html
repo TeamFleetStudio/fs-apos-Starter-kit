@@ -12,6 +12,15 @@
   {% endif %}
 {% endblock %}
 
+{% block extraHead %}
+  {# Custom CSS from Global Settings #}
+  {% if data.global.customCSS and data.global.customCSS.code %}
+    <style>
+      {{ data.global.customCSS.code | safe }}
+    </style>
+  {% endif %}
+{% endblock %}
+
 {% block beforeMain %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,4 +39,11 @@
 
 {% block afterMain %}
     {% render footer.footer(data) %}
+{% endblock %}
+
+{% block extraBody %}
+  {# Custom JavaScript from Global Settings #}
+  {% if data.global.customJavaScript and data.global.customJavaScript.code %}
+      {{ data.global.customJavaScript.code | safe }}
+  {% endif %}
 {% endblock %}
