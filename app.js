@@ -36,8 +36,12 @@ async function startApp() {
   console.log('');
 
   // ---------------------------------------------
-  // Start Apostrophe
+  // Start Apostrophe 
+  // (NOTE : should not remove the comment for block START and END, 
+  // Because, that is used to target this block to sync the code 
+  // with the app.js file of the app instance, from the shared resources folder )
   // ---------------------------------------------
+  // FS_SYNC_APOS_CONFIG_START
   require('apostrophe')({
     shortName: appName,
     baseUrl,
@@ -80,9 +84,11 @@ async function startApp() {
       },
       'pieces-modules': {
         options: { ignoreNoCodeWarning: true }
-      }
+      },
+      'code-editor-field': {}
     }
   });
+  // FS_SYNC_APOS_CONFIG_END
 }
 
 startApp().catch((err) => {
