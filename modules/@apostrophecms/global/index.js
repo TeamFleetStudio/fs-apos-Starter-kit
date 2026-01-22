@@ -93,6 +93,7 @@ module.exports = {
       customJavaScript: {
         type: 'codeEditor',
         label: 'Custom JavaScript',
+        help: 'Add your custom JavaScript code here',
         defaultLanguage: 'javascript',
         theme: 'dark',
         languages: [
@@ -102,6 +103,7 @@ module.exports = {
       customCSS: {
         type: 'codeEditor',
         label: 'Custom CSS',
+        help: 'Add your custom CSS code here',
         defaultLanguage: 'css',
         theme: 'dark',
         languages: [

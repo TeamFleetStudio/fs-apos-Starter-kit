@@ -44,6 +44,8 @@
 {% block extraBody %}
   {# Custom JavaScript from Global Settings #}
   {% if data.global.customJavaScript and data.global.customJavaScript.code %}
+  <script>
       {{ data.global.customJavaScript.code | safe }}
+  </script>
   {% endif %}
 {% endblock %}
