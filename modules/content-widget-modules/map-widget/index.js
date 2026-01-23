@@ -1,4 +1,5 @@
 const aosSchema = require('../../../lib/aosSchema.js');
+const customAttributesSchema = require('../../../lib/customAttributesSchema');
 const NodeGeocoder = require('node-geocoder');
 
 module.exports = {
@@ -27,7 +28,8 @@ module.exports = {
         max: 14,
         def: 14
       },
-      ...aosSchema
+      ...aosSchema,
+      ...customAttributesSchema
     }
   },
   components(self) {
