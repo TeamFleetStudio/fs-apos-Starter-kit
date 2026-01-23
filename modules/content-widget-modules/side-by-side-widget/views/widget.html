@@ -1,4 +1,4 @@
-<section data-aos="{{ data.widget.animationEffects }}" class="side-by-side container widget-my-spacing">
+<section data-aos="{{ data.widget.animationEffects }}" class="side-by-side container widget-my-spacing{% if data.widget.customClassName %} {{ data.widget.customClassName }}{% endif %}"{% if data.widget.customId %} id="{{ data.widget.customId }}"{% endif %}>
   <div class="side-by-side__column-item {{ 'invert' if data.widget.invert === true}}">
     {% area data.widget, 'one' with data.contextOptions %}
   </div>
