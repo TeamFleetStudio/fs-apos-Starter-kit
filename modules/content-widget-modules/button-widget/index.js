@@ -1,4 +1,5 @@
 const buttonSchema = require('../../../lib/buttonSchema');
+const customAttributesSchema = require('../../../lib/customAttributesSchema');
 
 module.exports = {
   extend: '@apostrophecms/widget-type',
@@ -11,7 +12,8 @@ module.exports = {
   },
   fields: {
     add: {
-      ...buttonSchema.button
+      ...buttonSchema.button,
+      ...customAttributesSchema
     }
   }
 };

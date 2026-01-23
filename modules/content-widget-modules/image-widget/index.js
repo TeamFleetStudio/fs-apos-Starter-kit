@@ -1,4 +1,5 @@
 const aosSchema = require('../../../lib/aosSchema.js');
+const customAttributesSchema = require('../../../lib/customAttributesSchema');
 
 module.exports = {
   extend: '@apostrophecms/widget-type',
@@ -18,7 +19,8 @@ module.exports = {
         required: true,
         max: 1
       },
-      ...aosSchema
+      ...aosSchema,
+      ...customAttributesSchema
     }
   }
 };

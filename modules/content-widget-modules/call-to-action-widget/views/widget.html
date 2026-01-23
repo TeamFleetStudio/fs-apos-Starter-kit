@@ -1,6 +1,7 @@
 <section
   data-aos="{{ data.widget.animationEffects }}"
-  class="call-to-action call-to-action--{{ data.widget.style}} call-to-action--{{ data.widget.contentAlignment}}"
+  class="call-to-action call-to-action--{{ data.widget.style}} call-to-action--{{ data.widget.contentAlignment}} {% if data.widget.customClassName %} {{ data.widget.customClassName }}{% endif %}"
+  {% if data.widget.customId %}id="{{ data.widget.customId }}"{% endif %}
 >
   {% if data.widget.featureImage.items[0].aposPlaceholder %}
     <div class="call-to-action__background" style="background-image: url({{ data.manager.options.placeholderUrl }})"></div>

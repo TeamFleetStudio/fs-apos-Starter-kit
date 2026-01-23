@@ -1,6 +1,6 @@
 {% import "button.html" as buttonFrag %}
 
-<div class="button-strip">
+<div class="button-strip{% if data.widget.customClassName %} {{ data.widget.customClassName }}{% endif %}"{% if data.widget.customId %} id="{{ data.widget.customId }}"{% endif %}>
   {% for button in data.widget.buttons %}
     {% render buttonFrag.render(button) %}
   {% endfor %}

@@ -24,7 +24,7 @@
     {% set class = class + ' btn-widget--alignment-' + button.alignment %}
   {% endif %}
 
-  <div class="btn-widget" id="{{ button._id }}">
+  <div class="btn-widget {% if button.customClassName %} {{ button.customClassName }}{% endif %}"{% if button.customId %} id="{{ button.customId }}"{% elif button._id %} id="{{ button._id }}"{% endif %}>
     {% render link.render({
       label: button.linkText,
       path: path,
