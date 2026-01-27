@@ -24,14 +24,14 @@ module.exports = {
       primaryColor: {
         type: 'color',
         label: 'Primary Color',
-        help: 'Set the primary brand color used throughout the site',
-        def: '#0d1b2a'
+        help: 'Primary brand color (default: #000000)',
+        def: '#000000'
       },
       secondaryColor: {
         type: 'color',
         label: 'Secondary Color',
-        help: 'Set the secondary brand color used throughout the site',
-        def: '#ef2d56'
+        help: 'Secondary brand color (default: #2850EB)',
+        def: '#2850EB'
       },
       headingFontFamily: {
         type: 'string',
