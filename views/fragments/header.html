@@ -2,7 +2,7 @@
 {% import "button.html" as buttonFrag %}
 
 {% fragment navigationBar(data) %}
-<div class="navigation container is-fluid"{% if data.global.headerBackgroundColor %} style="background-color: {{ data.global.headerBackgroundColor }};"{% endif %}>
+<div class="navigation container is-fluid {% if data.global.headerCustomClassName %} {{ data.global.headerCustomClassName }}{% endif %}"{% if data.global.headerCustomId %} id="{{ data.global.headerCustomId }}"{% endif %}{% if data.global.headerBackgroundColor %} style="background-color: {{ data.global.headerBackgroundColor }};"{% endif %}>
   <div class="navigation__logo-container">
     <a href="/" class="navigation__logo">
       {{ ui.image(data.global.logo) }}
@@ -23,7 +23,8 @@
       {% endfor %}
     </ul>
     
-    <div class="navigation__user-items">
+    {% set headerSpacing = data.global.headerButtonSpacing or 16 %}
+    <div class="navigation__user-items" style="--button-spacing: {{ headerSpacing }}px;">
       {% for btn in data.global.headerBtns %}
         {% render buttonFrag.render(btn) %}
       {% endfor %}

@@ -1,6 +1,7 @@
 const linkSchema = require('../../../lib/linkSchema');
 const buttonSchema = require('../../../lib/buttonSchema');
 const backgroundSchema = require('../../../lib/backgroundSchema');
+const customAttributesSchema = require('../../../lib/customAttributesSchema');
 
 module.exports = {
   fields: {
@@ -48,7 +49,6 @@ module.exports = {
         label: 'Header Button/s',
         type: 'array',
         titleField: 'linkText',
-        limit: 1,
         fields: {
           add: {
             ...buttonSchema.button
@@ -59,7 +59,6 @@ module.exports = {
         label: 'Header Navigation Items',
         type: 'array',
         titleField: 'linkText',
-        limit: 5,
         fields: {
           add: {
             ...linkSchema,
@@ -68,11 +67,27 @@ module.exports = {
       },
       headerBackgroundColor: backgroundSchema.backgroundColor,
       headerTextColor: backgroundSchema.textColor,
+      headerButtonSpacing: {
+        type: 'range',
+        label: 'Header Button Spacing',
+        help: 'Set the spacing between header buttons',
+        min: 0,
+        max: 50,
+        step: 1,
+        def: 16
+      },
+      headerCustomClassName: {
+        ...customAttributesSchema.customClassName,
+        help: 'Add a custom CSS class to the header'
+      },
+      headerCustomId: {
+        ...customAttributesSchema.customId,
+        help: 'Add a custom ID attribute to the header'
+      },
       footerNav: {
         label: 'Footer Navigation Items',
         type: 'array',
         titleField: 'linkText',
-        limit: 5,
         fields: {
           add: {
             ...linkSchema,
@@ -83,7 +98,6 @@ module.exports = {
         label: 'Footer Button/s',
         type: 'array',
         titleField: 'linkText',
-        limit: 1,
         fields: {
           add: {
             ...buttonSchema.button
@@ -92,6 +106,23 @@ module.exports = {
       },
       footerBackgroundColor: backgroundSchema.backgroundColor,
       footerTextColor: backgroundSchema.textColor,
+      footerButtonSpacing: {
+        type: 'range',
+        label: 'Footer Button Spacing',
+        help: 'Set the spacing between footer buttons',
+        min: 0,
+        max: 50,
+        step: 1,
+        def: 16
+      },
+      footerCustomClassName: {
+        ...customAttributesSchema.customClassName,
+        help: 'Add a custom CSS class to the footer'
+      },
+      footerCustomId: {
+        ...customAttributesSchema.customId,
+        help: 'Add a custom ID attribute to the footer'
+      },
       social: {
         label: 'Social Media Accounts',
         type: 'array',
@@ -158,11 +189,11 @@ module.exports = {
       },
       header: {
         label: 'Header',
-        fields: ['headerNav', 'headerBtns', 'headerBackgroundColor', 'headerTextColor']
+        fields: ['headerNav', 'headerBtns', 'headerButtonSpacing', 'headerBackgroundColor', 'headerTextColor', 'headerCustomClassName', 'headerCustomId']
       },
       footer: {
         label: 'Footer',
-        fields: ['footerNav', 'footerBtns', 'footerBackgroundColor', 'footerTextColor']
+        fields: ['footerNav', 'footerBtns', 'footerButtonSpacing', 'footerBackgroundColor', 'footerTextColor', 'footerCustomClassName', 'footerCustomId']
       },
       custom: {
         label: 'Custom Code',

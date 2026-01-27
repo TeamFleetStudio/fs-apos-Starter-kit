@@ -62,6 +62,16 @@
   &__user-items {
     display: flex;
     flex-shrink: 0;
+    flex-wrap: wrap;
+    
+    .btn-widget + .btn-widget {
+      margin-top: var(--button-spacing, 16px);
+      
+      @media (min-width: 600px) {
+        margin-top: 0;
+        margin-left: var(--button-spacing, 16px);
+      }
+    }
   }
 
   &__menu-btn {
