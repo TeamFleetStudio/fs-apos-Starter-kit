@@ -80,6 +80,12 @@
       {{ data.global.customCSS.code | safe }}
     </style>
   {% endif %}
+  {# Custom JavaScript (Head) from Global Settings #}
+  {% if data.global.customJavaScriptHead and data.global.customJavaScriptHead.code %}
+    <script>
+      {{ data.global.customJavaScriptHead.code | safe }}
+    </script>
+  {% endif %}
 {% endblock %}
 
 {% block beforeMain %}

@@ -161,10 +161,20 @@ module.exports = {
           }
         }
       },
+      customJavaScriptHead: {
+        type: 'codeEditor',
+        label: 'Custom JavaScript (Head)',
+        help: 'Add your custom JavaScript code to be injected in the head tag',
+        defaultLanguage: 'javascript',
+        theme: 'dark',
+        languages: [
+          { label: 'JavaScript', value: 'javascript' }
+        ]
+      },
       customJavaScript: {
         type: 'codeEditor',
         label: 'Custom JavaScript',
-        help: 'Add your custom JavaScript code here',
+        help: 'Add your custom JavaScript code to be injected at the end of body tag',
         defaultLanguage: 'javascript',
         theme: 'dark',
         languages: [
@@ -197,7 +207,7 @@ module.exports = {
       },
       custom: {
         label: 'Custom Code',
-        fields: ['customJavaScript', 'customCSS']
+        fields: ['customCSS', 'customJavaScriptHead', 'customJavaScript']
       }
     }
   }
