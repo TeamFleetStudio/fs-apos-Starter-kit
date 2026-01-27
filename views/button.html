@@ -10,6 +10,9 @@
     ~ linkTarget
     ~ style
     ~ size
+    ~ backgroundColor
+    ~ textColor
+    ~ borderRadius
 #}
 
 {% import "link.html" as link %}
@@ -24,12 +27,32 @@
     {% set class = class + ' btn-widget--alignment-' + button.alignment %}
   {% endif %}
 
+  {% if button.style === 'custom' %}
+    {% set btnClass = 'btn' %}
+    {% if button.size %} {% set btnClass = btnClass + ' btn--' + button.size %} {% endif %}
+  {% else %}
+    {% set btnClass = 'btn btn--' + button.style + ' btn--' + button.size %}
+  {% endif %}
+  {% set btnStyle = '' %}
+  {% if button.style === 'custom' %}
+    {% if button.backgroundColor %}
+      {% set btnStyle = btnStyle + 'background-color: ' + button.backgroundColor + ';' %}
+    {% endif %}
+    {% if button.textColor %}
+      {% set btnStyle = btnStyle + ' color: ' + button.textColor + ';' %}
+    {% endif %}
+  {% endif %}
+  {% if button.borderRadius %}
+    {% set btnStyle = btnStyle + ' border-radius: ' + button.borderRadius + 'px;' %}
+  {% endif %}
+
   <div class="btn-widget {% if button.customClassName %} {{ button.customClassName }}{% endif %}"{% if button.customId %} id="{{ button.customId }}"{% elif button._id %} id="{{ button._id }}"{% endif %}>
     {% render link.render({
       label: button.linkText,
       path: path,
       target: button.linkTarget,
-      class: 'btn btn--' + button.style + ' btn--' + button.size
+      class: btnClass,
+      style: btnStyle
     }) %}
   </div>
 {% endfragment %}

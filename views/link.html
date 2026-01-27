@@ -14,5 +14,6 @@
     {% if options.class %} class="link {{ options.class }}"{% endif %}
     href="{{ options.path }}"
     {% if options.target[0] === '_blank' %} target="_blank" {% endif %}
+    {% if options.style %} style="{{ options.style }}"{% endif %}
   >{{ options.label }}</a>
 {% endfragment %}

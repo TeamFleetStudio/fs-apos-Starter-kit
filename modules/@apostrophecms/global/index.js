@@ -1,5 +1,7 @@
 const linkSchema = require('../../../lib/linkSchema');
 const buttonSchema = require('../../../lib/buttonSchema');
+const backgroundSchema = require('../../../lib/backgroundSchema');
+const customAttributesSchema = require('../../../lib/customAttributesSchema');
 
 module.exports = {
   fields: {
@@ -19,11 +21,34 @@ module.exports = {
         label: 'Website Title',
         required: true
       },
+      primaryColor: {
+        type: 'color',
+        label: 'Primary Color',
+        help: 'Primary brand color (default: #000000)',
+        def: '#000000'
+      },
+      secondaryColor: {
+        type: 'color',
+        label: 'Secondary Color',
+        help: 'Secondary brand color (default: #2850EB)',
+        def: '#2850EB'
+      },
+      headingFontFamily: {
+        type: 'string',
+        label: 'Heading Font Family',
+        help: 'Enter Google Font name for headings (e.g., Bungee, Rubik Storm). Defaults to Lato.',
+        def: 'Lato'
+      },
+      bodyFontFamily: {
+        type: 'string',
+        label: 'Body Font Family',
+        help: 'Enter Google Font name for body text (e.g., Bungee, Rubik Storm). Defaults to Merriweather.',
+        def: 'Merriweather'
+      },
       headerBtns: {
         label: 'Header Button/s',
         type: 'array',
         titleField: 'linkText',
-        limit: 1,
         fields: {
           add: {
             ...buttonSchema.button
@@ -34,23 +59,69 @@ module.exports = {
         label: 'Header Navigation Items',
         type: 'array',
         titleField: 'linkText',
-        limit: 5,
         fields: {
           add: {
             ...linkSchema,
           }
         }
       },
+      headerBackgroundColor: backgroundSchema.backgroundColor,
+      headerTextColor: backgroundSchema.textColor,
+      headerButtonSpacing: {
+        type: 'range',
+        label: 'Header Button Spacing',
+        help: 'Set the spacing between header buttons',
+        min: 0,
+        max: 50,
+        step: 1,
+        def: 16
+      },
+      headerCustomClassName: {
+        ...customAttributesSchema.customClassName,
+        help: 'Add a custom CSS class to the header'
+      },
+      headerCustomId: {
+        ...customAttributesSchema.customId,
+        help: 'Add a custom ID attribute to the header'
+      },
       footerNav: {
         label: 'Footer Navigation Items',
         type: 'array',
         titleField: 'linkText',
-        limit: 5,
         fields: {
           add: {
             ...linkSchema,
           }
         }
+      },
+      footerBtns: {
+        label: 'Footer Button/s',
+        type: 'array',
+        titleField: 'linkText',
+        fields: {
+          add: {
+            ...buttonSchema.button
+          }
+        }
+      },
+      footerBackgroundColor: backgroundSchema.backgroundColor,
+      footerTextColor: backgroundSchema.textColor,
+      footerButtonSpacing: {
+        type: 'range',
+        label: 'Footer Button Spacing',
+        help: 'Set the spacing between footer buttons',
+        min: 0,
+        max: 50,
+        step: 1,
+        def: 16
+      },
+      footerCustomClassName: {
+        ...customAttributesSchema.customClassName,
+        help: 'Add a custom CSS class to the footer'
+      },
+      footerCustomId: {
+        ...customAttributesSchema.customId,
+        help: 'Add a custom ID attribute to the footer'
       },
       social: {
         label: 'Social Media Accounts',
@@ -90,10 +161,20 @@ module.exports = {
           }
         }
       },
+      customJavaScriptHead: {
+        type: 'codeEditor',
+        label: 'Custom JavaScript (Head)',
+        help: 'Add your custom JavaScript code to be injected in the head tag',
+        defaultLanguage: 'javascript',
+        theme: 'dark',
+        languages: [
+          { label: 'JavaScript', value: 'javascript' }
+        ]
+      },
       customJavaScript: {
         type: 'codeEditor',
         label: 'Custom JavaScript',
-        help: 'Add your custom JavaScript code here',
+        help: 'Add your custom JavaScript code to be injected at the end of body tag',
         defaultLanguage: 'javascript',
         theme: 'dark',
         languages: [
@@ -114,15 +195,19 @@ module.exports = {
     group: {
       brand: {
         label: 'Brand',
-        fields: ['title', 'logo', 'social']
+        fields: ['title', 'logo', 'social', 'primaryColor', 'secondaryColor', 'headingFontFamily', 'bodyFontFamily']
       },
-      navigations: {
-        label: 'Navigations',
-        fields: ['headerNav', 'footerNav', 'headerBtns']
+      header: {
+        label: 'Header',
+        fields: ['headerNav', 'headerBtns', 'headerButtonSpacing', 'headerBackgroundColor', 'headerTextColor', 'headerCustomClassName', 'headerCustomId']
+      },
+      footer: {
+        label: 'Footer',
+        fields: ['footerNav', 'footerBtns', 'footerButtonSpacing', 'footerBackgroundColor', 'footerTextColor', 'footerCustomClassName', 'footerCustomId']
       },
       custom: {
         label: 'Custom Code',
-        fields: ['customJavaScript', 'customCSS']
+        fields: ['customCSS', 'customJavaScriptHead', 'customJavaScript']
       }
     }
   }

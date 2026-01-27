@@ -2,7 +2,7 @@
 {% import "button.html" as buttonFrag %}
 
 {% fragment navigationBar(data) %}
-<div class="navigation container is-fluid">
+<div class="navigation container is-fluid {% if data.global.headerCustomClassName %} {{ data.global.headerCustomClassName }}{% endif %}"{% if data.global.headerCustomId %} id="{{ data.global.headerCustomId }}"{% endif %}{% if data.global.headerBackgroundColor %} style="background-color: {{ data.global.headerBackgroundColor }};"{% endif %}>
   <div class="navigation__logo-container">
     <a href="/" class="navigation__logo">
       {{ ui.image(data.global.logo) }}
@@ -11,19 +11,20 @@
     <div class="navigation__menu-btn"></div>
   </div>
 
-  <div class="navigation__nav-items">
+  <div class="navigation__nav-items"{% if data.global.headerTextColor %} style="color: {{ data.global.headerTextColor }};"{% endif %}>
     <ul class="navigation__nav-links">
       {% for nav in data.global.headerNav %}
         {% set path = apos
           .helper
           .linkPath(nav) %}
         <li>
-          <a href="{{ path }}" aria-label="{{ nav.ariaLabel }}">{{ nav.linkText }}</a>
+          <a href="{{ path }}" aria-label="{{ nav.ariaLabel }}"{% if data.global.headerTextColor %} style="color: {{ data.global.headerTextColor }};"{% endif %}>{{ nav.linkText }}</a>
         </li>
       {% endfor %}
     </ul>
     
-    <div class="navigation__user-items">
+    {% set headerSpacing = data.global.headerButtonSpacing or 16 %}
+    <div class="navigation__user-items" style="--button-spacing: {{ headerSpacing }}px;">
       {% for btn in data.global.headerBtns %}
         {% render buttonFrag.render(btn) %}
       {% endfor %}
