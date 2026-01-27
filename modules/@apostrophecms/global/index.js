@@ -32,6 +32,18 @@ module.exports = {
         help: 'Set the secondary brand color used throughout the site',
         def: '#ef2d56'
       },
+      headingFontFamily: {
+        type: 'string',
+        label: 'Heading Font Family',
+        help: 'Enter Google Font name for headings (e.g., Bungee, Rubik Storm). Defaults to Lato.',
+        def: 'Lato'
+      },
+      bodyFontFamily: {
+        type: 'string',
+        label: 'Body Font Family',
+        help: 'Enter Google Font name for body text (e.g., Bungee, Rubik Storm). Defaults to Merriweather.',
+        def: 'Merriweather'
+      },
       headerBtns: {
         label: 'Header Button/s',
         type: 'array',
@@ -142,7 +154,7 @@ module.exports = {
     group: {
       brand: {
         label: 'Brand',
-        fields: ['title', 'logo', 'social', 'primaryColor', 'secondaryColor']
+        fields: ['title', 'logo', 'social', 'primaryColor', 'secondaryColor', 'headingFontFamily', 'bodyFontFamily']
       },
       header: {
         label: 'Header',
