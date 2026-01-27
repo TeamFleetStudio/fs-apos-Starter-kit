@@ -13,19 +13,90 @@
 {% endblock %}
 
 {% block extraHead %}
+  {# Brand Colors and Fonts - Override SCSS variables #}
+  {% if data.global.primaryColor or data.global.secondaryColor or data.global.headingFontFamily or data.global.bodyFontFamily %}
+    <style>
+      {% if data.global.headingFontFamily %}
+        :root {
+          --heading-font-family: "{{ data.global.headingFontFamily }}", "Lato", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6,
+        .headings-font-family {
+          font-family: var(--heading-font-family) !important;
+        }
+      {% endif %}
+      {% if data.global.bodyFontFamily %}
+        :root {
+          --body-font-family: "{{ data.global.bodyFontFamily }}", "Merriweather", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+        body,
+        .body-font-family {
+          font-family: var(--body-font-family) !important;
+        }
+      {% endif %}
+      {% if data.global.primaryColor %}
+        :root {
+          --primary-color: {{ data.global.primaryColor }};
+        }
+        .btn--primary,
+        .my-form__submit {
+          background: {{ data.global.primaryColor }} !important;
+        }
+        .highlight-primary {
+          color: {{ data.global.primaryColor }} !important;
+        }
+        a {
+          color: {{ data.global.primaryColor }};
+        }
+        body {
+          color: {{ data.global.primaryColor }};
+        }
+        .form-control:focus {
+          border-color: {{ data.global.primaryColor }};
+        }
+        input[type="checkbox"]:checked {
+          background: {{ data.global.primaryColor }};
+        }
+        input[type="radio"]:checked {
+          background-image: radial-gradient({{ data.global.primaryColor }} 40%, transparent calc(40% + 1px));
+        }
+      {% endif %}
+      {% if data.global.secondaryColor %}
+        :root {
+          --secondary-color: {{ data.global.secondaryColor }};
+        }
+        .btn--secondary {
+          background: {{ data.global.secondaryColor }} !important;
+        }
+        .highlight-secondary {
+          color: {{ data.global.secondaryColor }} !important;
+        }
+      {% endif %}
+    </style>
+  {% endif %}
   {# Custom CSS from Global Settings #}
   {% if data.global.customCSS and data.global.customCSS.code %}
     <style>
       {{ data.global.customCSS.code | safe }}
     </style>
   {% endif %}
+  {# Custom JavaScript (Head) from Global Settings #}
+  {% if data.global.customJavaScriptHead and data.global.customJavaScriptHead.code %}
+    <script>
+      {{ data.global.customJavaScriptHead.code | safe }}
+    </script>
+  {% endif %}
 {% endblock %}
 
 {% block beforeMain %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  {# Marketing fonts #}
-  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,700&family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  {# Dynamic Google Fonts with fallback handling #}
+  {% set headingFont = data.global.headingFontFamily or 'Lato' %}
+  {% set bodyFont = data.global.bodyFontFamily or 'Merriweather' %}
+  {% set headingFontEncoded = headingFont | replace(' ', '+') %}
+  {% set bodyFontEncoded = bodyFont | replace(' ', '+') %}
+  <link href="https://fonts.googleapis.com/css2?family={{ headingFontEncoded }}:ital,wght@0,400;0,700;1,700&family={{ bodyFontEncoded }}:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" onerror="this.onerror=null; this.href='';">
   {% render header.navigationBar(data) %}
 {% endblock %}
 

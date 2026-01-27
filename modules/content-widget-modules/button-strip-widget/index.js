@@ -23,6 +23,15 @@ module.exports = {
           }
         }
       },
+      buttonSpacing: {
+        type: 'range',
+        label: 'Button Spacing',
+        help: 'Set the spacing between buttons',
+        min: 0,
+        max: 50,
+        step: 1,
+        def: 16
+      },
       ...aosSchema,
       ...customAttributesSchema
     }

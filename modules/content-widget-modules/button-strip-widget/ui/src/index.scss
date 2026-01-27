@@ -18,14 +18,14 @@
     }
 
     & + .btn-widget {
-      margin-top: 20px;
+      margin-top: var(--button-spacing, 16px);
     }
 
     @media only screen and (min-width: 600px) {
       width: auto;
       & + .btn-widget {
         margin-top: 0;
-        margin-left: 20px;
+        margin-left: var(--button-spacing, 16px);
       }
     }
   }

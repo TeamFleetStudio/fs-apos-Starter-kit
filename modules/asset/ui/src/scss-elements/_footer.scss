@@ -57,6 +57,22 @@
     }
   }
 
+  &__button-items {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    flex-wrap: wrap;
+    
+    .btn-widget + .btn-widget {
+      margin-top: var(--button-spacing, 16px);
+      
+      @media (min-width: 600px) {
+        margin-top: 0;
+        margin-left: var(--button-spacing, 16px);
+      }
+    }
+  }
+
   &__copyright {
     text-align: center;
     margin: 1rem 0;

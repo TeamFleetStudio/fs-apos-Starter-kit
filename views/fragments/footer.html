@@ -1,8 +1,9 @@
 {% import "ui.html" as ui %}
+{% import "button.html" as buttonFrag %}
 
 {% fragment footer(data) %}
-<div class="footer container is-fluid widget-py-spacing">
-  <div class="footer__main">
+<div class="footer container is-fluid widget-py-spacing {% if data.global.footerCustomClassName %} {{ data.global.footerCustomClassName }}{% endif %}"{% if data.global.footerCustomId %} id="{{ data.global.footerCustomId }}"{% endif %}{% if data.global.footerBackgroundColor %} style="background-color: {{ data.global.footerBackgroundColor }};"{% endif %}>
+  <div class="footer__main"{% if data.global.footerTextColor %} style="color: {{ data.global.footerTextColor }};"{% endif %}>
     <a href="/" class="footer__logo">
       {{ ui.image(data.global.logo) }}
     </a>
@@ -12,7 +13,7 @@
         {% for nav in data.global.footerNav %}
           {% set path = apos.helper.linkPath(nav) %}
           <li>
-            <a href="{{ path }}" aria-label="{{ nav.ariaLabel }}">{{ nav.linkText }}</a>
+            <a href="{{ path }}" aria-label="{{ nav.ariaLabel }}"{% if data.global.footerTextColor %} style="color: {{ data.global.footerTextColor }};"{% endif %}>{{ nav.linkText }}</a>
           </li>
         {% endfor %}
       </ul>
@@ -29,10 +30,17 @@
         {% endfor %}     
       </ul>
     </div>
+
+    {% set footerSpacing = data.global.footerButtonSpacing or 16 %}
+    <div class="footer__button-items" style="--button-spacing: {{ footerSpacing }}px;">
+      {% for btn in data.global.footerBtns %}
+        {% render buttonFrag.render(btn) %}
+      {% endfor %}
+    </div>
   </div>
 
-  <div class="footer__copyright">
-    <p><small>© {{ apos.modules.settings.options.year }}. All rights reserved by <a href="#">{{ data.global.title }}</a></small></p>
+  <div class="footer__copyright"{% if data.global.footerTextColor %} style="color: {{ data.global.footerTextColor }};"{% endif %}>
+    <p><small>© {{ apos.modules.settings.options.year }}. All rights reserved by <a href="#"{% if data.global.footerTextColor %} style="color: {{ data.global.footerTextColor }};"{% endif %}>{{ data.global.title }}</a></small></p>
   </div>
 
 </div>
