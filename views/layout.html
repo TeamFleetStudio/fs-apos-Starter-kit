@@ -13,6 +13,49 @@
 {% endblock %}
 
 {% block extraHead %}
+  {# Brand Colors - Override SCSS variables #}
+  {% if data.global.primaryColor or data.global.secondaryColor %}
+    <style>
+      {% if data.global.primaryColor %}
+        :root {
+          --primary-color: {{ data.global.primaryColor }};
+        }
+        .btn--primary,
+        .my-form__submit {
+          background: {{ data.global.primaryColor }} !important;
+        }
+        .highlight-primary {
+          color: {{ data.global.primaryColor }} !important;
+        }
+        a {
+          color: {{ data.global.primaryColor }};
+        }
+        body {
+          color: {{ data.global.primaryColor }};
+        }
+        .form-control:focus {
+          border-color: {{ data.global.primaryColor }};
+        }
+        input[type="checkbox"]:checked {
+          background: {{ data.global.primaryColor }};
+        }
+        input[type="radio"]:checked {
+          background-image: radial-gradient({{ data.global.primaryColor }} 40%, transparent calc(40% + 1px));
+        }
+      {% endif %}
+      {% if data.global.secondaryColor %}
+        :root {
+          --secondary-color: {{ data.global.secondaryColor }};
+        }
+        .btn--secondary {
+          background: {{ data.global.secondaryColor }} !important;
+        }
+        .highlight-secondary {
+          color: {{ data.global.secondaryColor }} !important;
+        }
+      {% endif %}
+    </style>
+  {% endif %}
   {# Custom CSS from Global Settings #}
   {% if data.global.customCSS and data.global.customCSS.code %}
     <style>

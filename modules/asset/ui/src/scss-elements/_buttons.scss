@@ -33,7 +33,6 @@
   border: none;
   color: $white;
   &:hover {
-    color: $white;
     background: lighten($primary, 5%);
   }
 }
@@ -43,7 +42,6 @@
   border: none;
   color: $btn-secondary-text;
   &:hover {
-    color: $primary;
     background: lighten($secondary, 5%);
   }
 }

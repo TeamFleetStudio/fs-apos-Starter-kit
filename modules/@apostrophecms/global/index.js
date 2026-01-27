@@ -1,5 +1,6 @@
 const linkSchema = require('../../../lib/linkSchema');
 const buttonSchema = require('../../../lib/buttonSchema');
+const backgroundSchema = require('../../../lib/backgroundSchema');
 
 module.exports = {
   fields: {
@@ -18,6 +19,18 @@ module.exports = {
         type: 'string',
         label: 'Website Title',
         required: true
+      },
+      primaryColor: {
+        type: 'color',
+        label: 'Primary Color',
+        help: 'Set the primary brand color used throughout the site',
+        def: '#0d1b2a'
+      },
+      secondaryColor: {
+        type: 'color',
+        label: 'Secondary Color',
+        help: 'Set the secondary brand color used throughout the site',
+        def: '#ef2d56'
       },
       headerBtns: {
         label: 'Header Button/s',
@@ -41,6 +54,8 @@ module.exports = {
           }
         }
       },
+      headerBackgroundColor: backgroundSchema.backgroundColor,
+      headerTextColor: backgroundSchema.textColor,
       footerNav: {
         label: 'Footer Navigation Items',
         type: 'array',
@@ -52,6 +67,19 @@ module.exports = {
           }
         }
       },
+      footerBtns: {
+        label: 'Footer Button/s',
+        type: 'array',
+        titleField: 'linkText',
+        limit: 1,
+        fields: {
+          add: {
+            ...buttonSchema.button
+          }
+        }
+      },
+      footerBackgroundColor: backgroundSchema.backgroundColor,
+      footerTextColor: backgroundSchema.textColor,
       social: {
         label: 'Social Media Accounts',
         type: 'array',
@@ -114,11 +142,15 @@ module.exports = {
     group: {
       brand: {
         label: 'Brand',
-        fields: ['title', 'logo', 'social']
+        fields: ['title', 'logo', 'social', 'primaryColor', 'secondaryColor']
       },
-      navigations: {
-        label: 'Navigations',
-        fields: ['headerNav', 'footerNav', 'headerBtns']
+      header: {
+        label: 'Header',
+        fields: ['headerNav', 'headerBtns', 'headerBackgroundColor', 'headerTextColor']
+      },
+      footer: {
+        label: 'Footer',
+        fields: ['footerNav', 'footerBtns', 'footerBackgroundColor', 'footerTextColor']
       },
       custom: {
         label: 'Custom Code',

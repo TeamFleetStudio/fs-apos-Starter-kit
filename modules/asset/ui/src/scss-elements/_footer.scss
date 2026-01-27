@@ -57,6 +57,12 @@
     }
   }
 
+  &__button-items {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+  }
+
   &__copyright {
     text-align: center;
     margin: 1rem 0;
