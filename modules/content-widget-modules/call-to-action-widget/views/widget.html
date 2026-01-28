@@ -9,7 +9,7 @@
     {% set backgroundImage = apos.image.first(data.widget.featureImage) %}
     <div class="call-to-action__background" style="background-image: url({{ apos.attachment.url(backgroundImage, { size: 'max' }) }})"></div>
   {% endif %}
-  <div class="container call-to-action__content">
+  <div class="apos-container call-to-action__content">
     {% area data.widget, 'content' %}
   </div>
 </section>

@@ -40,7 +40,7 @@ $container-sizes: (
   xl: map-get($breakpoints, xl) - 400px,
 );
 
-.container {
+.apos-container {
   padding-right: 1rem;
   padding-left: 1rem;
 
@@ -58,7 +58,7 @@ $container-sizes: (
 }
 
 @each $bp, $container-size in $container-sizes {
-  .container-#{$bp} {
+  .apos-container-#{$bp} {
     margin: 0 auto;
     padding-right: 1rem;
     padding-left: 1rem;

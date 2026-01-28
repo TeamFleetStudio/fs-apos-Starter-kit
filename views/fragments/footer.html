@@ -2,7 +2,7 @@
 {% import "button.html" as buttonFrag %}
 
 {% fragment footer(data) %}
-<div class="footer container is-fluid widget-py-spacing {% if data.global.footerCustomClassName %} {{ data.global.footerCustomClassName }}{% endif %}"{% if data.global.footerCustomId %} id="{{ data.global.footerCustomId }}"{% endif %}{% if data.global.footerBackgroundColor %} style="background-color: {{ data.global.footerBackgroundColor }};"{% endif %}>
+<div class="footer apos-container is-fluid widget-py-spacing {% if data.global.footerCustomClassName %} {{ data.global.footerCustomClassName }}{% endif %}"{% if data.global.footerCustomId %} id="{{ data.global.footerCustomId }}"{% endif %}{% if data.global.footerBackgroundColor %} style="background-color: {{ data.global.footerBackgroundColor }};"{% endif %}>
   <div class="footer__main"{% if data.global.footerTextColor %} style="color: {{ data.global.footerTextColor }};"{% endif %}>
     <a href="/" class="footer__logo">
       {{ ui.image(data.global.logo) }}
