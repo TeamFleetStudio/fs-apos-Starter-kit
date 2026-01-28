@@ -81,11 +81,11 @@
     </style>
   {% endif %}
   {# Custom JavaScript (Head) from Global Settings #}
+  <!-- Start Custom JavaScript (Head) -->
   {% if data.global.customJavaScriptHead and data.global.customJavaScriptHead.code %}
-    <script>
       {{ data.global.customJavaScriptHead.code | safe }}
-    </script>
   {% endif %}
+  <!-- End Custom JavaScript (Head) -->
 {% endblock %}
 
 {% block beforeMain %}
@@ -114,9 +114,9 @@
 
 {% block extraBody %}
   {# Custom JavaScript from Global Settings #}
+  <!-- Start Custom JavaScript -->
   {% if data.global.customJavaScript and data.global.customJavaScript.code %}
-  <script>
       {{ data.global.customJavaScript.code | safe }}
-  </script>
   {% endif %}
+  <!-- End Custom JavaScript -->
 {% endblock %}
