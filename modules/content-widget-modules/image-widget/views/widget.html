@@ -1,9 +1,9 @@
-<section data-aos="{{ data.widget.animationEffects }}" class="apos-container widget-my-spacing{% if data.widget.customClassName %} {{ data.widget.customClassName }}{% endif %}"{% if data.widget.customId %} id="{{ data.widget.customId }}"{% endif %}>
+<section data-aos="{{ data.widget.animationEffects }}" class="widget-my-spacing image-widget{% if data.widget.customClassName %} {{ data.widget.customClassName }}{% endif %}"{% if data.widget.customId %} id="{{ data.widget.customId }}"{% endif %}>
   {% if data.widget.aposPlaceholder and data.manager.options.placeholderUrl %}
     <img
       src="{{ data.manager.options.placeholderUrl }}"
       alt="{{ __t('apostrophe:imagePlaceholder') }}"
-      class="image-widget-placeholder"
+      class="image-widget-placeholder{% if data.widget.imageClass %} {{ data.widget.imageClass }}{% endif %}"
     />
   {% else %}
     {% set className = data.options.className or data.manager.options.className %}
@@ -14,12 +14,12 @@
     {% set attachment = apos.image.first(data.widget._image) %}
 
     {% if attachment %}
-      <img {% if className %} class="{{ className }}"{% endif %}
+      <img {% if className or data.widget.imageClass %} class="{{ className }}{% if data.widget.imageClass %} {{ data.widget.imageClass }}{% endif %}"{% endif %}
         {% if loadingType %} loading="{{ loadingType }}"{% endif %}
         srcset="{{ apos.image.srcset(attachment) }}"
         src="{{ apos.attachment.url(attachment, { size: size }) }}"
         alt="{{ attachment._alt or '' }}"
-        {% if dimensionAttrs %}
+        {% if dimensionAttrs or attachment.width or attachment.height %}
           {% if attachment.width %} width="{{ apos.attachment.getWidth(attachment) }}" {% endif %}
           {% if attachment.height %} height="{{ apos.attachment.getHeight(attachment) }}" {% endif %}
         {% endif %}
@@ -32,4 +32,7 @@
       />
     {% endif %}
   {% endif %}
+
+  {% area data.widget, 'content' %}
+
 </section>
