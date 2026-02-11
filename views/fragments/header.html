@@ -12,9 +12,9 @@
       <nav class="w-full">
         <div class="flex items-center headerContainer justify-between md:block">
           <div class="flex items-center justify-between w-full">
-            <a class="block md:hidden cursor-pointer mobile-container" title="Click Here" href="/">
+            <a class="block md:hidden cursor-pointer mobile-container w-32 max-w-[150px]" title="Click Here" href="/">
               <span class="block opacity-0 h-0 w-0 absolute">Go to home page</span>
-              {{ ui.image(data.global.logo, "w-full h-full mobileLogo") }}
+              {{ ui.image(data.global.headerLogo or data.global.logo, "w-full h-full mobileLogo") }}
             </a>
             <div
               id="navbarSection"
@@ -22,7 +22,7 @@
             >
               <a class="hidden md:block cursor-pointer" title="Click Here" href="/">
                 <span class="block opacity-0 h-0 w-0 absolute">Go to home page</span>
-                {{ ui.image(data.global.logo, "max-h-[50px] w-full h-full max-w-[160px]") }}
+                {{ ui.image(data.global.headerLogo or data.global.logo, "max-h-[50px] w-full h-full max-w-[160px]") }}
               </a>
               <div class="flex items-center nav-item-list flex-col md:flex-row">
                 <ul

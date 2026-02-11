@@ -14,12 +14,15 @@
 #}
 
 {% fragment render(button) %}
-  {# Resolve URL using starter linkSchema helper #}
-  {% set path = apos.helper.linkPath(button) %}
-  {# linkTarget is a checkboxes field, so use the first selected value if present #}
+  {# Resolve URL using starter linkSchema helper - only if isRedirect is true #}
+  {% set path = '' %}
   {% set target = '' %}
-  {% if button.linkTarget and button.linkTarget[0] %}
-    {% set target = button.linkTarget[0] %}
+  {% if button.isRedirect %}
+    {% set path = apos.helper.linkPath(button) %}
+    {# linkTarget is a checkboxes field, so use the first selected value if present #}
+    {% if button.linkTarget and button.linkTarget[0] %}
+      {% set target = button.linkTarget[0] %}
+    {% endif %}
   {% endif %}
 
   {# Extra wrapper classes (optional, e.g. alignment) #}
