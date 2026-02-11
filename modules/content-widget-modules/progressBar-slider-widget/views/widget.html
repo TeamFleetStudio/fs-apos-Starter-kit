@@ -1,0 +1,101 @@
+<section data-aos="{{ data.widget.animationEffects }}" class="report_slider sm:w-full max-w-lg sm:mx-auto mt-10{% if data.widget.customClassName %} {{ data.widget.customClassName }}{% endif %}"{% if data.widget.customId %} id="{{ data.widget.customId }}"{% endif %}>
+  <div class="flex sm:flex-row flex-col gap-11 sm:gap-3">
+    <div class="image_block flex-1 sm:w-1/2">
+      {% area data.widget, 'image' %}
+    </div>
+    <div class="slider_block sm:w-1/2 flex-1 bg-[#F0F0F0] rounded-[20px] relative p-5 pt-14">
+      <div class="circle-container" aria-hidden="true">
+        {% area data.widget, 'icon' %}
+      </div>
+      <div class="progress_slider" style="{{ "background-color: " + data.widget.bgColor + "" if data.widget.bgColor }};">
+        {% for audits in data.widget.slider %}
+          <div class="auditContent">
+            <div class="stat-number font-extrabold text-5xl xl:text-6xl 2xl:text-7xl">{{ audits.auditCount }}</div>
+            <p class="stat-description font-medium text-base text-[#4E4F51]">{{ audits.description }}</p>
+            <div class="progress-bar w-full h-1.5 bg-gray-300 mt-5 relative">
+              <div class="progress-fill h-full bg-black"></div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="content_block">
+    <div class="call-to-action">
+      {% if data.widget.bgImg.items[0].aposPlaceholder %}
+        <div class="call-to-action__background" style="background-image: url({{ data.manager.options.placeholderUrl }})"></div>
+      {% else %}
+        {% set backgroundImage = apos.image.first(data.widget.bgImg) %}
+        <div class="call-to-action__background" style="background-image: url({{ apos.attachment.url(backgroundImage, { size: 'max' }) }})"></div>
+      {% endif %}
+      {% if data.widget.tagline %}
+        <div class="call-to-action__tagline">
+          <span class="call-to-action__line"></span>
+          <div class="call-to-action__text text-xs">{{ data.widget.tagline }}</div>
+        </div>
+      {% endif %}
+      <div class="call-to-action__content">
+        {% area data.widget, 'content' %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script defer>
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if jQuery and Slick are available
+  if (typeof jQuery === 'undefined' || typeof jQuery.fn.slick === 'undefined') {
+    console.warn('Slick slider is not available. Progress bar slider requires jQuery and Slick slider library.');
+    return;
+  }
+
+  const autoplaySpeed = 3000;
+
+  jQuery('.progress_slider').slick({
+    accessibility: true,
+    dots: false,
+    arrows: false,
+    autoplay: true,
+    autoplaySpeed: autoplaySpeed,
+    speed: 600,
+    accessibility: true
+  });
+
+  const slides = document.querySelectorAll('.report_slider .auditContent');
+  const uniqueContent = new Set();
+
+  slides.forEach((slide) => {
+    const auditCount = slide.querySelector('.stat-number').textContent.trim();
+    const description = slide.querySelector('.stat-description').textContent.trim();
+    uniqueContent.add(`Audit count: ${auditCount}, Description: ${description}.`);
+  });
+
+  const allSlidesContent = Array.from(uniqueContent).join(' ');
+
+  slides.forEach((slide) => {
+    slide.setAttribute('aria-label', allSlidesContent);
+  });
+
+  jQuery('.progress_slider').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+    const progressBars = document.querySelectorAll('.progress-fill');
+    // Batch DOM operations using requestAnimationFrame to avoid forced reflow
+    requestAnimationFrame(() => {
+      progressBars.forEach((bar) => {
+        bar.style.animation = 'none';
+      });
+      requestAnimationFrame(() => {
+        progressBars.forEach((bar) => {
+          bar.style.animation = `progress-bar-fill ${autoplaySpeed}ms linear`;
+        });
+      });
+    });
+  });
+
+  jQuery('.progress_slider').on('afterChange', function () {
+    const activeProgressBar = document.querySelector('.slick-active .progress-fill');
+    if (activeProgressBar) {
+      activeProgressBar.style.animation = `progress-bar-fill ${autoplaySpeed}ms linear forwards`;
+    }
+  });
+});
+</script>

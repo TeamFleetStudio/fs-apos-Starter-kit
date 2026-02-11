@@ -28,5 +28,6 @@ module.exports = {
   'rich-text-widget': {},
 
   // migrated from wallyax
-  'hero-banner-widget': {}
+  'hero-banner-widget': {},
+  'progressBar-slider-widget': {}
 };
