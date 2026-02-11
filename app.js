@@ -85,8 +85,11 @@ async function startApp() {
       'pieces-modules': {
         options: { ignoreNoCodeWarning: true }
       },
-      'code-editor-field': {}
-    }
+      'code-editor-field': {},
+      'rich-text-color': {},
+      'rich-text-font': {}
+    },
+    bundles: ['@bodonkey/rich-text-enhancement']
   });
   // FS_SYNC_APOS_CONFIG_END
 }
