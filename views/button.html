@@ -1,38 +1,42 @@
 {#
   {% import "button.html" as buttonFrag %}
   {% render buttonFrag.render(button) %}
+#
 
-  * button - button object
-    ~ block
-    ~ alignment
-    ~ _id
-    ~ linkText
-    ~ linkTarget
-    ~ style
-    ~ size
-    ~ backgroundColor
-    ~ textColor
-    ~ borderRadius
+  * button - button object (merged starter + Wallyax features)
+    ~ linkText, linkType, _linkPage, _linkFile, linkUrl, linkTarget, ariaLabel
+    ~ style, size, backgroundColor, textColor, borderRadius
+    ~ alignment, weight
+    ~ isSvgIcon, svgIcon (codeEditor), iconPlacement
+    ~ border, borderColor
+    ~ horizontalRule
+    ~ customClassName, customId
 #}
 
-{% import "link.html" as link %}
-
 {% fragment render(button) %}
+  {# Resolve URL using starter linkSchema helper #}
   {% set path = apos.helper.linkPath(button) %}
-  {% set class = '' %}
-  {% if button.block %}
-    {% set class = class + ' btn-widget--block-' + button.block %}
-  {% endif %}
-  {% if button.alignment %}
-    {% set class = class + ' btn-widget--alignment-' + button.alignment %}
+  {# linkTarget is a checkboxes field, so use the first selected value if present #}
+  {% set target = '' %}
+  {% if button.linkTarget and button.linkTarget[0] %}
+    {% set target = button.linkTarget[0] %}
   {% endif %}
 
+  {# Extra wrapper classes (optional, e.g. alignment) #}
+  {% set wrapperClass = '' %}
+  {% if button.alignment %}
+    {% set wrapperClass = wrapperClass + ' btn-widget--alignment-' + button.alignment %}
+  {% endif %}
+
+  {# Compute button class from style + size (starter logic) #}
   {% if button.style === 'custom' %}
     {% set btnClass = 'btn' %}
     {% if button.size %} {% set btnClass = btnClass + ' btn--' + button.size %} {% endif %}
   {% else %}
-    {% set btnClass = 'btn btn--' + button.style + ' btn--' + button.size %}
+    {% set btnClass = 'btn btn--' + (button.style or 'primary') + ' btn--' + (button.size or '') %}
   {% endif %}
+
+  {# Compute inline styles (background/text colors, radius, border) #}
   {% set btnStyle = '' %}
   {% if button.style === 'custom' %}
     {% if button.backgroundColor %}
@@ -42,17 +46,77 @@
       {% set btnStyle = btnStyle + ' color: ' + button.textColor + ';' %}
     {% endif %}
   {% endif %}
-  {% if button.borderRadius %}
+  {% if button.borderRadius is not null %}
     {% set btnStyle = btnStyle + ' border-radius: ' + button.borderRadius + 'px;' %}
   {% endif %}
+  {% if button.border and button.borderColor %}
+    {% set btnStyle = btnStyle + ' border: 1px solid ' + button.borderColor + ';' %}
+  {% endif %}
 
-  <div class="btn-widget {% if button.customClassName %} {{ button.customClassName }}{% endif %}"{% if button.customId %} id="{{ button.customId }}"{% elif button._id %} id="{{ button._id }}"{% endif %}>
-    {% render link.render({
-      label: button.linkText,
-      path: path,
-      target: button.linkTarget,
-      class: btnClass,
-      style: btnStyle
-    }) %}
+  {# Text weight (from Wallyax) #}
+  {% set textWeight = '400' %}
+  {% if button.weight == 'light' %}
+    {% set textWeight = '300' %}
+  {% elseif button.weight == 'bold' %}
+    {% set textWeight = '700' %}
+  {% elseif button.weight == 'extrabold' %}
+    {% set textWeight = '800' %}
+  {% endif %}
+  {% set btnStyle = btnStyle + ' font-weight: ' + textWeight + ';' %}
+
+  {# SVG icon support (from Wallyax) #}
+  {% set iconPlacementClass = '' %}
+  {% set svgIcon = '' %}
+  {% if button.isSvgIcon and button.svgIcon and button.svgIcon.code %}
+    {% set svgIcon = button.svgIcon.code %}
+    {% set iconPlacementClass = 'flex-row' %}
+    {% if button.iconPlacement == 'start' %}
+      {% set iconPlacementClass = 'flex-row-reverse' %}
+    {% endif %}
+  {% endif %}
+
+  {# Wrapper div with starter customClassName/customId #}
+  <div class="btn-widget {{ wrapperClass }}{% if button.customClassName %} {{ button.customClassName }}{% endif %}"
+       {% if button.customId %} id="{{ button.customId }}"
+       {% elseif button._id %} id="{{ button._id }}"
+       {% endif %}>
+
+    {% if path %}
+      {# Render <a> when we have a link path #}
+      <div class="{{ 'relative' if button.horizontalRule }}">
+        <a
+          href="{{ path }}"
+          {% if target %} target="{{ target }}"{% endif %}
+          {% if button.ariaLabel %} aria-label="{{ button.ariaLabel }}"{% endif %}
+          class="cursor-pointer rounded-md {{ btnClass }} {{ 'relative z-[2] mx-auto' if button.horizontalRule }} {{ 'flex items-center ' + iconPlacementClass if button.isSvgIcon else 'inline-grid' }}"
+          style="{{ btnStyle }}"
+        >
+          <span>{{ button.linkText }}</span>
+          {% if button.isSvgIcon and svgIcon %}
+            <span class="{{ 'mr-2' if button.iconPlacement == 'start' else 'ml-2' }}">{{ svgIcon | safe }}</span>
+          {% endif %}
+        </a>
+        {% if button.horizontalRule %}
+          <div class="horizontal-rule border-b border-b-black absolute w-full bottom-1/2 z-[1]"></div>
+        {% endif %}
+      </div>
+    {% else %}
+      {# No link: render a plain <button> #}
+      <div class="{{ 'relative' if button.horizontalRule }}">
+        <button
+          class="cursor-pointer rounded-md {{ btnClass }} {{ 'relative z-[2] mx-auto' if button.horizontalRule }} {{ 'flex items-center ' + iconPlacementClass if button.isSvgIcon else 'inline-grid' }}"
+          style="{{ btnStyle }}"
+        >
+          <span>{{ button.linkText }}</span>
+          {% if button.isSvgIcon and svgIcon %}
+            <span class="{{ 'mr-2' if button.iconPlacement == 'start' else 'ml-2' }}">{{ svgIcon | safe }}</span>
+          {% endif %}
+        </button>
+        {% if button.horizontalRule %}
+          <div class="horizontal-rule border-b border-b-black absolute w-full bottom-1/2 z-[1]"></div>
+        {% endif %}
+      </div>
+    {% endif %}
   </div>
 {% endfragment %}
+
