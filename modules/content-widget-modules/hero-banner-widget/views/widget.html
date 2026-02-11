@@ -1,0 +1,29 @@
+{% import "ui.html" as ui %}
+
+{% if apos.image.first(data.widget["bg-img"]) and apos.image.first(data.widget["bg-img"])._urls.original %}
+  {% set bgImgData = apos.helper.getImageData(apos.image.first(data.widget["bg-img"])) %}
+  {% set bgImg = apos.image.first(data.widget["bg-img"])._urls.original %}
+{% else %}
+  {% set bgImg = "" %}
+  {% set bgImgData = {} %}
+{% endif %}
+
+{% set bgColor = data.widget["bg-color"] | default("") %}
+
+<section data-aos="{{ data.widget.animationEffects }}" class="hero-banner container is-fluid {{ data.widget["section-class"] }} {{ 'bg-img-container' if apos.image.first(data.widget["bg-img"]) }}"
+  style="
+    {{ "background-color: " + bgColor + "" if bgColor }}
+  ">
+  <div class="hero-banner__column-item-first">
+    {% area data.widget, 'one' with data.contextOptions %}
+    {% if apos.image.first(data.widget["bg-img"]) %}
+      <div class="hero-banner__bg-img">
+        {{ ui.image(data.widget["bg-img"]) }}
+      </div>
+    {% endif %}
+  </div>
+  <div class="hero-banner__column-item-second">
+    {% area data.widget, 'two' with data.contextOptions %}
+  </div>
+</section>
+
