@@ -3,39 +3,77 @@
   margin-bottom: $headings-margin-bottom;
   font-family: $headings-font-family;
   font-style: $headings-font-style;
-  font-weight: $headings-font-weight;
-  line-height: $headings-line-height;
   color: $headings-color;
 }
 
 h1 {
   @extend %heading;
-  @include font-size($h1-font-size);
+  font-size: 90px;
+  line-height: 72px;
+  @media (max-width: 1024px) {
+    font-size: 48px;
+    line-height: 43px;
+  }
+  @media (max-width: 767px) {
+    font-size: 58px;
+    line-height: 55px;
+  }
 }
 
 h2 {
   @extend %heading;
-  @include font-size($h2-font-size);
+  font-size: 67px;
+  line-height: 75px;
+  font-weight: 300;
+  @media (max-width: 1024px) {
+    font-size: 56px;
+    line-height: 52px;
+  }
+  @media (max-width: 767px) {
+    font-size: 40px;
+    line-height: 46px;
+  }
 }
 
 h3 {
   @extend %heading;
-  @include font-size($h3-font-size);
+  font-size: 64px;
+  line-height: 64px;
+  font-weight: 300;
+  @media (max-width: 1024px) {
+    font-size: 38px;
+    line-height: 38px;
+  }
 }
 
 h4 {
   @extend %heading;
-  @include font-size($h4-font-size);
+  font-size: 47px;
+  line-height: 51.7px;
+  font-weight: 400;
+  margin:0;
+  @media (max-width: 1024px) {
+    font-size: 28px;
+    line-height: 30.8px;
+  }
+  @media (max-width: 767px) {
+    font-size: 38px;
+    line-height: 41.8px;
+  }
 }
 
 h5 {
   @extend %heading;
-  @include font-size($h5-font-size);
+  font-size: 32px;
+  line-height: 32px;
+  font-weight: 800;
 }
 
 h6 {
   @extend %heading;
-  @include font-size($h6-font-size);
+  font-size: 26px;
+  line-height: 26px;
+  font-weight: 600;
 }
 
 .h1 {
@@ -62,16 +100,52 @@ h6 {
   @extend h6;
 }
 
-p:not([class]) {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  line-height: $line-height-base;
+.h7 {
+  @extend %heading;
+  @include font-size($h7-font-size);
+}
+
+strong {
+  font-weight: $bold-font-weight !important;
+}
+
+p:not([class]),
+p.p, .post_content li {
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 32px;
 }
 
 .small {
   font-size: $small-font-size;
 }
 .lead {
-  font-size: $lead-font-size;
   font-weight: $lead-font-weight;
+}
+.p1{
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: normal;
+  @media (max-width: 1024px) {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}
+.p2{
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: normal;
+  @media (max-width: 1024px) {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+.p3{
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: medium;
+  @media (max-width: 1024px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
 }
