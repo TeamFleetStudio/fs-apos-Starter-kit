@@ -1,0 +1,40 @@
+{% import "ui.html" as ui %}
+
+{% set bgImg = "" %}
+{% if data.widget.bgImg and apos.image.first(data.widget.bgImg) and apos.image.first(data.widget.bgImg)._urls.original %}
+    {% set bgImg = apos.image.first(data.widget.bgImg)._urls.original %}
+{% endif %}
+
+{% set animationEffects = data.widget.animationEffects | default('no-animation') %}
+{% set customClassName = data.widget.customClassName | default('') %}
+{% set customId = data.widget.customId | default('') %}
+{% set isBorder = data.widget.isBorder | default(false) %}
+{% set images = data.widget.images | default([]) %}
+
+<div{% if animationEffects and animationEffects !== 'no-animation' %} data-aos="{{ animationEffects }}"{% endif %}{% if customClassName %} class="{{ customClassName }}"{% endif %}{% if bgImg %} style="background-image: url('{{ bgImg }}');"{% endif %}{% if customId %} id="{{ customId }}"{% endif %}>
+    <div class="flex justify-between">
+        {% for image in images %}
+            {% set cardImage = image.cardImage | default(null) %}
+            {% set isRedirect = image.isRedirectToAnotherPage | default(false) %}
+            {% set imageClass = image.imageClass | default('') %}
+            {% set ariaLabel = image.ariaLabel | default('') %}
+            
+            {% if isRedirect and cardImage %}
+                {% set linkPath = apos.helper.linkPath(image) | default('#') %}
+                {% set linkTarget = apos.helper.linkTarget(image) | default('_self') %}
+                <a
+                    href="{{ linkPath }}"
+                    target="{{ linkTarget }}" 
+                    {% if ariaLabel %} aria-label="{{ ariaLabel }}" {% endif %}
+                    class="{{ 'p-3 bg-white border border-[#E4E7EB] rounded-2xl' if isBorder }}{% if imageClass %} {{ imageClass }}{% endif %} single-image cursor-pointer flex items-center justify-center"
+                >
+                    {{ ui.image(cardImage, "w-20", 'lazy') }}
+                </a>
+            {% elif cardImage %}
+                <div class="{{ 'p-3 bg-white border border-[#E4E7EB] rounded-2xl' if isBorder }} single-image flex items-center justify-center">
+                    {{ ui.image(cardImage, "w-20", 'lazy') }}
+                </div> 
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
