@@ -388,14 +388,14 @@ module.exports = {
       },
       header: {
         label: 'Header',
-        fields: ['headerNav', 'headerBtns', 'headerLayout', 'headerButtonSpacing', 'headerBackgroundColor', 'headerTextColor', 'headerCustomClassName', 'headerCustomId']
+        fields: ['headerLayout', 'headerNav', 'headerBtns', 'headerButtonSpacing', 'headerBackgroundColor', 'headerTextColor', 'headerCustomClassName', 'headerCustomId']
       },
       footer: {
         label: 'Footer',
         fields: [
+          'footerLayout',
           'footerNav',
           'footerBtns',
-          'footerLayout',
           'footerButtonSpacing',
           'footerBackgroundColor',
           'footerTextColor',
