@@ -46,6 +46,23 @@ async function startApp() {
     shortName: appName,
     baseUrl,
     nestedModuleSubdirs: true,
+    options: {
+      uploadfs: {
+        storage: 's3',
+        secret: process.env.APOS_S3_SECRET,
+        key: process.env.APOS_S3_KEY,
+        bucket: process.env.APOS_S3_BUCKET,
+        region: process.env.APOS_S3_REGION,
+        contentTypes: {
+          'video/mp4': 'mp4',
+          'video/webm': 'webm',
+        },
+        params: {
+          CacheControl: 'public, max-age=31536000, immutable'
+        },
+        optimize: true,
+      },
+    },
     modules: {
       '@apostrophecms/rich-text-widget': {},
       '@apostrophecms/image-widget': {
