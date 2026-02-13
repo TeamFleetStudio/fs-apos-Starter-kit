@@ -30,5 +30,6 @@ module.exports = {
   // migrated from wallyax
   'hero-banner-widget': {},
   'progressBar-slider-widget': {},
-  'image-card-widget': {}
+  'image-card-widget': {},
+  'testimonial-widget': {}
 };
