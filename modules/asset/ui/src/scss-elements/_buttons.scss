@@ -3,7 +3,7 @@
   // Match Wallyax "regular" CTA size (py-2.5 px-6 ~= 0.625rem 1.5rem)
   padding: 0.625rem 1.5rem;
   width: 100%;
-  display: inline-block;
+  display: flex;
   font-weight: $btn-font-weight;
   color: white;
   text-decoration: none;
