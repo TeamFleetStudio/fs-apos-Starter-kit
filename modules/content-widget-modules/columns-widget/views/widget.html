@@ -1,4 +1,9 @@
+{% set bgColor = data.widget.bgColor | default("") %}
+
 <section data-aos="{{ data.widget.animationEffects }}" class="{{ 'is-fluid' if data.widget.style === 'full' else 'mx-8 lg:mx-16' }} widget-columns widget-columns--{{ data.widget.cols }}{% if data.widget.customClassName %} {{ data.widget.customClassName }}{% endif %}"
+  style="
+    {{ "background-color: " + bgColor + ";" if bgColor }}
+  "
   {% if data.widget.customId %}
     id="{{ data.widget.customId }}"
   {% endif %}

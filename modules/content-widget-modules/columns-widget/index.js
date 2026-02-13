@@ -110,6 +110,11 @@ module.exports = {
           }
         }
       },
+      bgColor: {
+        type: 'color',
+        help: 'Background Color for widget',
+        label: 'Background Color'
+      },
       ...aosSchema,
       ...customAttributesSchema
     }

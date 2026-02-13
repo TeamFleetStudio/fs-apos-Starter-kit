@@ -13,6 +13,10 @@
 {% endblock %}
 
 {% block extraHead %}
+  {# Favicon from Brand logo #}
+  {% if data.global.logo and apos.image.first(data.global.logo) %}
+    <link rel="icon" href="{{ apos.attachment.url(apos.image.first(data.global.logo),{size: 'original'}) }}">
+  {% endif %}
   {# Brand Colors and Fonts - Override SCSS variables #}
   {% if data.global.primaryColor or data.global.secondaryColor or data.global.headingFontFamily or data.global.bodyFontFamily %}
     <style>
