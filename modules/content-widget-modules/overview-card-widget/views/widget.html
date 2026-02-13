@@ -1,0 +1,56 @@
+{% import "ui.html" as ui %}
+
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 {{ 'is-fluid' if data.widget.style === 'full' else 'mx-8 lg:mx-16' }} {{ data.widget.widgetClass }} ">
+    {% for card in data.widget.overviewCard %}
+    <div class="fading-border {{card.widgetClass}}">
+        <div class="fading-border-inner flex flex-col justify-evenly py-6 md:py-10 px-6 md:px-4 xl:px-10">
+            {% if card.image.items.length > 0 %}
+            <div class="w-full h-32 md:h-44 bg-transparent">
+                <div class="img">
+                    {{ui.image(card.image)}} 
+                </div>
+            </div>
+            {% endif %}
+            <div>
+                <p class="text-3xl lg:text-4xl font-bold mb-3">
+                    {{card.title}}
+                </p>
+                {% area card, 'content' %}
+                <div class="space-y-3 my-4 flex flex-col gap-4">
+                    {% for item in card.items %}
+                        <div class="flex items-center gap-4">
+                            <div class="flex justify-center items-center w-14 h-14 ">
+                                {% area item, 'icon' %}
+                            </div>
+                            {% if item.url %}
+                            <a href="{{item.url}}" target="_blank" rel="noopener noreferrer">
+                            {% endif %}
+                                <div class=" item flex flex-col gap-1 cursor-pointer ">
+                                    <div class="flex flex-col" >
+                                        <p class="heading text-lg md:text-xl font-bold {% if item.subHeading %}leading-5 {% else %} leading-6 {% endif %}">
+                                            {{ item.heading }}
+                                        </p>
+                                        <p class="subheading text-xs md:text-sm font-bold">
+                                            {{ item.subHeading }}
+                                        </p>
+                                    </div>
+                                    <p class="description mt-1 text-xs md:text-sm">
+                                        {{ item.description }}
+                                    </p>
+                                </div>
+                            {% if item.url %}
+                            </a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div>
+                {% if card.btn %}
+                {% area card,'btn' %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %} 
+</section>

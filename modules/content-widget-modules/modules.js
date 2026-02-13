@@ -31,5 +31,6 @@ module.exports = {
   'hero-banner-widget': {},
   'progressBar-slider-widget': {},
   'image-card-widget': {},
-  'testimonial-widget': {}
+  'testimonial-widget': {},
+  'overview-card-widget': {}
 };

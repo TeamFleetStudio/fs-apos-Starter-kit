@@ -187,3 +187,17 @@
     font-weight: 400;
   }
 }
+
+// Overview card widget styles
+.overview-card .image-widget img {
+  min-width: 64px;
+  max-width: 64px;
+}
+
+.overview-card {
+  .p {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+}
