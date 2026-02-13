@@ -3,11 +3,175 @@
   font-size: 67px !important;
 }
 
+.blogheading {
+  margin-top: 0 !important;
+  padding-top: 40px !important;
+}
+
 // Rich text area styles
 [data-rich-text] {
   p {
     margin-top: 1.5rem;
     margin-bottom: 1rem;
+  }
+
+  // Ensure typography classes apply correctly within rich text
+  h1, .h1 {
+    font-size: 90px;
+    line-height: 72px;
+    @media (max-width: 1440px) {
+      font-size: 58px;
+      line-height: 60px;
+    }
+    @media (max-width: 1024px) {
+      font-size: 48px;
+      line-height: 43px;
+    }
+    @media (max-width: 767px) {
+      font-size: 40px;
+      line-height: 55px;
+    }
+  }
+
+  h2, .h2 {
+    font-size: 67px;
+    line-height: 75px;
+    font-weight: 300;
+    @media (max-width: 1440px) {
+      font-size: 62px;
+      line-height: 68px;
+    }
+    @media (max-width: 1024px) {
+      font-size: 56px;
+      line-height: 52px;
+    }
+    @media (max-width: 767px) {
+      font-size: 40px;
+      line-height: 46px;
+    }
+  }
+
+  h3, .h3 {
+    font-size: 64px;
+    line-height: 64px;
+    font-weight: 300;
+    @media (max-width: 1440px) {
+      font-size: 52px;
+      line-height: 52px;
+    }
+    @media (max-width: 1024px) {
+      font-size: 38px;
+      line-height: 38px;
+    }
+  }
+
+  h4, .h4 {
+    font-size: 47px;
+    line-height: 51.7px;
+    font-weight: 400;
+    margin: 0;
+    @media (max-width: 1440px) {
+      font-size: 40px;
+      line-height: 44px;
+    }
+    @media (max-width: 1024px) {
+      font-size: 28px;
+      line-height: 30.8px;
+    }
+    @media (max-width: 767px) {
+      font-size: 38px;
+      line-height: 41.8px;
+    }
+  }
+
+  h5, .h5 {
+    font-size: 32px;
+    line-height: 32px;
+    font-weight: 800;
+    @media (max-width: 1440px) {
+      font-size: 30px;
+      line-height: 30px;
+    }
+  }
+
+  h6, .h6 {
+    font-size: 26px;
+    line-height: 26px;
+    font-weight: 600;
+    @media (max-width: 1440px) {
+      font-size: 24px;
+      line-height: 24px;
+    }
+  }
+
+  .h7 {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 300;
+    @media (max-width: 1440px) {
+      font-size: 22px;
+      line-height: 30px;
+    }
+  }
+
+  .p1 {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: normal;
+    @media (max-width: 1440px) {
+      font-size: 19px;
+      line-height: 28px;
+    }
+    @media (max-width: 1024px) {
+      font-size: 18px;
+      line-height: 28px;
+    }
+  }
+
+  .p2 {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: normal;
+    @media (max-width: 1440px) {
+      font-size: 17px;
+      line-height: 26px;
+    }
+    @media (max-width: 1024px) {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  .p3 {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: medium;
+    @media (max-width: 1440px) {
+      font-size: 15px;
+      line-height: 22px;
+    }
+    @media (max-width: 1024px) {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+
+  p.p {
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 32px;
+  }
+
+  .blogheading {
+    font-size: 40px;
+    line-height: 1;
+    font-weight: 600;
+    margin-bottom: 30px !important;
+    margin-top: 0 !important;
+    padding-top: 40px !important;
+    @media (max-width: 767px) {
+      font-size: 32px;
+    }
   }
 }
 
