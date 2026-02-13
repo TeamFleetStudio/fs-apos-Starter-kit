@@ -60,6 +60,8 @@ async function startApp() {
         params: {
           CacheControl: 'public, max-age=31536000, immutable'
         },
+        // Disable ACLs for buckets that don't allow ACLs (common for buckets created after April 2023)
+        acl: null,
         optimize: true,
       },
     },

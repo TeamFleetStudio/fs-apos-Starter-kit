@@ -96,7 +96,8 @@
             toggleButton.setAttribute("aria-expanded", !isExpanded);
             toggleButton.setAttribute("aria-label", isExpanded ? "open menu" : "close menu");
 
-            navbarSection.classList.toggle("visible");
+            navbarSection.classList.toggle("hidden");
+            navbarSection.classList.toggle("flex");
 
             openIcon.classList.toggle("hidden", !isExpanded);
             closeIcon.classList.toggle("hidden", isExpanded);
