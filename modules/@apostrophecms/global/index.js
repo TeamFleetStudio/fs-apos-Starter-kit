@@ -56,10 +56,20 @@ module.exports = {
             value: 'default'
           },
           {
-            label: 'Wallyax Header',
+            label: 'Header Layout 1',
             value: 'wallyax'
           }
         ]
+      },
+      headerLogo: {
+        label: 'Header Logo',
+        type: 'area',
+        options: {
+          max: 1,
+          widgets: {
+            '@apostrophecms/image': {}
+          }
+        }
       },
       headerNav: {
         label: 'Header Navigation Items',
@@ -224,9 +234,6 @@ module.exports = {
           widgets: {
             '@apostrophecms/image': {}
           }
-        },
-        if: {
-          footerLayout: 'wallyax'
         }
       },
       footerDescription: {
@@ -388,12 +395,13 @@ module.exports = {
       },
       header: {
         label: 'Header',
-        fields: ['headerLayout', 'headerNav', 'headerBtns', 'headerButtonSpacing', 'headerBackgroundColor', 'headerTextColor', 'headerCustomClassName', 'headerCustomId']
+        fields: ['headerLayout', 'headerLogo', 'headerNav', 'headerBtns', 'headerButtonSpacing', 'headerBackgroundColor', 'headerTextColor', 'headerCustomClassName', 'headerCustomId']
       },
       footer: {
         label: 'Footer',
         fields: [
           'footerLayout',
+          'footerLogo',
           'footerNav',
           'footerBtns',
           'footerButtonSpacing',
@@ -402,7 +410,6 @@ module.exports = {
           'footerCustomClassName',
           'footerCustomId',
           'footerBgImg',
-          'footerLogo',
           'footerDescription',
           'footerPrimaryNavigation',
           'footerSourceForgeScript'

@@ -14,7 +14,7 @@
           <div class="flex items-center justify-between w-full">
             <a class="block md:hidden cursor-pointer mobile-container w-32 max-w-[150px]" title="Click Here" href="/">
               <span class="block opacity-0 h-0 w-0 absolute">Go to home page</span>
-              {{ ui.image(data.global.headerLogo or data.global.logo, "w-full h-full mobileLogo") }}
+              {{ ui.image(data.global.headerLogo, "w-full h-full mobileLogo") }}
             </a>
             <div
               id="navbarSection"
@@ -22,7 +22,7 @@
             >
               <a class="hidden md:block cursor-pointer" title="Click Here" href="/">
                 <span class="block opacity-0 h-0 w-0 absolute">Go to home page</span>
-                {{ ui.image(data.global.headerLogo or data.global.logo, "max-h-[50px] w-full h-full max-w-[160px]") }}
+                {{ ui.image(data.global.headerLogo, "max-h-[50px] w-full h-full max-w-[160px]") }}
               </a>
               <div class="flex items-center nav-item-list flex-col md:flex-row">
                 <ul
@@ -110,7 +110,7 @@
     <div class="navigation apos-container is-fluid {% if data.global.headerCustomClassName %} {{ data.global.headerCustomClassName }}{% endif %}"{% if data.global.headerCustomId %} id="{{ data.global.headerCustomId }}"{% endif %}{% if data.global.headerBackgroundColor %} style="background-color: {{ data.global.headerBackgroundColor }};"{% endif %}>
       <div class="navigation__logo-container">
         <a href="/" class="navigation__logo">
-          {{ ui.image(data.global.logo) }}
+          {{ ui.image(data.global.headerLogo or data.global.logo) }}
         </a>
 
         <div class="navigation__menu-btn"></div>
