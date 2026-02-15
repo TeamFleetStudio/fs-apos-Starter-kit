@@ -1,0 +1,43 @@
+{% import "ui.html" as ui %}
+
+<section class="specialization-widget {{ data.widget.widgetClass }} grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 border-b border-0 border-black border-black"
+ {% if data.widget.widgetId %}
+    id="{{ data.widget.widgetId }}"
+  {% endif %}
+>
+    {% for card in data.widget.specializations %}
+    {% if card.url %} 
+    <a href="{{ card.url }}"  class="flex flex-col h-fit">
+        <section class="mx-auto" >
+            {{ ui.image(card.logo, '', 'lazy') }}
+        </section>
+        <section class="specialization_content">
+            <div class="font-semibold text-[32px] leading-[38px] tracking-tight">
+            <p class="text-center">
+                {{ card.title }}
+            </p>
+            </div>
+            <div class="text-xl mt-8 tracking-tight">
+                {% area card, 'description' %}
+            </div>
+        </section>
+    </a>
+    {% else %}
+    <div class="flex flex-col h-fit">
+        <section class="mx-auto" >
+            {{ ui.image(card.logo, '', 'lazy') }}
+        </section>
+        <section class="specialization_content">
+            <div class="font-semibold text-[32px] leading-[38px] tracking-tight">
+            <p class="text-center">
+                {{ card.title }}
+            </p>
+            </div>
+            <div class="text-xl mt-8 tracking-tight">
+                {% area card, 'description' %}
+            </div>
+        </section>
+    </div>
+    {% endif %}
+    {% endfor %}
+</section>

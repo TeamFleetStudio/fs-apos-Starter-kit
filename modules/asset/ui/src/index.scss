@@ -108,6 +108,13 @@ a {
   max-width: 150px !important;
 }
 
+.specialization-widget {
+  img {
+    max-height: 277px;
+    width: auto;
+  }
+}
+
 // Slick Slider Global Styles
 .slick-loading .slick-list {
   background: #fff url(ajax-loader.gif) center center no-repeat

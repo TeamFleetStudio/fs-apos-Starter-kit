@@ -32,5 +32,7 @@ module.exports = {
   'progressBar-slider-widget': {},
   'image-card-widget': {},
   'testimonial-widget': {},
-  'overview-card-widget': {}
+  'overview-card-widget': {},
+  'specialization-widget': {},
+  'services-team-widget': {}
 };

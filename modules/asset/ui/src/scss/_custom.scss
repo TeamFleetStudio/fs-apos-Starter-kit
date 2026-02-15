@@ -201,3 +201,11 @@
     line-height: 1.2;
   }
 }
+
+// Specialization widget styles
+.specialization-widget a section:first-of-type {
+  height: 250px;
+  display: flex;
+  align-items: center;
+}
+
