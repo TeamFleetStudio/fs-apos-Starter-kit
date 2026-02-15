@@ -209,3 +209,17 @@
   align-items: center;
 }
 
+// Services team widget styles
+.services-page-team-container,
+.services-content,
+.services-value {
+  h4 {
+    margin-bottom: 32px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .services-page-team-container .column-item__second {
+    padding-top: 30px;
+  }
+}
