@@ -34,5 +34,6 @@ module.exports = {
   'testimonial-widget': {},
   'overview-card-widget': {},
   'specialization-widget': {},
-  'services-team-widget': {}
+  'services-team-widget': {},
+  'card-widget': {}
 };
