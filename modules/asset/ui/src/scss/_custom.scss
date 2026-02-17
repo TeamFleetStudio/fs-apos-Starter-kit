@@ -6,15 +6,11 @@
 .blogheading {
   margin-top: 0 !important;
   padding-top: 40px !important;
+  margin-bottom: 30px !important;
 }
 
 // Rich text area styles
 [data-rich-text] {
-  p {
-    margin-top: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
   // Ensure typography classes apply correctly within rich text
   h1, .h1 {
     font-size: 90px;
@@ -221,5 +217,32 @@
 @media (max-width: 1024px) {
   .services-page-team-container .column-item__second {
     padding-top: 30px;
+  }
+}
+
+// BlogContentSection styles
+.BlogContentSection {
+  ol,
+  ul {
+    list-style-type: auto;
+    padding-left: 30px;
+    margin-bottom: 1rem;
+    li {
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .p1 {
+    margin-bottom: 12px;
+  }
+  p {
+    margin-bottom: 12px;
+  }
+  h5 {
+    margin: 32px 0;
+  }
+  a {
+    color: #dd3603 !important;
   }
 }
