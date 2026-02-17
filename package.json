@@ -48,6 +48,7 @@
     "ace-builds": "^1.43.5",
     "aos": "^2.3.4",
     "apostrophe": "4.26.0",
+    "axios": "^1.13.5",
     "dotenv": "^16.0.3",
     "node-geocoder": "^4.2.0",
     "normalize.css": "^8.0.1",

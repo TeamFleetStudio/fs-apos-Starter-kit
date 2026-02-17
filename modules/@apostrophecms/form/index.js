@@ -1,8 +1,12 @@
 const areaConfig = require('../../../lib/area');
+const axios = require('axios');
 
 module.exports = {
   options: {
     classPrefix: 'my-form',
+    recaptchaSite: process.env.APOS_GOOGLE_RECAPTCHA_SITE_KEY,
+    recaptchaSecret: process.env.APOS_GOOGLE_RECAPTCHA_SECRET,
+    recaptchaThreshold: parseFloat(process.env.APOS_GOOGLE_RECAPTCHA_THRESHOLD) || 0.5,
     formWidgets: {
       '@apostrophecms/form-text-field': {},
       '@apostrophecms/form-textarea-field': {},
@@ -29,14 +33,43 @@ module.exports = {
         if: {
           subscription: true
         }
+      },
+      linkUrl: {
+        label: 'URL for post link',
+        type: 'url'
+      },
+      thankYouBody: {
+        label: 'Thank You Body',
+        type: 'area',
+        options: {
+          widgets: areaConfig.richText
+        }
       }
     },
     group: {
+      formRedirect: {
+        label: 'Third Party Submission',
+        fields: ['linkUrl']
+      },
       subscription: {
         label: 'Enable Subscriptions',
         fields: ['subscription', 'emailSubscriptionField']
       }
     }
+  },
+  helpers(self) {
+    return {
+      prependIfPrefix(suffix) {
+        const prefix = self.options.classPrefix || '';
+        if (!prefix) {
+          return suffix;
+        }
+        if (!suffix) {
+          return prefix;
+        }
+        return `${prefix}${suffix}`;
+      }
+    };
   },
   handlers(self) {
     return {
@@ -76,5 +109,97 @@ module.exports = {
         }
       }
     };
+  },
+  methods(self) {
+    return {
+      async checkRecaptcha(req, input, formErrors, tokenParam) {
+        if (!req.recaptchaValidatedTokens) {
+          req.recaptchaValidatedTokens = new Set();
+        }
+
+        const secret = self.options.recaptchaSecret || process.env.APOS_GOOGLE_RECAPTCHA_SECRET;
+        const token = tokenParam || input.recaptchaToken || input.recaptcha;
+
+        if (!secret || !token) {
+          if (!token) {
+            formErrors.push({
+              global: true,
+              error: 'recaptcha',
+              message: req.t('aposForm:recaptchaSubmitError')
+            });
+          }
+          return false;
+        }
+
+        // Check if token was already validated in this request BEFORE making API call
+        if (token && req.recaptchaValidatedTokens.has(token)) {
+          return true;
+        }
+
+        try {
+          // Verify token with Google reCAPTCHA API
+          const response = await axios.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            null,
+            {
+              params: {
+                secret,
+                response: token
+              }
+            }
+          );
+
+          const result = response.data;
+          const threshold = self.options.recaptchaThreshold || 0.5;
+
+          if (!result.success && result['error-codes'] && result['error-codes'].includes('timeout-or-duplicate')) {
+            if (req.recaptchaValidatedTokens && req.recaptchaValidatedTokens.has(token)) {
+              return true;
+            }
+            formErrors.push({
+              global: true,
+              error: 'recaptcha',
+              message: req.t('aposForm:recaptchaValidationError')
+            });
+            return false;
+          }
+
+          // Check if verification succeeded and score meets threshold
+          if (!result.success) {
+            formErrors.push({
+              global: true,
+              error: 'recaptcha',
+              message: req.t('aposForm:recaptchaValidationError')
+            });
+            return false;
+          } else if (result.score !== undefined) {
+            if (result.score < threshold) {
+              formErrors.push({
+                global: true,
+                error: 'recaptcha',
+                message: req.t('aposForm:recaptchaValidationError')
+              });
+              return false;
+            }
+          }
+
+          if (!req.recaptchaValidatedTokens) {
+            req.recaptchaValidatedTokens = new Set();
+          }
+          req.recaptchaValidatedTokens.add(token);
+          return true;
+        } catch (error) {
+          self.apos.util.error('reCAPTCHA verification error', error);
+
+          formErrors.push({
+            global: true,
+            error: 'recaptcha',
+            message: req.t('aposForm:recaptchaConfigError')
+          });
+          return false;
+        }
+      }
+    };
   }
 };
+
