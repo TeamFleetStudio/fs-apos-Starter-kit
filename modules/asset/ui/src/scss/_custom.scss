@@ -214,6 +214,13 @@
   }
 }
 
+// Enterprise widget styles
+.topEnterprise {
+  img {
+    width: 150px;
+  }
+}
+
 @media (max-width: 1024px) {
   .services-page-team-container .column-item__second {
     padding-top: 30px;
