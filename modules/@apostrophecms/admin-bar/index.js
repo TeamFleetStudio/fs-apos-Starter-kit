@@ -36,7 +36,8 @@ module.exports = {
           '@apostrophecms/image',
           '@apostrophecms/file',
           '@apostrophecms/image-tag',
-          '@apostrophecms/file-tag'
+          '@apostrophecms/file-tag',
+          'video-upload'
         ]
       },
       {
