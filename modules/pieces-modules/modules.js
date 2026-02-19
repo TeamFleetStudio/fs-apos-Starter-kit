@@ -7,5 +7,15 @@ module.exports = {
   // Related Pieces Widgets
   'product-widget': {},
   'team-member-widget': {},
-  'video-upload-widget': {}
+  'video-upload-widget': {},
+
+  // Form Pieces
+  'contact-us-form': {},
+  'footer-form': {},
+  'whitepaper-form': {},
+  'about-wally-form': {},
+  'beyond-barriers-form': {},
+  'tools-form': {},
+  'free-report-form': {},
+  'acr-form': {}
 };
