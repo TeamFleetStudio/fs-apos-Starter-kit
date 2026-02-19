@@ -92,7 +92,7 @@
           {% if target %} target="{{ target }}"{% endif %}
           {% if button.ariaLabel %} aria-label="{{ button.ariaLabel }}"{% endif %}
           class="cursor-pointer rounded-md {{ btnClass }} {{ 'relative z-[2] mx-auto' if button.horizontalRule }} {{ 'flex items-center ' + iconPlacementClass if button.isSvgIcon else 'inline-grid' }}"
-          style="{{ btnStyle }}"
+          style=" {{ btnStyle }}"
         >
           <span>{{ button.linkText }}</span>
           {% if button.isSvgIcon and svgIcon %}
