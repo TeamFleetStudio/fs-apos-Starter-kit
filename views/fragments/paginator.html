@@ -1,0 +1,62 @@
+{% fragment pagination(data) %}
+<script>
+function goToPage(page) {
+  const url = new URL(window.location.href);
+  url.searchParams.set('page', page);
+  window.location.href = url.toString();
+}
+</script>
+<div class="lg:pb-16 pb-8 text-center">
+  <div class="paginator-wrap flex justify-center items-center gap-3">
+    <button
+      class="paginator-button bg-[#F9FAFB] text-sm rounded leading-6 py-1 px-4 uppercase text-black {{ 'opacity-50 pointer-events-none cursor-not-allowed' if data.currentPage == 1 else 'cursor-pointer hover:bg-yellowLite hover:text-blue' }}"
+      {{ 'disabled' if data.currentPage == 1 else '' }}
+      onClick="goToPage({{ data.currentPage - 1 }})"
+    >
+      Previous
+    </button>
+
+    {% set rangeStart = data.currentPage - 2 if data.currentPage > 2 else 1 %}
+    {% set rangeEnd = rangeStart + 4 if rangeStart + 4 <= data.totalPages else data.totalPages %}
+
+    {% if rangeStart > 1 %}
+      <button class="paginator-button bg-[#F9FAFB] text-sm rounded leading-6 py-1 px-3 cursor-pointer" onClick="goToPage(1)">01</button>
+      <span class="px-2">...</span>
+    {% endif %}
+
+    {% for page in range(rangeStart, rangeEnd + 1) %}
+      {% if page == data.currentPage %}
+        <button 
+          class="paginator-button text-sm rounded leading-6 py-1 px-3 bg-yellowLite text-blue font-bold cursor-not-allowed opacity-75" 
+          disabled 
+          aria-current="page"
+        >
+          {{ '0' ~ page if page < 10 else page }}
+        </button>
+      {% else %}
+        <button
+          class="paginator-button text-sm rounded leading-6 py-1 px-3 cursor-pointer bg-[#F9FAFB] text-black hover:bg-yellowLite hover:text-blue"
+          onClick="goToPage({{ page }})"
+        >
+          {{ '0' ~ page if page < 10 else page }}
+        </button>
+      {% endif %}
+    {% endfor %}
+
+    {% if rangeEnd < data.totalPages %}
+      <span class="px-2">...</span>
+      <button class="paginator-button bg-[#F9FAFB] text-sm rounded leading-6 py-1 px-3 cursor-pointer" onClick="goToPage({{ data.totalPages }})">
+        {{ '0' ~ data.totalPages if data.totalPages < 10 else data.totalPages }}
+      </button>
+    {% endif %}
+
+    <button
+      class="paginator-button bg-[#F9FAFB] text-sm rounded leading-6 py-1 px-4 uppercase text-black {{ 'opacity-50 pointer-events-none cursor-not-allowed' if data.currentPage == data.totalPages else 'cursor-pointer hover:bg-yellowLite hover:text-blue' }}"
+      {{ 'disabled' if data.currentPage == data.totalPages else '' }}
+      onClick="goToPage({{ data.currentPage + 1 }})"
+    >
+      Next
+    </button>
+  </div>
+</div>
+{% endfragment %}

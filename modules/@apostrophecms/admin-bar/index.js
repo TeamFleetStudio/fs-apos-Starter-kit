@@ -41,6 +41,13 @@ module.exports = {
         ]
       },
       {
+        name: 'post',
+        label: 'Post',
+        items: [
+          'blog'
+        ]
+      },
+      {
         name: 'admin',
         label: 'Admin',
         items: [
@@ -49,4 +56,4 @@ module.exports = {
       }
     ]
   }
-}
+};

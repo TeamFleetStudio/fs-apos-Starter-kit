@@ -106,7 +106,9 @@ async function startApp() {
       },
       'code-editor-field': {},
       'rich-text-color': {},
-      'rich-text-font': {}
+      'rich-text-font': {},
+      blog: {},
+      'blog-page': {}
     },
     bundles: ['@bodonkey/rich-text-enhancement']
   });
