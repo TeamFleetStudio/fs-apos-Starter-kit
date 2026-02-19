@@ -1,0 +1,40 @@
+<!-- modules/whitepaper-page/show.html -->
+{% extends "layout.html" %}
+
+{% block title %}{{ data.piece.metaTitle }}{% endblock %}
+{% block extraHead %}{{ super() }}
+<meta name="description" content= "{{ data.piece.metaDescription }}" >
+<link rel="canonical" href="{{data.url}}">
+{% endblock %}
+
+{% block main %}
+<div class="blogSection lg:p-16 p-8" id="main-content">
+    <section class="max-w-max flex items-center justify-center"> 
+        <a href="/whitepaper" aria-label="Back to Latest, Redirects to whitepaper page"><button aria-label="Back to Latest, Redirects to whitepaper" for="Back to Latest" class="flex centerCenter text-base" style="display: flex; align-items: center; justify-content: center; column-gap: 10px; padding: 5px 15px; position: relative; border: 2px solid rgb(0, 0, 0);">Back to Latest</button></a>
+    </section>
+    <h1 class="h1 lg:my-12 my-8">{{ data.piece.title }}</h1>
+    <h2 class="sr-only"> {{ data.piece.title }} </h2>
+    <div class="BlogImage lg:mb-12 mb-8">
+        <!-- show the whitepaper content -->
+        {% set image = apos.image.first(data.piece.bannerImage) %}
+            {% if image %}
+              <img 
+                src="{{ apos.attachment.url(image, { size: 'full' }) }}" 
+                alt="{{ image._alt or '' }}" 
+                width="{{ image.width or '' }}" 
+                height="{{ image.height or '' }}"
+                class="img-fluid"
+               >
+        {% endif %}
+    </div>
+    <div class="ContentSection">
+        {% area data.piece, 'content' %}
+    </div>
+    <section class="lg:mt-12 mt-8 max-w-max flex items-center justify-center"> 
+        <a href="/whitepaper"><button aria-label="Back to Latest" for="Back to Latest" class="flex centerCenter text-base" style="display: flex; align-items: center; justify-content: center; column-gap: 10px; padding: 5px 15px; position: relative; border: 2px solid rgb(0, 0, 0);">
+            Back to Latest
+        </button>
+        </a>
+    </section>
+</div>
+{% endblock %}

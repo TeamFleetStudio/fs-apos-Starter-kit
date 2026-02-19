@@ -23,6 +23,10 @@ module.exports = {
       {
         name: 'product-digest-page',
         label: 'Product Digest page'
+      },
+      {
+        name: 'whitepaper-page',
+        label: 'Whitepaper page'
       }
     ]
   }
