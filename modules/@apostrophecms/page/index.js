@@ -19,6 +19,10 @@ module.exports = {
       {
         name: 'media-page',
         label: 'Media page'
+      },
+      {
+        name: 'product-digest-page',
+        label: 'Product Digest page'
       }
     ]
   }

@@ -110,7 +110,9 @@ async function startApp() {
       blog: {},
       'blog-page': {},
       media: {},
-      'media-page': {}
+      'media-page': {},
+      'product-digest': {},
+      'product-digest-page': {}
     },
     bundles: ['@bodonkey/rich-text-enhancement']
   });
