@@ -1,0 +1,23 @@
+{% import "ui.html" as ui %}
+<div class="{{ data.widget.widgetClass }} px-4 sm:px-6 py-4" style="background-color: {{ data.widget.bgColor }}">
+    <div class="flex gap-8 items-center flex-col sm:flex-row">
+        {{ ui.image(data.widget.profile, "w-auto h-auto sm:w-60 sm:h-60") }}
+        <div class="w-full">
+            <p class="text-3xl md:text-4xl lg:text-[40px] leading-8 font-semibold">{{ data.widget.name }}</p>
+            <p class="text-xl md:text-[22px] lg:text-2xl font-semibold md:mt-2 lg:mt-0">{{ data.widget.role }}</p>
+            <div class="flex justify-between mt-4 w-full md:w-4/5 lg:w-full xl:w-3/4">
+                {% for podcast in data.widget.podcastsLinks %}
+                    {% if podcast.isRedirectToAnotherPage %}
+                        <a href="{{ apos.helper.linkPath(podcast) }}" target="{{ apos.helper.linkTarget(podcast) }}" {% if podcast.ariaLabel %} aria-label="{{ podcast.ariaLabel }}" {% endif %} class="single-image cursor-pointer flex items-center justify-center">
+                            {{ ui.image(podcast.cardImage, "w-8 sm:w-9") }}
+                        </a>
+                    {% else %}
+                        <div class="single-image flex items-center justify-center">
+                            {{ ui.image(podcast.cardImage, "w-8 sm:w-9") }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
