@@ -27,6 +27,10 @@ module.exports = {
       {
         name: 'whitepaper-page',
         label: 'Whitepaper page'
+      },
+      {
+        name: 'review-page',
+        label: 'Podcasts'
       }
     ]
   }

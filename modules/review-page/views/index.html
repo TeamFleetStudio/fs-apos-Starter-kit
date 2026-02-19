@@ -1,0 +1,123 @@
+{% extends "layout.html" %} {% import 'fragments/paginator.html' as paginator %}
+{% import '@apostrophecms/pager:macros.html' as pager with context %} {% set
+currentPath = data.page._url %} {% block main %} {% area data.page, 'main' %}
+<div class="m-8 lg:m-16" id="post_items">
+  <div
+    class="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 xl:gap-10 mb-8 lg:mb-16"
+  >
+    {% for post in data.pieces %} {% set image =
+    apos.image.first(post.featuredImage) %} {% if image %} {% set imageUrl =
+    apos.attachment.url(image) %} {% else %} {% set imageUrl =
+    'https://picsum.photos/200' %} {% endif %} {% set altText = '' %} {% if post.featuredImage and post.featuredImage.items and post.featuredImage.items[0] and post.featuredImage.items[0]._image and post.featuredImage.items[0]._image[0] and post.featuredImage.items[0]._image[0].alt %} {% set altText = post.featuredImage.items[0]._image[0].alt %} {% elif image and image._alt %} {% set altText = image._alt %} {% endif %}
+    <div class="min-h-80 flex justify-between flex-col">
+      <a
+        href="{% if post.externalUrl %} {{ post.externalUrl }} {% else %} {{ post._url }} {% endif %}"
+        class="text-black"
+      >
+        <div class="post">
+          <div class="post_image">
+            <img
+              src="{{ imageUrl }}"
+              width="{{ apos.attachment.getWidth(image) }}"
+              height="{{ apos.attachment.getHeight(image) }}"
+              class="w-full"
+              alt="{{ altText }}"
+              loading="lazy"
+            />
+          </div>
+          <div class="py-4">
+            <h6 class="h6 !mb-4">{{ post.title }}</h6>
+            <p class="p">{{ post.description }}</p>
+          </div>
+        </div>
+      </a>
+      <div class="flex justify-between relative">
+        <img
+          src="/images/copy-icon.png"
+          class="copyIcon w-6 h-6"
+          alt="Copy Icon"
+          data-url="{{ post._url }}"
+          aria-label="Copy Url"
+          style="cursor: pointer"
+          width="512"
+          height="512"
+          style="width: auto; height: auto"
+          loading="lazy"
+        />
+        <a
+          href="{% if post.externalUrl %} {{ post.externalUrl }} {% else %} {{ post._url }} {% endif %}"
+          class="text-black flex gap-4"
+        >
+          <p class="text-lg font-normal tracking-wide">{{post.duration}}</p>
+          <img
+            src="/images/right-arrow-icon.png"
+            class="w-6 h-6"
+            aria-label="Right Arrow"
+            alt="Right Arrow"
+            width="24"
+            height="24"
+            loading="lazy"
+          />
+        </a>
+        <div
+          class="tooltip hidden absolute bg-gray-700 text-white text-xs py-1 px-2 rounded-md top-full mt-2"
+        >
+          Link Copied!
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% if data.totalPages > 1 %} {% render paginator.pagination(data) %} {% endif
+  %}
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const copyIcons = document.querySelectorAll(".copyIcon");
+
+    copyIcons.forEach((icon) => {
+      icon.addEventListener("click", function () {
+        const urlToCopy = this.getAttribute("data-url");
+
+        navigator.clipboard
+          .writeText(urlToCopy)
+          .then(() => {
+            const tooltip = this.nextElementSibling.nextElementSibling;
+            tooltip.classList.remove("hidden");
+
+            setTimeout(() => {
+              tooltip.classList.add("hidden");
+            }, 2000);
+          })
+          .catch((err) => {
+            console.error("Failed to copy: ", err);
+          });
+      });
+    });
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("page")) {
+      const productListSection = document.querySelector("#post_items");
+      if (productListSection) {
+        const offset = 100;
+        // Use requestAnimationFrame to avoid forced reflow
+        requestAnimationFrame(() => {
+          const topPosition =
+            productListSection.getBoundingClientRect().top +
+            window.scrollY -
+            offset;
+          requestAnimationFrame(() => {
+            window.scrollTo({
+              top: topPosition,
+              behavior: "smooth",
+            });
+          });
+        });
+      }
+    }
+  });
+</script>
+{% endblock %}

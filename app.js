@@ -114,7 +114,9 @@ async function startApp() {
       'product-digest': {},
       'product-digest-page': {},
       whitepaper: {},
-      'whitepaper-page': {}
+      'whitepaper-page': {},
+      review: {},
+      'review-page': {}
     },
     bundles: ['@bodonkey/rich-text-enhancement']
   });
