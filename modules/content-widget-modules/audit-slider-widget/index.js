@@ -1,0 +1,45 @@
+module.exports = {
+  extend: '@apostrophecms/widget-type',
+  options: {
+    label: 'Audit Slider',
+    description: 'Add Audit Count slider',
+    previewImage: 'png'
+  },
+  fields: {
+    add: {
+      slider: {
+        type: 'array',
+        label: 'Audit Slider',
+        titleField: 'auditCount',
+        fields: {
+          add: {
+            auditCount: {
+              type: 'integer',
+              label: 'Audit Count',
+              required: true
+            },
+            description: {
+              type: 'string',
+              label: 'Description',
+              required: true,
+            },
+            bgColor: {
+                type: 'color',
+                label: 'Background Color',
+            }
+          }
+        }
+      },
+      widgetClass: {
+        type: 'string',
+        help: 'It can be use to write custom css',
+        label: 'Widget class name'
+      },
+      widgetId: {
+        type: 'string',
+        help: 'Use only for scroll to element.',
+        label: 'Widget Id'
+      }
+    }
+  }
+};

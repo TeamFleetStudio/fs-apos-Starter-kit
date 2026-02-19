@@ -253,3 +253,33 @@
     color: #dd3603 !important;
   }
 }
+
+// Audit Slider Widget Styles
+.audit-slider {
+  .slick-slide {
+    margin-top: 48px;
+
+    @media (min-width: 767px) {
+      margin-top: 96px;
+    }
+  }
+
+  .slide {
+    height: 240px;
+  }
+}
+
+.stat-number {
+  @media (min-width: 1320px) {
+    font-size: 2rem !important;
+  }
+
+  @media (min-width: 1360px) {
+    font-size: 2.5rem !important;
+  }
+}
+
+.stat-description {
+  text-align: left;
+  width: 92%;
+}

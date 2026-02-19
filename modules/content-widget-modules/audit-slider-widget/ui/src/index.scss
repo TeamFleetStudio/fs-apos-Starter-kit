@@ -1,0 +1,46 @@
+.slide {
+  position: relative;
+  margin: rem;
+  padding: 2.5rem 1rem;
+  border-radius: 1rem;
+  overflow: visible;
+}
+
+.circle-container {
+  position: absolute;
+  top: -40px; 
+  right: 5%;
+  width: 68px;
+  height: 68px;
+  background: #FFD700; 
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.progress-bar {
+  position: relative;
+  overflow: hidden; /* Ensures no overflow beyond the bar */
+}
+
+.progress-fill {
+  height: 100%; /* Fills the height of the bar */
+  background-color: black; /* Ensure visibility */
+  width: 0%; /* Start at 0 */
+  transition: none; /* No transition on initialization */
+}
+.progress-fill {
+  width: 0;
+  animation: progress-bar-fill linear forwards;
+}
+
+@keyframes progress-bar-fill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}

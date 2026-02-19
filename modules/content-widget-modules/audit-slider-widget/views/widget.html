@@ -1,0 +1,77 @@
+<div class="carousel-container mx-auto text-center w-60 {{ data.widget.widgetClass }}" {% if data.widget.widgetId %}id="{{ data.widget.widgetId }}"{% endif %}>
+  <div class="audit-slider">
+    {% for audits in data.widget.slider %}
+    <div class="slide" {% if audits.bgColor %}style="background-color: {{ audits.bgColor }};"{% endif %}>
+      <div class="circle-container" aria-hidden="true">
+        <svg width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_688_9043)">
+            <path d="M29.8595 8.21289L17.835 20.2374L11.5063 13.9087L2.01318 23.4018" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M22.2651 8.21289H29.8595V15.8073" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+          <defs>
+            <clipPath id="clip0_688_9043">
+              <rect width="30.3778" height="30.3778" fill="white" transform="translate(0.747437 0.619141)" />
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+      <div class="stat-number text-7xl font-extrabold">{{ audits.auditCount }}+</div>
+      <div class="stat-description font-medium text-base text-[#5C5D5F]">{{ audits.description }}</div>
+      <div class="progress-bar w-full h-1.5 bg-gray-300 mt-5 relative">
+        <div class="progress-fill h-full bg-black"></div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script defer>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check if jQuery and Slick are available
+    if (typeof jQuery === 'undefined' || typeof jQuery.fn.slick === 'undefined') {
+      console.warn('Slick slider is not available. Audit slider requires jQuery and Slick slider library.');
+      return;
+    }
+
+    const autoplaySpeed = 3000;
+
+    jQuery('.audit-slider').slick({
+      accessibility: true,
+      dots: false,
+      arrows: false,
+      autoplay: true,
+      autoplaySpeed: autoplaySpeed,
+      speed: 600,
+    });
+
+    const slides = document.querySelectorAll('.slide');
+    slides.forEach((slide) => {
+      const progressBar = slide.querySelector('.progress-fill');
+      if (progressBar) {
+        progressBar.style.animationDuration = `${autoplaySpeed}ms`;
+      }
+    });
+
+    jQuery('.audit-slider').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+      const progressBars = document.querySelectorAll('.progress-fill');
+      // Batch DOM operations using requestAnimationFrame to avoid forced reflow
+      requestAnimationFrame(() => {
+        progressBars.forEach((bar) => {
+          bar.style.animation = 'none';
+        });
+        requestAnimationFrame(() => {
+          progressBars.forEach((bar) => {
+            bar.style.animation = `progress-bar-fill ${autoplaySpeed}ms linear`;
+          });
+        });
+      });
+    });
+
+    jQuery('.audit-slider').on('afterChange', function () {
+      const activeProgressBar = document.querySelector('.slick-active .progress-fill');
+      if (activeProgressBar) {
+        activeProgressBar.style.animation = `progress-bar-fill ${autoplaySpeed}ms linear forwards`;
+      }
+    });
+  });
+</script>
