@@ -108,7 +108,9 @@ async function startApp() {
       'rich-text-color': {},
       'rich-text-font': {},
       blog: {},
-      'blog-page': {}
+      'blog-page': {},
+      media: {},
+      'media-page': {}
     },
     bundles: ['@bodonkey/rich-text-enhancement']
   });

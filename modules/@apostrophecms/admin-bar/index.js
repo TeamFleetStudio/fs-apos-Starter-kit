@@ -2,37 +2,11 @@ module.exports = {
   options: {
     groups: [
       {
-        name: 'pages',
-        label: 'Pages',
+        name: 'site settings',
+        label: 'Site Settings',
         items: [
-          '@apostrophecms/page'
-        ]
-      },
-      {
-        name: 'forms',
-        label: 'Forms',
-        items: [
-          '@apostrophecms/form'
-        ]
-      },
-      {
-        name: 'products',
-        label: 'Products',
-        items: [
-          'product'
-        ]
-      },
-      {
-        name: 'teams',
-        label: 'Teams',
-        items: [
-          'team-member'
-        ]
-      },
-      {
-        name: 'media',
-        label: 'Media',
-        items: [
+          '@apostrophecms/user',
+          '@apostrophecms/form',
           '@apostrophecms/image',
           '@apostrophecms/file',
           '@apostrophecms/image-tag',
@@ -41,17 +15,28 @@ module.exports = {
         ]
       },
       {
-        name: 'post',
-        label: 'Post',
+        name: 'form submissions',
+        label: 'Form Submissions',
         items: [
-          'blog'
+          'contact-us-form',
+          'footer-form',
+          'whitepaper-form',
+          'about-wally-form',
+          'beyond-barriers-form',
+          'tools-form',
+          'free-report-form',
+          'acr-form'
         ]
       },
       {
-        name: 'admin',
-        label: 'Admin',
+        name: 'Post',
+        label: 'Post',
         items: [
-          '@apostrophecms/user'
+          'whitepaper',
+          'blog',
+          'product-digest',
+          'media',
+          'review'
         ]
       }
     ]

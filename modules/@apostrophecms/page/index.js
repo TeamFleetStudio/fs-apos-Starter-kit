@@ -15,6 +15,10 @@ module.exports = {
       {
         name: 'blog-page',
         label: 'Blog page'
+      },
+      {
+        name: 'media-page',
+        label: 'Media page'
       }
     ]
   }

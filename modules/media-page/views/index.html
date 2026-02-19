@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% import 'fragments/paginator.html' as paginator %}
+{% block title %}{{ data.page.title }} - {{ data.global.title }}{% endblock %}
+{% block main %}
+<div id="main-content">
+  {% area data.page, 'main' %}
+  <div class="lg:p-16 p-8"><h1 class="h1">{{ data.page.title }}</h1></div>
+  <h2 class="sr-only"> View media resources </h2>
+  <div class="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 xl:gap-10 lg:mb-16 mb-8 lg:mx-16 mx-8 BlogCardWidgetDiv text-center sm:text-left">
+    {% for piece in data.pieces %}
+    <a href="{{ piece.url }}" target="_blank" rel="noopener noreferrer" aria-label="Read More about {{ piece.title }}">
+      <div class="rounded border-[#847234] rounded-[0] BlogCardWidget flex flex-col justify-between">
+        <div>
+          {% set image = apos.image.first(piece.bannerImage) %}
+          {% if image %}
+            <img 
+              src="{{ apos.attachment.url(image, { size: 'full' }) }}" 
+              alt="{{ image._alt or '' }}" 
+              width="{{ apos.attachment.getWidth(image) }}"
+              height="{{ apos.attachment.getHeight(image) }}"
+            >
+          {% endif %}
+          <div class="py-4">
+            <h6 class="h6 mb-4">{{ piece.title }}</h6>
+            <p class="p">{{piece.shortDescription}}</p>
+          </div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% if data.totalPages > 1 %}
+    {% render paginator.pagination(data) %}
+  {% endif %}
+</div>
+{% endblock %}
