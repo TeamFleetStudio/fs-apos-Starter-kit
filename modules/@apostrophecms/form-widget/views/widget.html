@@ -125,7 +125,7 @@
   <div role="alert" data-apos-form-thank-you
     class="apos-form-hidden apos-form-submission-thank-you {{ prependIfPrefix('__submission-thank-you') }}"
   >
-    <p class="font-semibold text-xl lg:text-2xl mb-2">{{ form.thankYouHeading or __t('aposForm:defaultThankYou') }}</p>
+    <p class="font-semibold text-xl! lg:text-2xl! mb-2">{{ form.thankYouHeading or __t('aposForm:defaultThankYou') }}</p>
     {% if not apos.area.isEmpty(form, 'thankYouBody') %}
       {% area form, 'thankYouBody' %}
     {% endif %}

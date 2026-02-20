@@ -2,6 +2,7 @@ const linkSchema = require('../../../lib/linkSchema');
 const buttonSchema = require('../../../lib/buttonSchema');
 const backgroundSchema = require('../../../lib/backgroundSchema');
 const customAttributesSchema = require('../../../lib/customAttributesSchema');
+const areaConfig = require('../../../lib/area');
 
 module.exports = {
   fields: {
@@ -386,6 +387,17 @@ module.exports = {
         languages: [
           { label: 'CSS', value: 'css' }
         ]
+      },
+      form: {
+        type: 'area',
+        label: 'Form',
+        options: {
+          widgets: {
+            '@apostrophecms/image': {},
+            ...areaConfig.richText,
+            'custom-form': {}
+          }
+        }
       }
     },
     group: {
@@ -422,6 +434,10 @@ module.exports = {
       custom: {
         label: 'Custom Code',
         fields: ['customCSS', 'customJavaScriptHead', 'customJavaScript']
+      },
+      Form: {
+        label: 'Report Form',
+        fields: ['form']
       }
     }
   }

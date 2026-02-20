@@ -38,7 +38,7 @@
             {% for primaryNav in data.global.footerPrimaryNavigation %}
               <div>
                 <nav aria-label="{{ primaryNav.title }}">
-                  <p class="text-xl font-semibold text-black mb-6">{{ primaryNav.title }}</p>
+                  <p class="text-xl! font-semibold text-black mb-6">{{ primaryNav.title }}</p>
                   <ul class="space-y-3">
                     {% for navItem in primaryNav.navItems %}
                       <li>

@@ -4,7 +4,7 @@
         {{ ui.image(data.widget.profile, "w-auto h-auto sm:w-60 sm:h-60") }}
         <div class="w-full">
             <p class="text-3xl md:text-4xl lg:text-[40px] leading-8 font-semibold">{{ data.widget.name }}</p>
-            <p class="text-xl md:text-[22px] lg:text-2xl font-semibold md:mt-2 lg:mt-0">{{ data.widget.role }}</p>
+            <p class="text-xl! md:text-[22px] lg:text-2xl! font-semibold md:mt-2 lg:mt-0">{{ data.widget.role }}</p>
             <div class="flex justify-between mt-4 w-full md:w-4/5 lg:w-full xl:w-3/4">
                 {% for podcast in data.widget.podcastsLinks %}
                     {% if podcast.isRedirectToAnotherPage %}

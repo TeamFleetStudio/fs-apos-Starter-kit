@@ -104,9 +104,6 @@ a {
 .apos-login__footer {
   display: none;
 }
-.apos-schema img {
-  max-width: 150px !important;
-}
 
 .specialization-widget {
   img {
@@ -327,4 +324,59 @@ a {
   font-weight: 400;
   line-height: 20px;
   text-align: center
+}
+
+// Skip to Table of Content styles
+@media (min-width: 1024px) {
+  .skip-table {
+    position: absolute;
+    left: -999px;
+  }
+
+  .skip-table:focus {
+    position: static;
+    left: auto;
+    background: #000;
+    color: #fff;
+    padding: 10px;
+    outline: 2px solid #2f78c4;
+    transition: 0.2s;
+  }
+}
+
+#blog-main-content {
+  scroll-margin-top: 80px;
+}
+
+// Scroll to Top button styles
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background-color: #FFD602;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s;
+  z-index: 1000;
+}
+
+.scroll-to-top.show {
+  display: flex;
+}
+
+.scroll-to-top:focus,
+.scroll-to-top:focus-visible {
+  outline: solid;
+  outline-color: #2f78c4;
+  outline-offset: 0.15rem;
+  outline-width: 2px;
 }
