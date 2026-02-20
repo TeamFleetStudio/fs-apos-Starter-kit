@@ -10,7 +10,7 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
   <div class="lg:w-3/4">
     <nav
       aria-label="breadcrumb"
-      class="breadcrumbNav max-[1024px]:px-8 my-2 text-sm lg:text-base w-full overflow-hidden"
+      class="breadcrumbNav max-[1024px]:px-8 my-2 text-sm! lg:text-base! w-full overflow-hidden"
     >
       <ol class="flex space-x-2 text-[#020407] capitalize items-center">
         {% if data.page._ancestors and data.page._ancestors | length > 0 %} {%
@@ -65,7 +65,7 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
             <div class="flex flex-wrap gap-2 mb-3 font-medium">
               {% if data.piece.blog_type %}
               <span
-                class="inline-flex items-center px-3 py-1 gap-2 rounded-full text-base font-medium"
+                class="inline-flex items-center px-3 py-1 gap-2 rounded-full text-base! font-medium"
                 style="background-color: #d1f7d1; color: #1c1e21"
               >
                 {% if data.piece.blog_type == 'podcast' %}
@@ -86,7 +86,7 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
                   width="14"
                   height="14"
                   viewBox="0 0 12 12"
-                  fill="none"
+                  fill="black"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
@@ -95,20 +95,20 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
                   />
                 </svg>
                 {% endif %}
-                <span class="text-sm"
+                <span class="text-sm!"
                   >{{ data.piece.blog_type | capitalize }}</span
                 >
               </span>
               {% endif %} {% if data.piece.category %}
               <span
-                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium capitalize"
+                class="inline-flex items-center px-3 py-1 rounded-full text-sm! font-medium capitalize"
                 style="background-color: #ffffcc; color: #1c1e21"
               >
                 {{ data.piece.category }}
               </span>
               {% endif %}
             </div>
-            <h1 class="text-2xl lg:text-3xl font-bold lg:w-9/12 mt-2.5">
+            <h1 class="text-2xl! lg:text-3xl! font-bold lg:w-9/12 mt-2.5">
               {{ data.piece.title }}
             </h1>
             <div class="flex flex-wrap justify-between w-full lg:gap-4">
@@ -127,10 +127,10 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
                 </div>
                 {% endif %}
                 <div class="flex flex-col leading-5">
-                  <div class="text-base font-bold">
+                  <div class="text-base! font-bold">
                     {{ data.piece.authorName }}
                   </div>
-                  <div class="flex gap-2 text-sm">
+                  <div class="flex gap-2 text-sm!">
                     <div>
                       {% if data.piece.publishedDate %} Published on {{
                       data.piece.publishedDate | date('DD MMM, YYYY') }} {%
@@ -204,7 +204,7 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
         </p>
         <a
           href="#home_audit"
-          class="mt-3 text-base bg-yellow py-3 px-5 rounded-full"
+          class="mt-3 text-base! bg-yellow py-3 px-5 rounded-full"
           aria-label="CLick here to get free report"
           id="scrollToForm_mobile"
         >
@@ -246,7 +246,7 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
           class="hidden lg:w-full bg-white rounded-lg mt-4 max-[1024px]:mx-8"
         >
           <div class="p-3 sm:p-4 md:p-6">
-            <div class="text-lg font-semibold text-[#434141] mb-4">
+            <div class="text-lg! font-semibold text-[#434141] mb-4">
               Table of Content
             </div>
             <div id="sidebarDropdown"></div>
@@ -297,7 +297,7 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
       <div class="toc-wrapper relative" id="tableContent">
         <div class="tocDiv fading-border hidden lg:block h-fit">
           <div class="fading-border-inner p-4">
-            <div class="text-base font-semibold text-[#434141] mb-4">
+            <div class="text-base! font-semibold text-[#434141] mb-4">
               Table Of Content
             </div>
             <div
@@ -332,7 +332,7 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
                     <section class="widget-my-spacing">
                       <div class="apos-area">
                         <div data-rich-text="">
-                          <p class="h2 text-3xl lg:text-5xl">
+                          <p class="h2 text-3xl! lg:text-5xl!">
                             <span class="highlight-secondary"
                               ><strong
                                 ><span
@@ -446,8 +446,8 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
         const link = document.createElement("a");
         link.href = `#${id}`;
         link.className =
-          "flex items-center text-base p-4 bg-[#F7F5F5] text-black m-2 rounded-lg transition-colors";
-        link.innerHTML = `<p class="text-base">${heading.textContent}</p>`;
+          "flex items-center text-base! p-4 bg-[#F7F5F5] text-black m-2 rounded-lg transition-colors";
+        link.innerHTML = `<p class="text-base!">${heading.textContent}</p>`;
 
         link.addEventListener("click", (e) => {
           e.preventDefault();

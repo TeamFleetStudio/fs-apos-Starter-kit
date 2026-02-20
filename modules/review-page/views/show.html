@@ -16,24 +16,24 @@
 {% block main %}
   <div class="UniquePodcast lg:p-16 p-8">
     <section class="max-w-max flex items-center justify-center"> 
-      <a href="/beyond-barriers" aria-label="Back to Latest, Redirects to blog page" > <button aria-label="Back to Latest, Redirects to blog page" for="Back to Latest" class="flex centerCenter text-base text-black" style="display: flex; align-items: center; justify-content: center; column-gap: 10px; padding: 5px 15px; position: relative; border: 2px solid rgb(0, 0, 0);">Back to Latest</button></a>
+      <a href="/beyond-barriers" aria-label="Back to Latest, Redirects to blog page" > <button aria-label="Back to Latest, Redirects to blog page" for="Back to Latest" class="flex centerCenter text-base! text-black" style="display: flex; align-items: center; justify-content: center; column-gap: 10px; padding: 5px 15px; position: relative; border: 2px solid rgb(0, 0, 0);">Back to Latest</button></a>
     </section>
-    <h1 class="text-4xl lg:text-7xl lg:my-12 my-8">{{ data.piece.title }}</h1>
+    <h1 class="text-4xl! lg:text-7xl! lg:my-12 my-8">{{ data.piece.title }}</h1>
     <h2 class="sr-only"> {{ data.piece.title }} </h2>
-    <p class="text-lg lg:text-2xl">{{ data.piece.description}}</p>
+    <p class="text-lg! lg:text-2xl!">{{ data.piece.description}}</p>
     <div class="flex items-center gap-4 my-8">
       <img srcset="{{srcset}}" src="{{ imageUrl }}" class="w-20	h-20 rounded-full bg-grey" alt="{{ altText }}"
       {% if image and image.width %} width="{{ apos.attachment.getWidth(image) }}" {% endif %}
       {% if image and image.height %} height="{{ apos.attachment.getHeight(image) }}" {% endif %}>
-      <p class="text-lg lg:text-2xl">{{ review.author }}</p>
+      <p class="text-lg! lg:text-2xl!">{{ review.author }}</p>
       {% if review.role %}
       <div class="w-px h-4 mx-4 bg-black"></div>
-      <p class="text-lg lg:text-2xl">{{ review.role }}</p>
+      <p class="text-lg! lg:text-2xl!">{{ review.role }}</p>
       {% endif %}
     </div>
     <div class="post_content">{% area review, 'content'%}</div>
     <section class="lg:mt-12 mt-8 max-w-max flex items-center justify-center"> 
-      <a href="/beyond-barriers"> <button aria-label="Back to Latest" for="Back to Latest" class="flex centerCenter text-base text-black" style="display: flex; align-items: center; justify-content: center; column-gap: 10px; padding: 5px 15px; position: relative; border: 2px solid rgb(0, 0, 0);">
+      <a href="/beyond-barriers"> <button aria-label="Back to Latest" for="Back to Latest" class="flex centerCenter text-base! text-black" style="display: flex; align-items: center; justify-content: center; column-gap: 10px; padding: 5px 15px; position: relative; border: 2px solid rgb(0, 0, 0);">
           Back to Latest
       </button>
       </a>

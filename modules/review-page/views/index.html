@@ -48,7 +48,7 @@ currentPath = data.page._url %} {% block main %} {% area data.page, 'main' %}
           href="{% if post.externalUrl %} {{ post.externalUrl }} {% else %} {{ post._url }} {% endif %}"
           class="text-black flex gap-4"
         >
-          <p class="text-lg font-normal tracking-wide">{{post.duration}}</p>
+          <p class="text-lg! font-normal tracking-wide">{{post.duration}}</p>
           <img
             src="/images/right-arrow-icon.png"
             class="w-6 h-6"
@@ -60,7 +60,7 @@ currentPath = data.page._url %} {% block main %} {% area data.page, 'main' %}
           />
         </a>
         <div
-          class="tooltip hidden absolute bg-gray-700 text-white text-xs py-1 px-2 rounded-md top-full mt-2"
+          class="tooltip hidden absolute bg-gray-700 text-white text-xs! py-1 px-2 rounded-md top-full mt-2"
         >
           Link Copied!
         </div>

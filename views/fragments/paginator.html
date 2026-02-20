@@ -45,7 +45,7 @@ function goToPage(page) {
 
     {% if rangeEnd < data.totalPages %}
       <span class="px-2">...</span>
-      <button class="paginator-button bg-[#F9FAFB] text-sm rounded leading-6 py-1 px-3 cursor-pointer" onClick="goToPage({{ data.totalPages }})">
+      <button class="paginator-button bg-[#F9FAFB] text-sm rounded leading-6 py-1 px-3 cursor-pointer hover:bg-yellowLite hover:text-blue" onClick="goToPage({{ data.totalPages }})">
         {{ '0' ~ data.totalPages if data.totalPages < 10 else data.totalPages }}
       </button>
     {% endif %}

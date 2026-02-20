@@ -49,6 +49,12 @@ module.exports = {
             category: req.query.category
           };
         }
+        if (req.query.blog_type) {
+          options.filters = {
+            ...options.filters,
+            blog_type: req.query.blog_type
+          };
+        }
         if (req.query.search) {
           const searchRegex = new RegExp(req.query.search, 'i');
           options.filters = {

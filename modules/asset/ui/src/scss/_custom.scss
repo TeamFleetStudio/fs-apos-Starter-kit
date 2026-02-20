@@ -13,90 +13,74 @@
 [data-rich-text] {
   // Ensure typography classes apply correctly within rich text
   h1, .h1 {
-    font-size: 90px;
-    line-height: 72px;
-    @media (max-width: 1440px) {
-      font-size: 58px;
-      line-height: 60px;
-    }
+    font-size: 58px;
+    line-height: 60px;
     @media (max-width: 1024px) {
       font-size: 48px;
       line-height: 43px;
     }
     @media (max-width: 767px) {
-      font-size: 40px;
-      line-height: 55px;
+      font-size: 48px;
+      line-height: 52px;
     }
   }
 
   h2, .h2 {
-    font-size: 67px;
-    line-height: 75px;
+    font-size: 40px;
+    line-height: 46px;
     font-weight: 300;
-    @media (max-width: 1440px) {
-      font-size: 62px;
-      line-height: 68px;
-    }
     @media (max-width: 1024px) {
-      font-size: 56px;
-      line-height: 52px;
-    }
-    @media (max-width: 767px) {
       font-size: 40px;
       line-height: 46px;
+    }
+    @media (max-width: 767px) {
+      font-size: 38px;
+      line-height: 42px;
     }
   }
 
   h3, .h3 {
-    font-size: 64px;
-    line-height: 64px;
+    font-size: 36px;
+    line-height: 36px;
     font-weight: 300;
-    @media (max-width: 1440px) {
-      font-size: 52px;
-      line-height: 52px;
-    }
     @media (max-width: 1024px) {
-      font-size: 38px;
-      line-height: 38px;
+      font-size: 32px;
+      line-height: 34px;
     }
   }
 
   h4, .h4 {
-    font-size: 47px;
-    line-height: 51.7px;
+    font-size: 30px;
+    line-height: 32px;
     font-weight: 400;
     margin: 0;
-    @media (max-width: 1440px) {
-      font-size: 40px;
-      line-height: 44px;
-    }
     @media (max-width: 1024px) {
-      font-size: 28px;
-      line-height: 30.8px;
+      font-size: 30px;
+      line-height: 32px;
     }
     @media (max-width: 767px) {
-      font-size: 38px;
-      line-height: 41.8px;
-    }
-  }
-
-  h5, .h5 {
-    font-size: 32px;
-    line-height: 32px;
-    font-weight: 800;
-    @media (max-width: 1440px) {
-      font-size: 30px;
+      font-size: 28px;
       line-height: 30px;
     }
   }
 
-  h6, .h6 {
+  h5, .h5 {
     font-size: 26px;
-    line-height: 26px;
-    font-weight: 600;
-    @media (max-width: 1440px) {
+    line-height: 28px;
+    font-weight: 800;
+    @media (max-width: 767px) {
       font-size: 24px;
       line-height: 24px;
+    }
+  }
+
+  h6, .h6 {
+    font-size: 24px;
+    line-height: 24px;
+    font-weight: 600;
+    @media (max-width: 767px) {
+      font-size: 22px;
+      line-height: 22px;
     }
   }
 
@@ -172,9 +156,7 @@
 }
 
 [data-rich-text]:has(ul) {
-  background-color: #fffbe6;
   padding: 1rem;
-  border-color: #ffe58f;
   border-radius: 0.25rem;
   margin-bottom: 1rem;
   p {
@@ -182,6 +164,15 @@
     color: #976b0c;
     font-weight: 400;
   }
+}
+
+.bg-\[\#F7F5F5\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(247 245 245 / var(--tw-bg-opacity));
+}
+
+.bg-\[\#FFD60280\] {
+  background-color: #ffd60280;
 }
 
 // Overview card widget styles
@@ -252,6 +243,12 @@
   a {
     color: #dd3603 !important;
   }
+  .h2:has(strong) {
+    padding-top: 20px !important;
+  }
+  h2 {
+    padding-top: 20px !important;
+  }
 }
 
 // Audit Slider Widget Styles
@@ -308,4 +305,28 @@
 
 .text-lightblack {
   color: #1C1E21 !important;
+}
+
+.text-white {
+  color: #ffffff !important;
+}
+
+.hover\:text-\[#DD3603\]:hover {
+  color: #DD3603 !important;
+}
+
+.text-blue {
+  color: #6366f1 !important;
+}
+
+.hover\:text-blue:hover {
+  color: #6366f1 !important;
+}
+
+.bg-yellowLite {
+  background-color: #fff3b4 !important;
+}
+
+.hover\:bg-yellowLite:hover {
+  background-color: #fff3b4 !important;
 }

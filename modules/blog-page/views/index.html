@@ -2,7 +2,7 @@
 {% block title %}{{ data.page.title }} - {{ data.global.title }}{% endblock %}
 {% block main %}
 <section id="blog-main-content" class="lg:mx-16 mx-8">
-  <nav aria-label="breadcrumb" class="my-4 text-base">
+  <nav aria-label="breadcrumb" class="my-4 text-base!">
     <ol class="flex space-x-2 capitalize">
       {% if data.page._ancestors and data.page._ancestors | length > 0 %} {% set
       lastAncestor = data.page._ancestors | last %}
@@ -35,7 +35,7 @@
             class="BlogBannerContent lg:w-3/5 py-4 lg:py-7 lg:pl-10 pl-4 pr-4 lg:pr-0 relative z-10"
           >
             <p
-              class="text-3xl font-bold text-lightblack capitalize mb-3 lg:mb-0"
+              class="text-3xl! font-bold text-lightblack capitalize mb-3 lg:mb-0"
             >
               {{ data.page.title }}
             </p>
@@ -51,7 +51,7 @@
             <div class="flex flex-wrap gap-2 mb-3 font-medium">
               {% if data.pieces[0].blog_type %}
               <span
-                class="inline-flex items-center px-3 py-1 gap-2 rounded-full text-base font-medium"
+                class="inline-flex items-center px-3 py-1 gap-2 rounded-full text-base! font-medium"
                 style="background-color: #d1f7d1; color: #1c1e21"
               >
                 {% if data.pieces[0].blog_type == 'podcast' %}
@@ -81,24 +81,24 @@
                   />
                 </svg>
                 {% endif %}
-                <span class="text-sm"
+                <span class="text-sm!"
                   >{{ data.pieces[0].blog_type | capitalize }}</span
                 >
               </span>
               {% endif %} {% if data.pieces[0].category %}
               <span
-                class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium capitalize"
+                class="inline-flex items-center px-3 py-1 rounded-full text-sm! font-medium capitalize"
                 style="background-color: #ffffcc; color: #1c1e21"
               >
                 {{ data.pieces[0].category }}
               </span>
               {% endif %}
             </div>
-            <p class="text-base font-normal text-lightblack tracking-wide my-3">
+            <p class="text-base! font-normal text-lightblack tracking-wide my-3">
               {{ data.pieces[0].meta }}
             </p>
             <a
-              class="inline-block bg-black text-yellow border border-black rounded-lg px-2.5 py-2.5 text-base font-medium BlogCardWidgetLink min-w-max w-full lg:w-fit text-center lg:text-left"
+              class="inline-block bg-black text-yellow border border-black rounded-lg px-2.5 py-2.5 text-base! font-medium BlogCardWidgetLink min-w-max w-full lg:w-fit text-center lg:text-left"
               href="{{ data.pieces[0]._url }}"
               aria-label="Read Full article about {{ data.pieces[0].title }}"
               >Read More</a
@@ -150,7 +150,7 @@
                 id="searchBoxMobile"
                 name="search_mobile"
                 aria-label="Search Box"
-                class="border border-black rounded-lg px-8 py-4 text-sm w-full"
+                class="border border-black rounded-lg px-8 py-4 text-sm! w-full"
                 placeholder="Search..."
                 value="{{ data.search or '' }}"
                 oninput="toggleClearButton('mobile')"
@@ -230,7 +230,7 @@
                       fill="black"
                     />
                   </svg>
-                  <h2 class="text-3xl font-bold mb-0">Filter</h2>
+                  <h2 class="text-3xl! font-bold mb-0">Filter</h2>
                 </div>
                 <div>
                   <button
@@ -344,7 +344,7 @@
                   value="podcast"
                 />
                 <span
-                  class="inline-flex items-center gap-1 text-base font-medium"
+                  class="inline-flex items-center gap-1 text-base! font-medium"
                 >
                   <svg
                     width="14"
@@ -358,7 +358,7 @@
                       fill="black"
                     ></path>
                   </svg>
-                  <span class="text-base">Podcast</span>
+                  <span class="text-base!">Podcast</span>
                 </span>
               </label>
               <label class="px-4 py-3 flex items-center gap-2"
@@ -369,7 +369,7 @@
                   value="article"
                 />
                 <span
-                  class="inline-flex items-center gap-1 text-base font-medium"
+                  class="inline-flex items-center gap-1 text-base! font-medium"
                 >
                   <svg
                     width="14"
@@ -383,14 +383,14 @@
                       fill="#1C1E21"
                     ></path>
                   </svg>
-                  <span class="text-base">Article</span>
+                  <span class="text-base!">Article</span>
                 </span>
               </label>
             </fieldset>
 
             <button
               id="applyFiltersBtn"
-              class="mt-auto w-full bg-black text-yellow text-lg font-medium tracking-wide py-5 px-auto rounded-lg"
+              class="mt-auto w-full bg-black text-yellow text-lg! font-medium tracking-wide py-5 px-auto rounded-lg"
               onclick="applyFilters(); closeFilterOverlay();"
             >
               Apply Filters
@@ -399,7 +399,7 @@
         </form>
         {% if data.pieces | length == 0 %}
         <div class="text-center my-14">
-          <p class="text-2xl text-secondary">
+          <p class="text-2xl! text-secondary">
             No data available for the current filter or search criteria.
           </p>
         </div>
@@ -441,7 +441,7 @@
                   <div class="flex flex-wrap gap-2 mb-2 font-medium">
                     {% if data.pieces[i].blog_type %}
                     <span
-                      class="inline-flex items-center px-3 py-1 gap-2 rounded-full text-base font-medium"
+                      class="inline-flex items-center px-3 py-1 gap-2 rounded-full text-base! font-medium"
                       style="background-color: #d1f7d1; color: #1c1e21"
                     >
                       {% if data.pieces[i].blog_type == 'podcast' %}
@@ -471,24 +471,24 @@
                         />
                       </svg>
                       {% endif %}
-                      <span class="text-sm"
+                      <span class="text-sm!"
                         >{{ data.pieces[i].blog_type | capitalize }}</span
                       >
                     </span>
                     {% endif %} {% if data.pieces[i].category %}
                     <span
-                      class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium capitalize"
+                      class="inline-flex items-center px-3 py-1 rounded-full text-sm! font-medium capitalize"
                       style="background-color: #ffffcc; color: #1c1e21"
                     >
                       {{ data.pieces[i].category }}
                     </span>
                     {% endif %}
                   </div>
-                  <p class="mb-2 text-base font-bold text-lightblack">
+                  <p class="mb-2 text-base! font-bold text-lightblack">
                     {{ piece.title }}
                   </p>
                   <p
-                    class="text-sm font-normal text-lightblack tracking-wide textWrapper"
+                    class="text-sm! font-normal text-lightblack tracking-wide textWrapper"
                   >
                     {{piece.meta}}
                   </p>
@@ -496,7 +496,7 @@
               </div>
               <div class="w-full mt-2 justify-between items-center">
                 <a
-                  class="inline-block bg-yellow text-black rounded-lg px-3 py-2 text-sm font-medium BlogCardWidgetLink min-w-max"
+                  class="inline-block bg-yellow text-black rounded-lg px-3 py-2 text-sm! font-medium BlogCardWidgetLink min-w-max"
                   href="{{ piece._url }}"
                   aria-label="Read More about {{ piece.title }}"
                   >Read More</a
@@ -537,7 +537,7 @@
               id="searchBoxDesktop"
               name="search_desktop"
               aria-label="Search Box"
-              class="border border-black rounded-lg px-8 py-4 text-sm w-full"
+              class="border border-black rounded-lg px-8 py-4 text-sm! w-full"
               placeholder="Search..."
               value="{{ data.search or '' }}"
               oninput="toggleClearButton('desktop')"
@@ -590,7 +590,7 @@
             </svg>
             <h2 class="text-xl! font-medium mb-0">Filter</h2>
           </div>
-          <p class="text-base font-bold mt-2.5 mb-4">Categories</p>
+          <p class="text-base! font-bold mt-2.5 mb-4">Categories</p>
           <label class="px-4 py-3 flex items-center gap-2"
             ><input
               type="radio"
@@ -658,7 +658,7 @@
         </fieldset>
 
         <fieldset class="flex flex-col mt-5" aria-label="Type filter">
-          <legend class="text-base font-bold mt-2.5 mb-4">Type</legend>
+          <legend class="text-base! font-bold mt-2.5 mb-4">Type</legend>
           <label class="px-4 py-3 flex items-center gap-2"
             ><input
               type="radio"
@@ -676,7 +676,7 @@
               value="podcast"
               aria-label="Podcast"
             />
-            <span class="inline-flex items-center gap-1 text-base font-medium">
+            <span class="inline-flex items-center gap-1 text-base! font-medium">
               <svg
                 width="14"
                 height="14"
@@ -689,7 +689,7 @@
                   fill="black"
                 ></path>
               </svg>
-              <span class="text-base">Podcast</span>
+              <span class="text-base!">Podcast</span>
             </span>
           </label>
           <label class="px-4 py-3 flex items-center gap-2"
@@ -699,7 +699,7 @@
               value="article"
               aria-label="Article"
             />
-            <span class="inline-flex items-center gap-1 text-base font-medium">
+            <span class="inline-flex items-center gap-1 text-base! font-medium">
               <svg
                 width="14"
                 height="14"
@@ -712,7 +712,7 @@
                   fill="#1C1E21"
                 ></path>
               </svg>
-              <span class="text-base">Article</span>
+              <span class="text-base!">Article</span>
             </span>
           </label>
         </fieldset>
@@ -942,6 +942,13 @@
       </script>
 
       <script>
+        function closeFilterOverlay() {
+          const filterOverlay = document.getElementById("filterOverlay");
+          if (filterOverlay) {
+            filterOverlay.classList.add("hidden");
+          }
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
           const filterHamburger = document.getElementById("filterHamburger");
           const filterOverlay = document.getElementById("filterOverlay");
@@ -949,43 +956,51 @@
           const searchBoxMobile = document.getElementById("searchBoxMobile");
 
           // Open filter overlay
-          filterHamburger.addEventListener("click", () => {
-            filterOverlay.classList.remove("hidden");
-          });
+          if (filterHamburger && filterOverlay) {
+            filterHamburger.addEventListener("click", () => {
+              filterOverlay.classList.remove("hidden");
+            });
+          }
 
           // Close filter overlay
-          closeFilter.addEventListener("click", () => {
-            filterOverlay.classList.add("hidden");
-          });
+          if (closeFilter && filterOverlay) {
+            closeFilter.addEventListener("click", () => {
+              filterOverlay.classList.add("hidden");
+            });
+          }
 
           // Close overlay when clicking outside
-          filterOverlay.addEventListener("click", (event) => {
-            if (event.target === filterOverlay) {
-              filterOverlay.classList.add("hidden");
-            }
-          });
+          if (filterOverlay) {
+            filterOverlay.addEventListener("click", (event) => {
+              if (event.target === filterOverlay) {
+                filterOverlay.classList.add("hidden");
+              }
+            });
+          }
 
           // Expand search box to w-full and hide filterHamburger when focused
-          searchBoxMobile.addEventListener("focus", () => {
-            searchBoxMobile.classList.add("w-full");
-            filterHamburger.style.display = "none"; // Hide the filter button
-          });
+          if (searchBoxMobile && filterHamburger) {
+            searchBoxMobile.addEventListener("focus", () => {
+              searchBoxMobile.classList.add("w-full");
+              filterHamburger.style.display = "none"; // Hide the filter button
+            });
 
-          // Ensure search box remains expanded and restore filterHamburger only if empty
-          searchBoxMobile.addEventListener("blur", () => {
-            searchBoxMobile.classList.add("w-full"); // Keep it expanded
-            if (!searchBoxMobile.value.trim()) {
-              filterHamburger.style.display = "flex"; // Restore filter button if input is empty
-            }
-          });
+            // Ensure search box remains expanded and restore filterHamburger only if empty
+            searchBoxMobile.addEventListener("blur", () => {
+              searchBoxMobile.classList.add("w-full"); // Keep it expanded
+              if (!searchBoxMobile.value.trim()) {
+                filterHamburger.style.display = "flex"; // Restore filter button if input is empty
+              }
+            });
 
-          // Handle Enter key for searching
-          searchBoxMobile.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
-              event.preventDefault();
-              applySearch("mobile");
-            }
-          });
+            // Handle Enter key for searching
+            searchBoxMobile.addEventListener("keydown", (event) => {
+              if (event.key === "Enter") {
+                event.preventDefault();
+                applySearch("mobile");
+              }
+            });
+          }
         });
         function toggleClearButton(prefix) {
           const searchBox = document.getElementById(

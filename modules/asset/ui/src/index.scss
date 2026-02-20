@@ -412,3 +412,25 @@ input[type="radio"]:checked::before {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+// Table of Contents active link styles
+.tocDiv a.active {
+  background-color: #ffd60280;
+  font-weight: bold;
+  transition: background-color 0.3s ease-in-out;
+}
+
+// Blog Details banner overlay - make images white in text-white container
+.BlogDetails {
+  .BannerImage .img-fluid {
+    min-height: 500px;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  // Make SVG images white when inside text-white container
+  .text-white img,
+  .text-white svg {
+    filter: brightness(0) invert(1);
+  }
+}
