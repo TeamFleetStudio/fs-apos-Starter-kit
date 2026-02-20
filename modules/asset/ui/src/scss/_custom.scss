@@ -288,3 +288,24 @@
   bottom: 18px;
   right: 90px;
 }
+
+// Tailwind utility classes for button colors (since Tailwind is not configured)
+.bg-yellow {
+  background-color: #FFD602 !important;
+}
+
+.bg-black {
+  background-color: #000000 !important;
+}
+
+.text-yellow {
+  color: #FFD602 !important;
+}
+
+.text-black {
+  color: #000000 !important;
+}
+
+.text-lightblack {
+  color: #1C1E21 !important;
+}

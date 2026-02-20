@@ -380,3 +380,35 @@ a {
   outline-offset: 0.15rem;
   outline-width: 2px;
 }
+
+// Radio button styles for filter forms
+label:has(input[type="radio"]:checked) {
+  background-color: #ffd60280;
+  border-radius: 40px;
+  font-weight: bold;
+}
+
+input[type="radio"]:checked {
+  border: 2px solid black;
+}
+
+input[type="radio"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #464c53;
+  border-radius: 50%;
+  position: relative;
+}
+
+input[type="radio"]:checked::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
