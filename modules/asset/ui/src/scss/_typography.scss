@@ -158,8 +158,9 @@ p.p, .post_content li {
   }
 }
 
-// List styles
-ul {
+// List styles - exclude navigation elements
+ul:not(.navigation__nav-links):not(.nav-item-list ul):not(.list-none),
+ol {
   list-style-type: disc;
   padding-left: 1.5rem;
   margin-bottom: 1rem;
@@ -176,17 +177,6 @@ ul {
 
 ol {
   list-style-type: decimal;
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
-  margin-top: 1rem;
-  
-  li {
-    margin-bottom: 0.5rem;
-    
-    p {
-      margin-bottom: 0;
-    }
-  }
 }
 
 // ProseMirror/Tiptap editor list styles
