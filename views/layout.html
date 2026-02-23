@@ -83,11 +83,53 @@
     <style>
       {{ data.global.customCSS.code | safe }}
     </style>
+    <div id="custom-css-data" style="display:none;" data-code="{{ data.global.customCSS.code | replace('"', '&quot;') | replace("'", '&#39;') | replace('<', '&lt;') | replace('>', '&gt;') | replace('\n', '&#10;') | replace('\r', '&#13;') }}"></div>
+    <script>
+      // Log Custom CSS for debugging
+      (function() {
+        const cssDataEl = document.getElementById('custom-css-data');
+        if (cssDataEl) {
+          const cssCode = cssDataEl.getAttribute('data-code')
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'")
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&#10;/g, '\n')
+            .replace(/&#13;/g, '\r');
+          const lineCount = cssCode.split('\n').length;
+          console.log('=== Custom CSS (Global Settings) ===');
+          console.log('CSS Code Length:', cssCode.length, 'characters');
+          console.log('CSS Code Lines:', lineCount);
+          console.log('Full CSS Code:', cssCode);
+        }
+      })();
+    </script>
   {% endif %}
   {# Custom JavaScript (Head) from Global Settings #}
   <!-- Start Custom JavaScript (Head) -->
   {% if data.global.customJavaScriptHead and data.global.customJavaScriptHead.code %}
       {{ data.global.customJavaScriptHead.code | safe }}
+      <div id="custom-js-head-data" style="display:none;" data-code="{{ data.global.customJavaScriptHead.code | replace('"', '&quot;') | replace("'", '&#39;') | replace('<', '&lt;') | replace('>', '&gt;') | replace('\n', '&#10;') | replace('\r', '&#13;') }}"></div>
+      <script>
+        // Log Custom JavaScript Head for debugging
+        (function() {
+          const jsHeadDataEl = document.getElementById('custom-js-head-data');
+          if (jsHeadDataEl) {
+            const jsHeadCode = jsHeadDataEl.getAttribute('data-code')
+              .replace(/&quot;/g, '"')
+              .replace(/&#39;/g, "'")
+              .replace(/&lt;/g, '<')
+              .replace(/&gt;/g, '>')
+              .replace(/&#10;/g, '\n')
+              .replace(/&#13;/g, '\r');
+            const lineCount = jsHeadCode.split('\n').length;
+            console.log('=== Custom JavaScript (Head) ===');
+            console.log('JS Head Code Length:', jsHeadCode.length, 'characters');
+            console.log('JS Head Code Lines:', lineCount);
+            console.log('Full JS Head Code:', jsHeadCode);
+          }
+        })();
+      </script>
   {% endif %}
   <!-- End Custom JavaScript (Head) -->
 {% endblock %}
@@ -137,6 +179,27 @@
   <!-- Start Custom JavaScript -->
   {% if data.global.customJavaScript and data.global.customJavaScript.code %}
       {{ data.global.customJavaScript.code | safe }}
+      <div id="custom-js-body-data" style="display:none;" data-code="{{ data.global.customJavaScript.code | replace('"', '&quot;') | replace("'", '&#39;') | replace('<', '&lt;') | replace('>', '&gt;') | replace('\n', '&#10;') | replace('\r', '&#13;') }}"></div>
+      <script>
+        // Log Custom JavaScript Body for debugging
+        (function() {
+          const jsBodyDataEl = document.getElementById('custom-js-body-data');
+          if (jsBodyDataEl) {
+            const jsBodyCode = jsBodyDataEl.getAttribute('data-code')
+              .replace(/&quot;/g, '"')
+              .replace(/&#39;/g, "'")
+              .replace(/&lt;/g, '<')
+              .replace(/&gt;/g, '>')
+              .replace(/&#10;/g, '\n')
+              .replace(/&#13;/g, '\r');
+            const lineCount = jsBodyCode.split('\n').length;
+            console.log('=== Custom JavaScript (Body) ===');
+            console.log('JS Body Code Length:', jsBodyCode.length, 'characters');
+            console.log('JS Body Code Lines:', lineCount);
+            console.log('Full JS Body Code:', jsBodyCode);
+          }
+        })();
+      </script>
   {% endif %}
   <!-- End Custom JavaScript -->
 {% endblock %}

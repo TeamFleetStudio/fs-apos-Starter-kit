@@ -5,6 +5,13 @@
   }
 }
 
+.desktopLogo {
+  @media (min-width: 768px) {
+    max-height: 50px;
+    max-width: 160px;
+  }
+}
+
 .nav-item-list ul li:last-child a {
   text-decoration: underline;
   text-decoration-thickness: 0.55px;
