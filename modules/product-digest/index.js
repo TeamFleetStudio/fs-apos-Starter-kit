@@ -5,7 +5,8 @@ module.exports = {
   options: {
     label: 'Product Digest',
     perPage: 9,
-    sort: { createdAt: -1 }
+    sort: { createdAt: -1 },
+    shortcut: 'g,d'
   },
   fields: {
     add: {
