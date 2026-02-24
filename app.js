@@ -92,6 +92,11 @@ async function startApp() {
       },
       '@apostrophecms/seo': {},
       '@apostrophecms/open-graph': {},
+      '@apostrophecms/redirect': {
+        options: {
+          statusCode: 301,
+        },
+      },
 
       helper: {},
       asset: {},
