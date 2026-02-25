@@ -213,7 +213,6 @@ module.exports = {
           footerLayout: 'default'
         }
       },
-      // Wallyax-style footer fields
       footerBgImg: {
         label: 'Footer Background Image',
         type: 'area',
