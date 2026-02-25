@@ -12,10 +12,5 @@ module.exports = {
   // Form Pieces
   'contact-us-form': {},
   'footer-form': {},
-  'whitepaper-form': {},
-  'about-wally-form': {},
-  'beyond-barriers-form': {},
-  'tools-form': {},
-  'free-report-form': {},
-  'acr-form': {}
+  'whitepaper-form': {}
 };
