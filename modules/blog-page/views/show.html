@@ -270,22 +270,6 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
     </div>
   </div>
   <div class="lg:w-1/4 lg:flex flex-col gap-4 lg:mt-12">
-    <div
-      class="p-6 bg-black rounded-3xl font-bold accessibilityReportSection hidden lg:block"
-    >
-      <p class="text-xl! text-white">
-        Get a <span class="text-yellow">free accessibility report</span> on your
-        website now!
-      </p>
-      <a
-        href="#home_audit"
-        class="mt-3 text-base bg-yellow py-3 px-5 rounded-full"
-        aria-label="CLick here to get free report"
-        id="scrollToForm"
-      >
-        Get Free Report
-      </a>
-    </div>
     {% if data.piece.podcastEmbed.code %}
     <div class="fading-border hidden lg:block" id="podcast">
       <div class="fading-border-inner p-3">
@@ -312,100 +296,9 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
   </div>
 </section>
 
-<section
-  class="lg:mx-16 mx-8 widget-columns widget-columns--single widget-my-spacing pt-4 pb-6 lg:pt-12 lg:pb-12 rounded-3xl bg-white"
-  id="home_audit"
->
-  <div style="background-color: #000000ff" class="rounded-3xl">
-    <div class="widget-columns__column column-item__first !w-full">
-      <div class="apos-area">
-        <section
-          class="is-fluid side-by-side justify-between widget-my-spacing md:!gap-0 !flex-col lg:!flex-row auditWebsite flex flex-col md:flex-row"
-        >
-          <div class="side-by-side__column-item column-item__first w-[70%]">
-            <div class="apos-area">
-              <section
-                class="mx-8 lg:mx-16 widget-columns widget-columns--single widget-my-spacing home-page-report-form-container accessible_website py-5 lg:py-16"
-              >
-                <div class="widget-columns__column column-item__first">
-                  <div class="apos-area">
-                    <section class="widget-my-spacing">
-                      <div class="apos-area">
-                        <div data-rich-text="">
-                          <p class="h2 text-3xl! lg:text-5xl!">
-                            <span class="highlight-secondary"
-                              ><strong
-                                ><span
-                                  >Not sure if you're accessible? Audit your
-                                  website for free</span
-                                ></strong
-                              ></span
-                            >
-                          </p>
-                        </div>
-                      </div>
-                    </section>
-                    <section
-                      class="widget-my-spacing pt-3 md:pt-6"
-                      id="color-darkgrey"
-                    >
-                      <div class="apos-area">
-                        <div data-rich-text="">
-                          <p class="p">
-                            <span class="highlight-secondary"
-                              ><span
-                                >Get actionable insights instantly and ensure
-                                your website is fully accessible to all
-                                users.</span
-                              ></span
-                            >
-                          </p>
-                        </div>
-                      </div>
-                    </section>
-                    <section
-                      id="BlogwebsiteForm"
-                      class="custom-form widget-py-spacing websiteFreeForm report-form audit_free pt-4 md:pt-8 form-widget-container roundedRadius md:flex md:justify-start pt-6 formWidth pb-4"
-                    >
-                      {% area data.global, 'form' %}
-                    </section>
-                  </div>
-                </div>
-              </section>
-            </div>
-          </div>
-          <div class="side-by-side__column-item column-item__second w-[30%]">
-            <div class="apos-area">
-              <section
-                class="is-fluid widget-columns widget-columns--single widget-my-spacing shapeImg"
-              >
-                <div class="widget-columns__column column-item__first">
-                  <div class="apos-area">
-                    <section class="widget-my-spacing image-widget shapeImg">
-                      <img
-                        class="img-fluid"
-                        srcset="
-                          https://apostrophe-wallyax.s3.amazonaws.com/attachments/cm5l25yvl3eqycgpgaggj4n7k-wally-3-0-mask-group.max.png       411w,
-                          https://apostrophe-wallyax.s3.amazonaws.com/attachments/cm5l25yvl3eqycgpgaggj4n7k-wally-3-0-mask-group.one-third.png 380w,
-                          https://apostrophe-wallyax.s3.amazonaws.com/attachments/cm5l25yvl3eqycgpgaggj4n7k-wally-3-0-mask-group.one-sixth.png 190w
-                        "
-                        src="https://apostrophe-wallyax.s3.amazonaws.com/attachments/cm5l25yvl3eqycgpgaggj4n7k-wally-3-0-mask-group.full.png"
-                        alt="Decorative image"
-                        aria-hidden="true"
-                        width="411"
-                        height="498"
-                      />
-                    </section>
-                  </div>
-                </div>
-              </section>
-            </div>
-          </div>
-        </section>
-      </div>
+    <div class="ContentSection">
+        {% area data.piece, 'bottomSection' %}
     </div>
-  </div>
-</section>
 <button
   id="scrollToTop"
   class="scroll-to-top bg-yellow"
