@@ -223,7 +223,7 @@ module.exports = {
           }
         },
         if: {
-          footerLayout: 'wallyax'
+          footerLayout: 'footer-layout-1'
         }
       },
       footerLogo: {
@@ -241,7 +241,7 @@ module.exports = {
         type: 'string',
         textarea: true,
         if: {
-          footerLayout: 'wallyax'
+          footerLayout: 'footer-layout-1'
         }
       },
       footerPrimaryNavigation: {
@@ -267,7 +267,7 @@ module.exports = {
           }
         },
         if: {
-          footerLayout: 'wallyax'
+          footerLayout: 'footer-layout-1'
         }
       },
       footerSourceForgeScript: {
@@ -280,7 +280,7 @@ module.exports = {
           { label: 'JavaScript', value: 'javascript' }
         ],
         if: {
-          footerLayout: 'wallyax'
+          footerLayout: 'footer-layout-1'
         }
       },
       footerSocial: {
@@ -313,7 +313,7 @@ module.exports = {
           }
         },
         if: {
-          footerLayout: 'wallyax'
+          footerLayout: 'footer-layout-1'
         }
       },
       social: {
