@@ -1,47 +1,104 @@
 {% import "ui.html" as ui %}
 {% import "button.html" as buttonFrag %}
+{% import "link.html" as link %}
 
 {% fragment footer(data) %}
-<div class="footer apos-container is-fluid widget-py-spacing {% if data.global.footerCustomClassName %} {{ data.global.footerCustomClassName }}{% endif %}"{% if data.global.footerCustomId %} id="{{ data.global.footerCustomId }}"{% endif %}{% if data.global.footerBackgroundColor %} style="background-color: {{ data.global.footerBackgroundColor }};"{% endif %}>
-  <div class="footer__main"{% if data.global.footerTextColor %} style="color: {{ data.global.footerTextColor }};"{% endif %}>
-    <a href="/" class="footer__logo">
-      {{ ui.image(data.global.logo) }}
-    </a>
+  {% set footerLayout = data.global.footerLayout or 'default' %}
 
-    <div class="footer__nav-items">
-      <ul>
-        {% for nav in data.global.footerNav %}
-          {% set path = apos.helper.linkPath(nav) %}
-          <li>
-            <a href="{{ path }}" aria-label="{{ nav.ariaLabel }}"{% if data.global.footerTextColor %} style="color: {{ data.global.footerTextColor }};"{% endif %}>{{ nav.linkText }}</a>
-          </li>
-        {% endfor %}
-      </ul>
+  {% if footerLayout == 'wallyax' %}
+    {# Wallyax-style footer template #}
+    {% set footerBackground = apos.image.first(data.global.footerBgImg) %}
+    <section class="footer-container px-8 lg:px-16 pt-12 lg:pt-24 pb-10 lg:pb-20 bg-[#f6f6f6]">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-0">
+        <!-- Logo and Description -->
+        <div>
+          <div class="w-40">
+            {{ ui.image(data.global.footerLogo, '', 'lazy') }}
+          </div>
+          <p class="highlight-lightblack text-base py-7 lg:w-5/6">
+            {{ data.global.footerDescription }}
+          </p>
+          <div class="flex gap-4 flex">
+            {% for social in data.global.footerSocial %}
+              <a href="{{ social.link }}" target="_blank" rel="noopener noreferrer" aria-label="{{ social.title }} Opens in a new tab" class="highlight-lightblack hover:text-black w-8 h-8">
+                {% area social, 'icon' %}
+              </a>
+            {% endfor %}
+          </div>
+          <div class="mt-4">
+            {% if data.global.footerSourceForgeScript and data.global.footerSourceForgeScript.code %}
+              {{ data.global.footerSourceForgeScript.code | safe }}
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-0">
+          {% if data.global.footerPrimaryNavigation %}
+            {% for primaryNav in data.global.footerPrimaryNavigation %}
+              <div>
+                <nav aria-label="{{ primaryNav.title }}">
+                  <p class="text-xl! font-semibold text-black mb-6">{{ primaryNav.title }}</p>
+                  <ul class="space-y-3">
+                    {% for navItem in primaryNav.navItems %}
+                      <li>
+                        {% render link.render({
+                          path: apos.helper.linkPath(navItem),
+                          label: navItem.linkText,
+                          class: "highlight-lightblack hover:text-black"
+                        }) %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </nav>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  {% else %}
+    {# Default starter footer template #}
+    <div class="footer apos-container is-fluid widget-py-spacing {% if data.global.footerCustomClassName %} {{ data.global.footerCustomClassName }}{% endif %}"{% if data.global.footerCustomId %} id="{{ data.global.footerCustomId }}"{% endif %}{% if data.global.footerBackgroundColor %} style="background-color: {{ data.global.footerBackgroundColor }};"{% endif %}>
+      <div class="footer__main"{% if data.global.footerTextColor %} style="color: {{ data.global.footerTextColor }};"{% endif %}>
+        <a href="/" class="footer__logo">
+          {{ ui.image(data.global.footerLogo or data.global.logo) }}
+        </a>
+
+        <div class="footer__nav-items">
+          <ul>
+            {% for nav in data.global.footerNav %}
+              {% set path = apos.helper.linkPath(nav) %}
+              <li>
+                <a href="{{ path }}" aria-label="{{ nav.ariaLabel }}"{% if data.global.footerTextColor %} style="color: {{ data.global.footerTextColor }};"{% endif %}>{{ nav.linkText }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="footer__social-items">
+          <ul>
+            {% for social in data.global.social %}
+              <li>
+                <a aria-label="{{ social.icon }} link" target="_blank" href="{{ social.link }}">
+                  <img src="/images/social-icons/{{ social.icon }}.svg" />
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        {% set footerSpacing = data.global.footerButtonSpacing or 16 %}
+        <div class="footer__button-items" style="--button-spacing: {{ footerSpacing }}px;">
+          {% for btn in data.global.footerBtns %}
+            {% render buttonFrag.render(btn) %}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="footer__copyright"{% if data.global.footerTextColor %} style="color: {{ data.global.footerTextColor }};"{% endif %}>
+        <p><small>© {{ apos.modules.settings.options.year }}. All rights reserved by <a href="#"{% if data.global.footerTextColor %} style="color: {{ data.global.footerTextColor }};"{% endif %}>{{ data.global.title }}</a></small></p>
+      </div>
     </div>
-
-    <div class="footer__social-items">
-      <ul>   
-        {% for social in data.global.social %}
-        <li>
-          <a aria-label="{{ social.icon }} link" target="_blank" href="{{ social.link }}">
-            <img src="/images/social-icons/{{ social.icon }}.svg" />
-          </a>
-        </li>
-        {% endfor %}     
-      </ul>
-    </div>
-
-    {% set footerSpacing = data.global.footerButtonSpacing or 16 %}
-    <div class="footer__button-items" style="--button-spacing: {{ footerSpacing }}px;">
-      {% for btn in data.global.footerBtns %}
-        {% render buttonFrag.render(btn) %}
-      {% endfor %}
-    </div>
-  </div>
-
-  <div class="footer__copyright"{% if data.global.footerTextColor %} style="color: {{ data.global.footerTextColor }};"{% endif %}>
-    <p><small>© {{ apos.modules.settings.options.year }}. All rights reserved by <a href="#"{% if data.global.footerTextColor %} style="color: {{ data.global.footerTextColor }};"{% endif %}>{{ data.global.title }}</a></small></p>
-  </div>
-
-</div>
+  {% endif %}
 {% endfragment %}

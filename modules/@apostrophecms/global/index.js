@@ -2,6 +2,7 @@ const linkSchema = require('../../../lib/linkSchema');
 const buttonSchema = require('../../../lib/buttonSchema');
 const backgroundSchema = require('../../../lib/backgroundSchema');
 const customAttributesSchema = require('../../../lib/customAttributesSchema');
+const areaConfig = require('../../../lib/area');
 
 module.exports = {
   fields: {
@@ -45,13 +46,29 @@ module.exports = {
         help: 'Enter Google Font name for body text (e.g., Bungee, Rubik Storm). Defaults to Merriweather.',
         def: 'Merriweather'
       },
-      headerBtns: {
-        label: 'Header Button/s',
-        type: 'array',
-        titleField: 'linkText',
-        fields: {
-          add: {
-            ...buttonSchema.button
+      headerLayout: {
+        type: 'select',
+        label: 'Header Layout',
+        help: 'Choose which header template to use',
+        def: 'default',
+        choices: [
+          {
+            label: 'Default Header',
+            value: 'default'
+          },
+          {
+            label: 'Header Layout 1',
+            value: 'wallyax'
+          }
+        ]
+      },
+      headerLogo: {
+        label: 'Header Logo',
+        type: 'area',
+        options: {
+          max: 1,
+          widgets: {
+            '@apostrophecms/image': {}
           }
         }
       },
@@ -65,8 +82,31 @@ module.exports = {
           }
         }
       },
-      headerBackgroundColor: backgroundSchema.backgroundColor,
-      headerTextColor: backgroundSchema.textColor,
+      headerBtns: {
+        label: 'Header Button/s',
+        type: 'array',
+        titleField: 'linkText',
+        fields: {
+          add: {
+            ...buttonSchema.button
+          }
+        },
+        if: {
+          headerLayout: 'default'
+        }
+      },
+      headerBackgroundColor: {
+        ...backgroundSchema.backgroundColor,
+        if: {
+          headerLayout: 'default'
+        }
+      },
+      headerTextColor: {
+        ...backgroundSchema.textColor,
+        if: {
+          headerLayout: 'default'
+        }
+      },
       headerButtonSpacing: {
         type: 'range',
         label: 'Header Button Spacing',
@@ -74,15 +114,40 @@ module.exports = {
         min: 0,
         max: 50,
         step: 1,
-        def: 16
+        def: 16,
+        if: {
+          headerLayout: 'default'
+        }
       },
       headerCustomClassName: {
         ...customAttributesSchema.customClassName,
-        help: 'Add a custom CSS class to the header'
+        help: 'Add a custom CSS class to the header',
+        if: {
+          headerLayout: 'default'
+        }
       },
       headerCustomId: {
         ...customAttributesSchema.customId,
-        help: 'Add a custom ID attribute to the header'
+        help: 'Add a custom ID attribute to the header',
+        if: {
+          headerLayout: 'default'
+        }
+      },
+      footerLayout: {
+        type: 'select',
+        label: 'Footer Layout',
+        help: 'Choose which footer template to use',
+        def: 'default',
+        choices: [
+          {
+            label: 'Default Footer',
+            value: 'default'
+          },
+          {
+            label: 'Wallyax Footer',
+            value: 'wallyax'
+          }
+        ]
       },
       footerNav: {
         label: 'Footer Navigation Items',
@@ -92,6 +157,9 @@ module.exports = {
           add: {
             ...linkSchema,
           }
+        },
+        if: {
+          footerLayout: 'default'
         }
       },
       footerBtns: {
@@ -102,10 +170,23 @@ module.exports = {
           add: {
             ...buttonSchema.button
           }
+        },
+        if: {
+          footerLayout: 'default'
         }
       },
-      footerBackgroundColor: backgroundSchema.backgroundColor,
-      footerTextColor: backgroundSchema.textColor,
+      footerBackgroundColor: {
+        ...backgroundSchema.backgroundColor,
+        if: {
+          footerLayout: 'default'
+        }
+      },
+      footerTextColor: {
+        ...backgroundSchema.textColor,
+        if: {
+          footerLayout: 'default'
+        }
+      },
       footerButtonSpacing: {
         type: 'range',
         label: 'Footer Button Spacing',
@@ -113,15 +194,128 @@ module.exports = {
         min: 0,
         max: 50,
         step: 1,
-        def: 16
+        def: 16,
+        if: {
+          footerLayout: 'default'
+        }
       },
       footerCustomClassName: {
         ...customAttributesSchema.customClassName,
-        help: 'Add a custom CSS class to the footer'
+        help: 'Add a custom CSS class to the footer',
+        if: {
+          footerLayout: 'default'
+        }
       },
       footerCustomId: {
         ...customAttributesSchema.customId,
-        help: 'Add a custom ID attribute to the footer'
+        help: 'Add a custom ID attribute to the footer',
+        if: {
+          footerLayout: 'default'
+        }
+      },
+      // Wallyax-style footer fields
+      footerBgImg: {
+        label: 'Footer Background Image',
+        type: 'area',
+        options: {
+          max: 1,
+          widgets: {
+            '@apostrophecms/image': {}
+          }
+        },
+        if: {
+          footerLayout: 'wallyax'
+        }
+      },
+      footerLogo: {
+        label: 'Footer Logo',
+        type: 'area',
+        options: {
+          max: 1,
+          widgets: {
+            '@apostrophecms/image': {}
+          }
+        }
+      },
+      footerDescription: {
+        label: 'Footer Description',
+        type: 'string',
+        textarea: true,
+        if: {
+          footerLayout: 'wallyax'
+        }
+      },
+      footerPrimaryNavigation: {
+        label: 'Footer Primary Navigations',
+        type: 'array',
+        titleField: 'title',
+        fields: {
+          add: {
+            title: {
+              type: 'string',
+              label: 'Title'
+            },
+            navItems: {
+              label: 'Nav Items',
+              type: 'array',
+              titleField: 'linkText',
+              fields: {
+                add: {
+                  ...linkSchema
+                }
+              }
+            }
+          }
+        },
+        if: {
+          footerLayout: 'wallyax'
+        }
+      },
+      footerSourceForgeScript: {
+        label: 'Footer Source Forge Script',
+        help: 'Add JS script for SourceForge badge',
+        type: 'codeEditor',
+        defaultLanguage: 'javascript',
+        theme: 'dark',
+        languages: [
+          { label: 'JavaScript', value: 'javascript' }
+        ],
+        if: {
+          footerLayout: 'wallyax'
+        }
+      },
+      footerSocial: {
+        label: 'Footer Social Media',
+        type: 'array',
+        titleField: 'title',
+        fields: {
+          add: {
+            title: {
+              type: 'string',
+              label: 'Social Media Label',
+              required: true
+            },
+            icon: {
+              label: 'Icon',
+              type: 'area',
+              required: true,
+              options: {
+                max: 1,
+                widgets: {
+                  'image': {}
+                }
+              }
+            },
+            link: {
+              type: 'url',
+              label: 'Social Link',
+              required: true
+            }
+          }
+        },
+        if: {
+          footerLayout: 'wallyax'
+        }
       },
       social: {
         label: 'Social Media Accounts',
@@ -159,6 +353,9 @@ module.exports = {
               ]
             }
           }
+        },
+        if: {
+          footerLayout: 'default'
         }
       },
       customJavaScriptHead: {
@@ -190,24 +387,57 @@ module.exports = {
         languages: [
           { label: 'CSS', value: 'css' }
         ]
+      },
+      form: {
+        type: 'area',
+        label: 'Form',
+        options: {
+          widgets: {
+            '@apostrophecms/image': {},
+            ...areaConfig.richText,
+            'custom-form': {}
+          }
+        }
       }
     },
     group: {
       brand: {
         label: 'Brand',
-        fields: ['title', 'logo', 'social', 'primaryColor', 'secondaryColor', 'headingFontFamily', 'bodyFontFamily']
+        fields: ['title', 'logo', 'primaryColor', 'secondaryColor', 'headingFontFamily', 'bodyFontFamily']
       },
       header: {
         label: 'Header',
-        fields: ['headerNav', 'headerBtns', 'headerButtonSpacing', 'headerBackgroundColor', 'headerTextColor', 'headerCustomClassName', 'headerCustomId']
+        fields: ['headerLayout', 'headerLogo', 'headerNav', 'headerBtns', 'headerButtonSpacing', 'headerBackgroundColor', 'headerTextColor', 'headerCustomClassName', 'headerCustomId']
       },
       footer: {
         label: 'Footer',
-        fields: ['footerNav', 'footerBtns', 'footerButtonSpacing', 'footerBackgroundColor', 'footerTextColor', 'footerCustomClassName', 'footerCustomId']
+        fields: [
+          'footerLayout',
+          'footerLogo',
+          'footerNav',
+          'footerBtns',
+          'footerButtonSpacing',
+          'footerBackgroundColor',
+          'footerTextColor',
+          'footerCustomClassName',
+          'footerCustomId',
+          'footerBgImg',
+          'footerDescription',
+          'footerPrimaryNavigation',
+          'footerSourceForgeScript'
+        ]
+      },
+      socialMediaPlatforms: {
+        label: 'Social Media Platform',
+        fields: ['social', 'footerSocial']
       },
       custom: {
         label: 'Custom Code',
         fields: ['customCSS', 'customJavaScriptHead', 'customJavaScript']
+      },
+      Form: {
+        label: 'Report Form',
+        fields: ['form']
       }
     }
   }

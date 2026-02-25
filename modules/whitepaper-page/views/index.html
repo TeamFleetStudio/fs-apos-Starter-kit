@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% import 'fragments/paginator.html' as paginator %}
+
+{% block title %}{{ data.page.title }} - {{ data.global.title }}{% endblock %}
+{% block main %}
+<div id="main-content">
+  <div class="lg:p-16 p-8"><h1 class="h1">White Papers & eBooks</h1>
+  <h2 class="sr-only"> Explore eBooks and white papers </h2>
+  </div>
+
+  <div class="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6 xl:gap-10 lg:mb-16 mb-8 lg:mx-16 mx-8 BlogCardWidgetDiv text-center sm:text-left">
+    {% for piece in data.pieces %}
+        
+      <div class="rounded border-[#847234] rounded-[0] BlogCardWidget flex flex-col justify-between">
+        <div>
+          <a aria-hidden="true" tabindex="-1" href="{{ piece._url }}" style="display: block;">  {% set image = apos.image.first(piece.bannerImage) %}
+          {% if image %}
+            <img 
+              src="{{ apos.attachment.url(image, { size: 'full' }) }}" 
+              alt="{{ image._alt or '' }}" 
+              width="{{ image.width or '' }}" 
+              height="{{ image.height or '' }}"
+              class="w-full h-48 object-cover object-center"
+            >
+          {% endif %}</a> 
+          <div class="py-4">
+            <h6 class="h6 mb-4">{{ piece.title }}</h6>
+            <p class="p">{{piece.meta}}</p>
+          </div>
+        </div>
+        <div>
+          <a class="inline-block bg-black text-white hover:text-[#DD3603] px-4 py-2 font-normal BlogCardWidgetLink mt-4" href="{{ piece._url }}" aria-label="Read More about {{ piece.title }}">Read More</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  {% if data.totalPages > 1 %}
+    {% render paginator.pagination(data) %}
+  {% endif %}
+</div>
+{% endblock %}

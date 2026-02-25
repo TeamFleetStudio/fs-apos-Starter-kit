@@ -4,8 +4,10 @@ const customAttributesSchema = require('../../../lib/customAttributesSchema');
 module.exports = {
   extend: '@apostrophecms/widget-type',
   options: {
-    label: 'Button',
-    icon: 'button-icon'
+    label: 'CTA Button',
+    icon: 'button-icon',
+    description: 'Add call to action button to your page',
+    previewImage: 'svg'
   },
   icons: {
     'button-icon': 'ShapeRectanglePlus'

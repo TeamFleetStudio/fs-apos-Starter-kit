@@ -1,0 +1,45 @@
+{% import "button.html" as buttonFrag %}
+<div class="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-10 lg:mb-16 mb-8 lg:mx-16 mx-8 card">
+  {% for items in data.widget.card %}
+    <div class="rounded border-[#847234] rounded-[0] BlogCardWidget Fcard">
+      <div class="{{ items.widgetClass }}">
+        {% set image = apos.image.first(items.bannerImage) %}
+        {% if items.isRedirectToAnotherPage %}
+          <a
+            href="{{ apos.helper.linkPath(items) }}"
+            target="{{ apos.helper.linkTarget(items) }}" 
+            {% if items.ariaLabel %} aria-label="{{ items.ariaLabel }}" {% endif %}
+            class="cursor-pointer"
+          >
+            {% if image %}
+              <img 
+                src="{{ apos.attachment.url(image, { size: 'full' }) }}" 
+                alt="{{ image._alt or '' }}" 
+                width="{{ apos.attachment.getWidth(image) }}"
+                height="{{ apos.attachment.getHeight(image) }}"
+              >
+            {% endif %}
+          </a>
+        {% else %}
+          {% if image %}
+            <img 
+              src="{{ apos.attachment.url(image, { size: 'full' }) }}" 
+              alt="{{ image._alt or '' }}" 
+              width="{{ apos.attachment.getWidth(image) }}"
+              height="{{ apos.attachment.getHeight(image) }}"
+            >
+          {% endif %}
+        {% endif %}
+      </div>
+      <div class="py-4">
+        <div class="font-bold text-xl! BlogCardWidgetTitle">{{ items.title }}</div>
+        <p class="p">{{ items.content }}</p>
+      </div>
+      <div class="pb-2">
+        {% for btn in items.cardBtns %}
+          {% render buttonFrag.render(btn) %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+</div>

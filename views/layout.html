@@ -13,6 +13,10 @@
 {% endblock %}
 
 {% block extraHead %}
+  {# Favicon from Brand logo #}
+  {% if data.global.logo and apos.image.first(data.global.logo) %}
+    <link rel="icon" href="{{ apos.attachment.url(apos.image.first(data.global.logo),{size: 'original'}) }}">
+  {% endif %}
   {# Brand Colors and Fonts - Override SCSS variables #}
   {% if data.global.primaryColor or data.global.secondaryColor or data.global.headingFontFamily or data.global.bodyFontFamily %}
     <style>
@@ -86,17 +90,34 @@
       {{ data.global.customJavaScriptHead.code | safe }}
   {% endif %}
   <!-- End Custom JavaScript (Head) -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 {% endblock %}
 
 {% block beforeMain %}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  {# DNS prefetch for CDNs #}
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://code.jquery.com">
+  {# Preconnect to speed up resource loading #}
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://code.jquery.com" crossorigin>
   {# Dynamic Google Fonts with fallback handling #}
   {% set headingFont = data.global.headingFontFamily or 'Lato' %}
   {% set bodyFont = data.global.bodyFontFamily or 'Merriweather' %}
   {% set headingFontEncoded = headingFont | replace(' ', '+') %}
   {% set bodyFontEncoded = bodyFont | replace(' ', '+') %}
   <link href="https://fonts.googleapis.com/css2?family={{ headingFontEncoded }}:ital,wght@0,400;0,700;1,700&family={{ bodyFontEncoded }}:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" onerror="this.onerror=null; this.href='';">
+  {# jQuery - Required for Slick slider and progress bar slider widget #}
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
+  {# Accessible Slick Slider CSS - Required for progress bar slider widget #}
+  <link rel="preload" as="style" href="https://cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/slick.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/slick.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/slick.min.css"></noscript>
+  {# Accessible Slick Slider JS - Required for progress bar slider widget #}
+  <script src="https://cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/slick.min.js" defer></script>
   {% render header.navigationBar(data) %}
 {% endblock %}
 

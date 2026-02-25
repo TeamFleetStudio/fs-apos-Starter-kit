@@ -25,5 +25,18 @@ module.exports = {
   'pricing-widget': {},
   'side-by-side-widget': {},
   'image-widget': {},
-  'rich-text-widget': {}
+  'rich-text-widget': {},
+
+  // migrated from wallyax
+  'hero-banner-widget': {},
+  'progressBar-slider-widget': {},
+  'image-card-widget': {},
+  'enterprise-widget': {},
+  'testimonial-widget': {},
+  'overview-card-widget': {},
+  'specialization-widget': {},
+  'services-team-widget': {},
+  'card-widget': {},
+  'beyond-barriers-guests-widget': {},
+  'audit-slider-widget': {}
 };

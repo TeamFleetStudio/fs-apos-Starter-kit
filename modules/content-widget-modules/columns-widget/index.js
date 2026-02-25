@@ -6,7 +6,6 @@ module.exports = {
   extend: '@apostrophecms/widget-type',
   options: {
     label: 'Columns',
-    icon: 'pillar',
     description: 'Create flexible layouts for your content.',
     previewImage: 'svg'
   },
@@ -110,6 +109,11 @@ module.exports = {
             ...areaConfig.columnExpandedGroup
           }
         }
+      },
+      bgColor: {
+        type: 'color',
+        help: 'Background Color for widget',
+        label: 'Background Color'
       },
       ...aosSchema,
       ...customAttributesSchema

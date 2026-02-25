@@ -46,6 +46,25 @@ async function startApp() {
     shortName: appName,
     baseUrl,
     nestedModuleSubdirs: true,
+    options: {
+      uploadfs: {
+        storage: 's3',
+        secret: process.env.APOS_S3_SECRET,
+        key: process.env.APOS_S3_KEY,
+        bucket: process.env.APOS_S3_BUCKET,
+        region: process.env.APOS_S3_REGION,
+        contentTypes: {
+          'video/mp4': 'mp4',
+          'video/webm': 'webm',
+        },
+        params: {
+          CacheControl: 'public, max-age=31536000, immutable'
+        },
+        // Disable ACLs for buckets that don't allow ACLs (common for buckets created after April 2023)
+        acl: null,
+        optimize: true,
+      },
+    },
     modules: {
       '@apostrophecms/rich-text-widget': {},
       '@apostrophecms/image-widget': {
@@ -73,6 +92,11 @@ async function startApp() {
       },
       '@apostrophecms/seo': {},
       '@apostrophecms/open-graph': {},
+      '@apostrophecms/redirect': {
+        options: {
+          statusCode: 301,
+        },
+      },
 
       helper: {},
       asset: {},
@@ -85,8 +109,21 @@ async function startApp() {
       'pieces-modules': {
         options: { ignoreNoCodeWarning: true }
       },
-      'code-editor-field': {}
-    }
+      'code-editor-field': {},
+      'rich-text-color': {},
+      'rich-text-font': {},
+      blog: {},
+      'blog-page': {},
+      media: {},
+      'media-page': {},
+      'product-digest': {},
+      'product-digest-page': {},
+      whitepaper: {},
+      'whitepaper-page': {},
+      review: {},
+      'review-page': {}
+    },
+    bundles: ['@bodonkey/rich-text-enhancement']
   });
   // FS_SYNC_APOS_CONFIG_END
 }

@@ -31,7 +31,7 @@
 {% endmacro %}
 
 {# Image #}
-{% macro image (image, className = '') %}
+{% macro image (image, className = '', loading = '') %}
   {% set attachment = apos.image.first(image) %}
 
   {% if attachment %}
@@ -41,6 +41,9 @@
       alt="{{ attachment._alt or '' }}"
       width="{{ apos.attachment.getWidth(attachment) }}"
       height="{{ apos.attachment.getHeight(attachment) }}"
+      {% if loading %}
+        loading="{{ loading }}"
+      {% endif %}
       {% if apos.attachment.hasFocalPoint(attachment) %}
         style="object-position: {{ apos.attachment.focalPointToObjectPosition(attachment) }}"
       {% endif %}

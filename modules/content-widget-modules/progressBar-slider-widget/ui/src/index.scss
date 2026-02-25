@@ -1,0 +1,104 @@
+@import "../../../../asset/ui/src/scss/variables";
+
+.report_slider {
+  .content_block .call-to-action {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    color: $white;
+    margin-top: 20px;
+    height: 220px;
+    padding: 3rem 2rem;
+    justify-content: flex-start;
+
+    &__background {
+      background-position: 50% 50%;
+      background-size: cover;
+      border-radius: 2rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    .call-to-action__tagline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 1;
+    }
+
+    .call-to-action__line {
+      display: inline-block;
+      width: 50px;
+      height: 2px;
+      background-color: white;
+      flex-shrink: 0;
+    }
+    .call-to-action__content {
+      z-index: 1;
+      width: 70%;
+      padding: 0;
+      margin: 1rem 0 0 0;
+    }
+    .call-to-action__text {
+      font-size: 14px;
+      color: white;
+    }
+    .h5 {
+      line-height: 38px;
+      @media (max-width: 769px) {
+        line-height: 30px;
+      }
+    }
+  }
+
+  .image_block {
+    display: flex;
+    align-items: end;
+  }
+  .circle-container {
+    position: absolute;
+    top: -34px;
+    right: 5%;
+    width: 68px;
+    height: 68px;
+    background: #ffd700;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+
+  .progress-bar {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background-color: black;
+    width: 0%;
+    transition: none;
+  }
+  .progress-fill {
+    width: 0;
+    animation: progress-bar-fill linear forwards;
+  }
+
+  @keyframes progress-bar-fill {
+    from {
+      width: 0%;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  .slick-autoplay-toggle-button {
+    display: none;
+  }
+}

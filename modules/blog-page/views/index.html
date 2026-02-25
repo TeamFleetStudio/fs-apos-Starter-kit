@@ -1,0 +1,1057 @@
+{% extends "layout.html" %} {% import 'fragments/paginator.html' as paginator %}
+{% block title %}{{ data.page.title }} - {{ data.global.title }}{% endblock %}
+{% block main %}
+<section id="blog-main-content" class="lg:mx-16 mx-8">
+  <nav aria-label="breadcrumb" class="my-4 text-base!">
+    <ol class="flex space-x-2 capitalize">
+      {% if data.page._ancestors and data.page._ancestors | length > 0 %} {% set
+      lastAncestor = data.page._ancestors | last %}
+      <li class="flex">
+        <a href="{{ lastAncestor._url }}" class="text-[#020407]"
+          >{{ lastAncestor.title }}</a
+        >
+        <span class="mx-1">></span>
+      </li>
+      {% endif %}
+      <li class="text-[#020407] font-bold capitalize">
+        <a href="{{ data.page._url }}" class="text-[#020407]"
+          >{{ data.page.title }}</a
+        >
+      </li>
+    </ol>
+  </nav>
+  <div class="lg:flex justify-between w-full">
+    <div class="lg:flex justify-between w-full">
+      {% if data.pieces | length > 0 %}
+      <div class="BlogHeroBanner xl:w-3/4 lg:w-4/5">
+        {% set has_params = data.query | length > 0 %} {% set page_is_one =
+        data.query.page == "1" or not data.query.page %} {% if (not has_params
+        or data.query.page === "1") %}
+        <div
+          class="BlogCardWidgetDiv mb-5 min-h-72 h-fit w-full text-left rounded-3xl lg:flex relative overflow-hidden"
+          style="background-color: #ffd602"
+        >
+          <div
+            class="BlogBannerContent lg:w-3/5 py-4 lg:py-7 lg:pl-10 pl-4 pr-4 lg:pr-0 relative z-10"
+          >
+            <p
+              class="text-3xl! font-bold text-lightblack capitalize mb-3 lg:mb-0"
+            >
+              {{ data.page.title }}
+            </p>
+            <div class="MobileBlogBanner block lg:hidden relative">
+              <div
+                class="BlogGradientTop absolute inset-0 bg-gradient-to-b from-[#FFD602] from-10% via-[#FFEE80]/70 via-40% to-transparent to-90%"
+              ></div>
+              {% area data.pieces[0], 'bannerImage' %}
+            </div>
+            <h1 class="text-xl! text-lightblack font-bold mt-3 lg:mt-6 mb-3">
+              {{ data.pieces[0].title }}
+            </h1>
+            <div class="flex flex-wrap gap-2 mb-3 font-medium">
+              {% if data.pieces[0].blog_type %}
+              <span
+                class="inline-flex items-center px-3 py-1 gap-2 rounded-full text-base! font-medium"
+                style="background-color: #d1f7d1; color: #1c1e21"
+              >
+                {% if data.pieces[0].blog_type == 'podcast' %}
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 13.0002V8.15016C5.8 8.02794 5.63889 7.86961 5.51667 7.67516C5.39444 7.48072 5.33333 7.25572 5.33333 7.00016C5.33333 6.6335 5.46389 6.31961 5.725 6.0585C5.98611 5.79738 6.3 5.66683 6.66667 5.66683C7.03333 5.66683 7.34722 5.79738 7.60833 6.0585C7.86944 6.31961 8 6.6335 8 7.00016C8 7.25572 7.93889 7.4835 7.81667 7.6835C7.69444 7.8835 7.53333 8.03905 7.33333 8.15016V13.0002C7.33333 13.1891 7.26944 13.3474 7.14167 13.4752C7.01389 13.6029 6.85556 13.6668 6.66667 13.6668C6.47778 13.6668 6.31944 13.6029 6.19167 13.4752C6.06389 13.3474 6 13.1891 6 13.0002ZM2.55 11.3502C2.41667 11.4835 2.25556 11.5502 2.06667 11.5502C1.87778 11.5502 1.72222 11.4779 1.6 11.3335C1.1 10.7446 0.708333 10.0835 0.425 9.35016C0.141667 8.61683 0 7.8335 0 7.00016C0 6.07794 0.175 5.21127 0.525 4.40016C0.875 3.58905 1.35 2.8835 1.95 2.2835C2.55 1.6835 3.25556 1.2085 4.06667 0.858496C4.87778 0.508496 5.74444 0.333496 6.66667 0.333496C7.58889 0.333496 8.45555 0.508496 9.26667 0.858496C10.0778 1.2085 10.7833 1.6835 11.3833 2.2835C11.9833 2.8835 12.4583 3.58905 12.8083 4.40016C13.1583 5.21127 13.3333 6.07794 13.3333 7.00016C13.3333 7.8335 13.1917 8.61683 12.9083 9.35016C12.625 10.0835 12.2333 10.7446 11.7333 11.3335C11.6111 11.4779 11.4583 11.5529 11.275 11.5585C11.0917 11.5641 10.9333 11.5002 10.8 11.3668C10.6778 11.2446 10.6167 11.0891 10.6167 10.9002C10.6167 10.7113 10.6778 10.5446 10.8 10.4002C11.1778 9.9335 11.4722 9.41127 11.6833 8.8335C11.8944 8.25572 12 7.64461 12 7.00016C12 5.51127 11.4833 4.25016 10.45 3.21683C9.41667 2.1835 8.15555 1.66683 6.66667 1.66683C5.17778 1.66683 3.91667 2.1835 2.88333 3.21683C1.85 4.25016 1.33333 5.51127 1.33333 7.00016C1.33333 7.64461 1.43889 8.25294 1.65 8.82516C1.86111 9.39738 2.16111 9.91683 2.55 10.3835C2.67222 10.5279 2.73611 10.6918 2.74167 10.8752C2.74722 11.0585 2.68333 11.2168 2.55 11.3502ZM4.43333 9.46683C4.3 9.60016 4.13889 9.66961 3.95 9.67516C3.76111 9.68072 3.61111 9.60572 3.5 9.45016C3.24444 9.10572 3.04167 8.72794 2.89167 8.31683C2.74167 7.90572 2.66667 7.46683 2.66667 7.00016C2.66667 5.88905 3.05556 4.94461 3.83333 4.16683C4.61111 3.38905 5.55556 3.00016 6.66667 3.00016C7.77778 3.00016 8.72222 3.38905 9.5 4.16683C10.2778 4.94461 10.6667 5.88905 10.6667 7.00016C10.6667 7.46683 10.5917 7.9085 10.4417 8.32516C10.2917 8.74183 10.0889 9.11683 9.83333 9.45016C9.72222 9.59461 9.57222 9.66961 9.38333 9.67516C9.19444 9.68072 9.03333 9.61683 8.9 9.4835C8.77778 9.36127 8.71389 9.20572 8.70833 9.01683C8.70278 8.82794 8.75556 8.65572 8.86667 8.50016C9.01111 8.27794 9.125 8.04183 9.20833 7.79183C9.29167 7.54183 9.33333 7.27794 9.33333 7.00016C9.33333 6.26683 9.07222 5.63905 8.55 5.11683C8.02778 4.59461 7.4 4.3335 6.66667 4.3335C5.93333 4.3335 5.30556 4.59461 4.78333 5.11683C4.26111 5.63905 4 6.26683 4 7.00016C4 7.28905 4.04167 7.55572 4.125 7.80016C4.20833 8.04461 4.32222 8.27794 4.46667 8.50016C4.57778 8.65572 4.63056 8.82516 4.625 9.0085C4.61944 9.19183 4.55556 9.34461 4.43333 9.46683Z"
+                    fill="black"
+                  />
+                </svg>
+                {% elif data.pieces[0].blog_type == 'article' %}
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1.72222 11.5C1.38611 11.5 1.09838 11.3803 0.859028 11.141C0.619676 10.9016 0.5 10.6139 0.5 10.2778V1.72222C0.5 1.38611 0.619676 1.09838 0.859028 0.859028C1.09838 0.619676 1.38611 0.5 1.72222 0.5H10.2778C10.6139 0.5 10.9016 0.619676 11.141 0.859028C11.3803 1.09838 11.5 1.38611 11.5 1.72222V10.2778C11.5 10.6139 11.3803 10.9016 11.141 11.141C10.9016 11.3803 10.6139 11.5 10.2778 11.5H1.72222ZM3.55556 9.05556H6.61111C6.78426 9.05556 6.9294 8.99699 7.04653 8.87986C7.16366 8.76273 7.22222 8.61759 7.22222 8.44444C7.22222 8.2713 7.16366 8.12616 7.04653 8.00903C6.9294 7.8919 6.78426 7.83333 6.61111 7.83333H3.55556C3.38241 7.83333 3.23727 7.8919 3.12014 8.00903C3.00301 8.12616 2.94444 8.2713 2.94444 8.44444C2.94444 8.61759 3.00301 8.76273 3.12014 8.87986C3.23727 8.99699 3.38241 9.05556 3.55556 9.05556ZM3.55556 6.61111H8.44444C8.61759 6.61111 8.76273 6.55255 8.87986 6.43542C8.99699 6.31829 9.05556 6.17315 9.05556 6C9.05556 5.82685 8.99699 5.68171 8.87986 5.56458C8.76273 5.44745 8.61759 5.38889 8.44444 5.38889H3.55556C3.38241 5.38889 3.23727 5.44745 3.12014 5.56458C3.00301 5.68171 2.94444 5.82685 2.94444 6C2.94444 6.17315 3.00301 6.31829 3.12014 6.43542C3.23727 6.55255 3.38241 6.61111 3.55556 6.61111ZM3.55556 4.16667H8.44444C8.61759 4.16667 8.76273 4.1081 8.87986 3.99097C8.99699 3.87384 9.05556 3.7287 9.05556 3.55556C9.05556 3.38241 8.99699 3.23727 8.87986 3.12014C8.76273 3.00301 8.61759 2.94444 8.44444 2.94444H3.55556C3.38241 2.94444 3.23727 3.00301 3.12014 3.12014C3.00301 3.23727 2.94444 3.38241 2.94444 3.55556C2.94444 3.7287 3.00301 3.87384 3.12014 3.99097C3.23727 4.1081 3.38241 4.16667 3.55556 4.16667Z"
+                    fill="#1C1E21"
+                  />
+                </svg>
+                {% endif %}
+                <span class="text-sm!"
+                  >{{ data.pieces[0].blog_type | capitalize }}</span
+                >
+              </span>
+              {% endif %} {% if data.pieces[0].category %}
+              <span
+                class="inline-flex items-center px-3 py-1 rounded-full text-sm! font-medium capitalize"
+                style="background-color: #ffffcc; color: #1c1e21"
+              >
+                {{ data.pieces[0].category }}
+              </span>
+              {% endif %}
+            </div>
+            <p class="text-base! font-normal text-lightblack tracking-wide my-3">
+              {{ data.pieces[0].meta }}
+            </p>
+            <a
+              class="inline-block bg-black text-yellow border border-black rounded-lg px-2.5 py-2.5 text-base! font-medium BlogCardWidgetLink min-w-max w-full lg:w-fit text-center lg:text-left"
+              href="{{ data.pieces[0]._url }}"
+              aria-label="Read Full article about {{ data.pieces[0].title }}"
+              >Read More</a
+            >
+          </div>
+          <div class="BlogBannerImage hidden lg:block lg:w-2/5 relative">
+            {% set image = apos.image.first(data.pieces[0].bannerImage) %}
+            {% if image %}
+              <img 
+                src="{{ apos.attachment.url(image, { size: 'full' }) }}" 
+                alt="{{ image._alt or '' }}" 
+                width="{{ image.width or '' }}" 
+                height="{{ image.height or '' }}"
+                class="img-fluid"
+              >
+            {% endif %}
+            <div
+              class="BlogGradientRight absolute inset-0 -left-2 bg-gradient-to-r from-[#FFD602] from-10% via-[#FFEE80]/70 via-40% to-transparent to-90%"
+            ></div>
+          </div>
+        </div>
+        {% endif %} {% endif %}
+        <form
+          id="filterFormMobile"
+          class="lg:hidden block my-6 flex flex-col items-start gap-4 w-full"
+          onsubmit="return false;"
+        >
+          <div class="flex gap-4 w-full">
+            <div class="relative w-full">
+              <div class="absolute top-5 left-3">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15 15L10.3333 10.3333M11.8889 6.44444C11.8889 9.45133 9.45133 11.8889 6.44444 11.8889C3.43756 11.8889 1 9.45133 1 6.44444C1 3.43756 3.43756 1 6.44444 1C9.45133 1 11.8889 3.43756 11.8889 6.44444Z"
+                    stroke="#6B7280"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+              <input
+                type="text"
+                id="searchBoxMobile"
+                name="search_mobile"
+                aria-label="Search Box"
+                class="border border-black rounded-lg px-8 py-4 text-sm! w-full"
+                placeholder="Search..."
+                value="{{ data.search or '' }}"
+                oninput="toggleClearButton('mobile')"
+              />
+              <button
+                id="clearSearchMobile"
+                class="absolute right-3 top-4 hidden"
+                onclick="clearSearch('mobile')"
+                aria-label="Clear Search"
+              >
+                ✖
+              </button>
+            </div>
+            <button
+              id="searchButtonMobile"
+              aria-label="Search"
+              class="bg-yellow text-black border border-black px-4 py-4 rounded-lg flex items-center"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 15L10.3333 10.3333M11.8889 6.44444C11.8889 9.45133 9.45133 11.8889 6.44444 11.8889C3.43756 11.8889 1 9.45133 1 6.44444C1 3.43756 3.43756 1 6.44444 1C9.45133 1 11.8889 3.43756 11.8889 6.44444Z"
+                  stroke="black"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <div
+              id="filterHamburger"
+              class="filter-hamburger bg-yellow p-4 items-center flex rounded-xl border border-black cursor-pointer"
+              aria-label="Open Filter Menu"
+              aria-expanded="true"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.00257 16C6.71996 16 6.48307 15.9042 6.2919 15.7125C6.10072 15.5208 6.00513 15.2833 6.00513 15V9L0.220022 1.6C-0.0293363 1.26667 -0.06674 0.916667 0.107811 0.55C0.282362 0.183333 0.585747 0 1.01797 0H14.982C15.4143 0 15.7176 0.183333 15.8922 0.55C16.0667 0.916667 16.0293 1.26667 15.78 1.6L9.99487 9V15C9.99487 15.2833 9.89928 15.5208 9.7081 15.7125C9.51693 15.9042 9.28004 16 8.99743 16H7.00257Z"
+                  fill="black"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <div
+            id="filterOverlay"
+            class="fixed inset-0 bg-white z-50 flex flex-col items-start gap-4 w-full h-screen p-6 hidden overflow-auto"
+          >
+            <fieldset
+              id="categoriesFieldset"
+              class="filter-fieldset flex flex-col mt-5 w-full"
+              aria-label="Categories filter"
+            >
+              <legend></legend>
+              <div class="flex items-center justify-between">
+                <div class="flex gap-2 items-center">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.00257 16C6.71996 16 6.48307 15.9042 6.2919 15.7125C6.10072 15.5208 6.00513 15.2833 6.00513 15V9L0.220022 1.6C-0.0293363 1.26667 -0.06674 0.916667 0.107811 0.55C0.282362 0.183333 0.585747 0 1.01797 0H14.982C15.4143 0 15.7176 0.183333 15.8922 0.55C16.0667 0.916667 16.0293 1.26667 15.78 1.6L9.99487 9V15C9.99487 15.2833 9.89928 15.5208 9.7081 15.7125C9.51693 15.9042 9.28004 16 8.99743 16H7.00257Z"
+                      fill="black"
+                    />
+                  </svg>
+                  <h2 class="text-3xl! font-bold mb-0">Filter</h2>
+                </div>
+                <div>
+                  <button
+                    id="closeFilter"
+                    aria-label="Close Filter menu"
+                    aria-expanded="false"
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M8.00008 9.56143L2.53494 15.0266C2.33046 15.2311 2.07021 15.3333 1.7542 15.3333C1.43819 15.3333 1.17794 15.2311 0.973465 15.0266C0.768987 14.8221 0.666748 14.5619 0.666748 14.2458C0.666748 13.9298 0.768987 13.6696 0.973465 13.4651L6.43861 7.99996L0.973465 2.53481C0.768987 2.33034 0.666748 2.07009 0.666748 1.75408C0.666748 1.43807 0.768987 1.17782 0.973465 0.973343C1.17794 0.768865 1.43819 0.666626 1.7542 0.666626C2.07021 0.666626 2.33046 0.768865 2.53494 0.973343L8.00008 6.43849L13.4652 0.973343C13.6697 0.768865 13.93 0.666626 14.246 0.666626C14.562 0.666626 14.8222 0.768865 15.0267 0.973343C15.2312 1.17782 15.3334 1.43807 15.3334 1.75408C15.3334 2.07009 15.2312 2.33034 15.0267 2.53481L9.56155 7.99996L15.0267 13.4651C15.2312 13.6696 15.3334 13.9298 15.3334 14.2458C15.3334 14.5619 15.2312 14.8221 15.0267 15.0266C14.8222 15.2311 14.562 15.3333 14.246 15.3333C13.93 15.3333 13.6697 15.2311 13.4652 15.0266L8.00008 9.56143Z"
+                        fill="black"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <p class="text-xl! font-bold mt-2.5 mb-4">Categories</p>
+              <label class="px-4 py-3 flex items-center gap-2"
+                ><input
+                  type="radio"
+                  name="category_mobile"
+                  value=""
+                  aria-label="All"
+                  checked
+                />
+                All</label
+              >
+              <label class="px-4 py-3 flex items-center gap-2"
+                ><input
+                  type="radio"
+                  name="category_mobile"
+                  aria-label="Creative"
+                  value="Creative"
+                />
+                Creative</label
+              >
+              <label class="px-4 py-3 flex items-center gap-2"
+                ><input
+                  type="radio"
+                  name="category_mobile"
+                  value="UX"
+                  aria-label="UX"
+                />
+                UX</label
+              >
+              <label class="px-4 py-3 flex items-center gap-2"
+                ><input
+                  type="radio"
+                  name="category_mobile"
+                  aria-label="Development"
+                  value="Development"
+                />
+                Development</label
+              >
+              <label class="px-4 py-3 flex items-center gap-2"
+                ><input
+                  type="radio"
+                  name="category_mobile"
+                  aria-label="Compliance"
+                  value="Compliance"
+                />
+                Compliance</label
+              >
+              <label class="px-4 py-3 flex items-center gap-2"
+                ><input
+                  type="radio"
+                  name="category_mobile"
+                  aria-label="Accessibility"
+                  value="Accessibility"
+                />
+                Accessibility</label
+              >
+              <label class="px-4 py-3 flex items-center gap-2"
+                ><input
+                  type="radio"
+                  name="category_mobile"
+                  aria-label="How-To"
+                  value="How-To"
+                />
+                How-To</label
+              >
+            </fieldset>
+
+            <fieldset
+              id="typeFieldset"
+              class="filter-fieldset flex flex-col mt-5 w-full"
+              aria-label="Type filter"
+            >
+              <legend class="text-xl! font-bold mt-2.5 mb-4">Type</legend>
+              <label class="px-4 py-3 flex items-center gap-2"
+                ><input
+                  type="radio"
+                  name="blog_type_mobile"
+                  value=""
+                  aria-label="All"
+                  checked
+                />
+                All</label
+              >
+              <label class="px-4 py-3 flex items-center gap-2"
+                ><input
+                  type="radio"
+                  name="blog_type_mobile"
+                  aria-label="Podcast"
+                  value="podcast"
+                />
+                <span
+                  class="inline-flex items-center gap-1 text-base! font-medium"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M6 13.0002V8.15016C5.8 8.02794 5.63889 7.86961 5.51667 7.67516C5.39444 7.48072 5.33333 7.25572 5.33333 7.00016C5.33333 6.6335 5.46389 6.31961 5.725 6.0585C5.98611 5.79738 6.3 5.66683 6.66667 5.66683C7.03333 5.66683 7.34722 5.79738 7.60833 6.0585C7.86944 6.31961 8 6.6335 8 7.00016C8 7.25572 7.93889 7.4835 7.81667 7.6835C7.69444 7.8835 7.53333 8.03905 7.33333 8.15016V13.0002C7.33333 13.1891 7.26944 13.3474 7.14167 13.4752C7.01389 13.6029 6.85556 13.6668 6.66667 13.6668C6.47778 13.6668 6.31944 13.6029 6.19167 13.4752C6.06389 13.3474 6 13.1891 6 13.0002ZM2.55 11.3502C2.41667 11.4835 2.25556 11.5502 2.06667 11.5502C1.87778 11.5502 1.72222 11.4779 1.6 11.3335C1.1 10.7446 0.708333 10.0835 0.425 9.35016C0.141667 8.61683 0 7.8335 0 7.00016C0 6.07794 0.175 5.21127 0.525 4.40016C0.875 3.58905 1.35 2.8835 1.95 2.2835C2.55 1.6835 3.25556 1.2085 4.06667 0.858496C4.87778 0.508496 5.74444 0.333496 6.66667 0.333496C7.58889 0.333496 8.45555 0.508496 9.26667 0.858496C10.0778 1.2085 10.7833 1.6835 11.3833 2.2835C11.9833 2.8835 12.4583 3.58905 12.8083 4.40016C13.1583 5.21127 13.3333 6.07794 13.3333 7.00016C13.3333 7.8335 13.1917 8.61683 12.9083 9.35016C12.625 10.0835 12.2333 10.7446 11.7333 11.3335C11.6111 11.4779 11.4583 11.5529 11.275 11.5585C11.0917 11.5641 10.9333 11.5002 10.8 11.3668C10.6778 11.2446 10.6167 11.0891 10.6167 10.9002C10.6167 10.7113 10.6778 10.5446 10.8 10.4002C11.1778 9.9335 11.4722 9.41127 11.6833 8.8335C11.8944 8.25572 12 7.64461 12 7.00016C12 5.51127 11.4833 4.25016 10.45 3.21683C9.41667 2.1835 8.15555 1.66683 6.66667 1.66683C5.17778 1.66683 3.91667 2.1835 2.88333 3.21683C1.85 4.25016 1.33333 5.51127 1.33333 7.00016C1.33333 7.64461 1.43889 8.25294 1.65 8.82516C1.86111 9.39738 2.16111 9.91683 2.55 10.3835C2.67222 10.5279 2.73611 10.6918 2.74167 10.8752C2.74722 11.0585 2.68333 11.2168 2.55 11.3502ZM4.43333 9.46683C4.3 9.60016 4.13889 9.66961 3.95 9.67516C3.76111 9.68072 3.61111 9.60572 3.5 9.45016C3.24444 9.10572 3.04167 8.72794 2.89167 8.31683C2.74167 7.90572 2.66667 7.46683 2.66667 7.00016C2.66667 5.88905 3.05556 4.94461 3.83333 4.16683C4.61111 3.38905 5.55556 3.00016 6.66667 3.00016C7.77778 3.00016 8.72222 3.38905 9.5 4.16683C10.2778 4.94461 10.6667 5.88905 10.6667 7.00016C10.6667 7.46683 10.5917 7.9085 10.4417 8.32516C10.2917 8.74183 10.0889 9.11683 9.83333 9.45016C9.72222 9.59461 9.57222 9.66961 9.38333 9.67516C9.19444 9.68072 9.03333 9.61683 8.9 9.4835C8.77778 9.36127 8.71389 9.20572 8.70833 9.01683C8.70278 8.82794 8.75556 8.65572 8.86667 8.50016C9.01111 8.27794 9.125 8.04183 9.20833 7.79183C9.29167 7.54183 9.33333 7.27794 9.33333 7.00016C9.33333 6.26683 9.07222 5.63905 8.55 5.11683C8.02778 4.59461 7.4 4.3335 6.66667 4.3335C5.93333 4.3335 5.30556 4.59461 4.78333 5.11683C4.26111 5.63905 4 6.26683 4 7.00016C4 7.28905 4.04167 7.55572 4.125 7.80016C4.20833 8.04461 4.32222 8.27794 4.46667 8.50016C4.57778 8.65572 4.63056 8.82516 4.625 9.0085C4.61944 9.19183 4.55556 9.34461 4.43333 9.46683Z"
+                      fill="black"
+                    ></path>
+                  </svg>
+                  <span class="text-base!">Podcast</span>
+                </span>
+              </label>
+              <label class="px-4 py-3 flex items-center gap-2"
+                ><input
+                  type="radio"
+                  name="blog_type_mobile"
+                  aria-label="Article"
+                  value="article"
+                />
+                <span
+                  class="inline-flex items-center gap-1 text-base! font-medium"
+                >
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 12 12"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1.72222 11.5C1.38611 11.5 1.09838 11.3803 0.859028 11.141C0.619676 10.9016 0.5 10.6139 0.5 10.2778V1.72222C0.5 1.38611 0.619676 1.09838 0.859028 0.859028C1.09838 0.619676 1.38611 0.5 1.72222 0.5H10.2778C10.6139 0.5 10.9016 0.619676 11.141 0.859028C11.3803 1.09838 11.5 1.38611 11.5 1.72222V10.2778C11.5 10.6139 11.3803 10.9016 11.141 11.141C10.9016 11.3803 10.6139 11.5 10.2778 11.5H1.72222ZM3.55556 9.05556H6.61111C6.78426 9.05556 6.9294 8.99699 7.04653 8.87986C7.16366 8.76273 7.22222 8.61759 7.22222 8.44444C7.22222 8.2713 7.16366 8.12616 7.04653 8.00903C6.9294 7.8919 6.78426 7.83333 6.61111 7.83333H3.55556C3.38241 7.83333 3.23727 7.8919 3.12014 8.00903C3.00301 8.12616 2.94444 8.2713 2.94444 8.44444C2.94444 8.61759 3.00301 8.76273 3.12014 8.87986C3.23727 8.99699 3.38241 9.05556 3.55556 9.05556ZM3.55556 6.61111H8.44444C8.61759 6.61111 8.76273 6.55255 8.87986 6.43542C8.99699 6.31829 9.05556 6.17315 9.05556 6C9.05556 5.82685 8.99699 5.68171 8.87986 5.56458C8.76273 5.44745 8.61759 5.38889 8.44444 5.38889H3.55556C3.38241 5.38889 3.23727 5.44745 3.12014 5.56458C3.00301 5.68171 2.94444 5.82685 2.94444 6C2.94444 6.17315 3.00301 6.31829 3.12014 6.43542C3.23727 6.55255 3.38241 6.61111 3.55556 6.61111ZM3.55556 4.16667H8.44444C8.61759 4.16667 8.76273 4.1081 8.87986 3.99097C8.99699 3.87384 9.05556 3.7287 9.05556 3.55556C9.05556 3.38241 8.99699 3.23727 8.87986 3.12014C8.76273 3.00301 8.61759 2.94444 8.44444 2.94444H3.55556C3.38241 2.94444 3.23727 3.00301 3.12014 3.12014C3.00301 3.23727 2.94444 3.38241 2.94444 3.55556C2.94444 3.7287 3.00301 3.87384 3.12014 3.99097C3.23727 4.1081 3.38241 4.16667 3.55556 4.16667Z"
+                      fill="#1C1E21"
+                    ></path>
+                  </svg>
+                  <span class="text-base!">Article</span>
+                </span>
+              </label>
+            </fieldset>
+
+            <button
+              id="applyFiltersBtn"
+              class="mt-auto w-full bg-black text-yellow text-lg! font-medium tracking-wide py-5 px-auto rounded-lg"
+              onclick="applyFilters(); closeFilterOverlay();"
+            >
+              Apply Filters
+            </button>
+          </div>
+        </form>
+        {% if data.pieces | length == 0 %}
+        <div class="text-center my-14">
+          <p class="text-2xl! text-secondary">
+            No data available for the current filter or search criteria.
+          </p>
+        </div>
+        {% endif %} {% if data.pieces | length > 0 %}
+        <div
+          class="grid min-[1100px]:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 lg:mb-16 mb-8 BlogCardWidgetDiv text-left"
+        >
+          {% set startIndex = 1 if (not has_params or data.query.page == "1")
+          else 0 %} {% set endIndex = 10 %} {% for i in range(startIndex,
+          endIndex) %} {% set piece = data.pieces[i] %} {% if piece %}
+          <div class="fading-border">
+            <div
+              class="fading-border-inner p-4 BlogCardWidget flex flex-col justify-between h-full"
+            >
+              <div>
+                <a
+                  class="blogCardImg"
+                  class="w-full h-48 object-cover object-center"
+                  aria-hidden="true"
+                  tabindex="-1"
+                  href="{{ piece._url }}"
+                  style="display: block"
+                  loading="lazy"
+                >
+
+                  {% set image = apos.image.first(piece.bannerImage) %}
+          {% if image %}
+            <img 
+              src="{{ apos.attachment.url(image, { size: 'full' }) }}" 
+              alt="{{ image._alt or '' }}" 
+              width="{{ image.width or '' }}" 
+              height="{{ image.height or '' }}"
+              class="w-full h-48 object-cover object-center"
+              loading="lazy"
+            >
+          {% endif %}
+                </a>
+                <div class="mt-4">
+                  <div class="flex flex-wrap gap-2 mb-2 font-medium">
+                    {% if data.pieces[i].blog_type %}
+                    <span
+                      class="inline-flex items-center px-3 py-1 gap-2 rounded-full text-base! font-medium"
+                      style="background-color: #d1f7d1; color: #1c1e21"
+                    >
+                      {% if data.pieces[i].blog_type == 'podcast' %}
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 13.0002V8.15016C5.8 8.02794 5.63889 7.86961 5.51667 7.67516C5.39444 7.48072 5.33333 7.25572 5.33333 7.00016C5.33333 6.6335 5.46389 6.31961 5.725 6.0585C5.98611 5.79738 6.3 5.66683 6.66667 5.66683C7.03333 5.66683 7.34722 5.79738 7.60833 6.0585C7.86944 6.31961 8 6.6335 8 7.00016C8 7.25572 7.93889 7.4835 7.81667 7.6835C7.69444 7.8835 7.53333 8.03905 7.33333 8.15016V13.0002C7.33333 13.1891 7.26944 13.3474 7.14167 13.4752C7.01389 13.6029 6.85556 13.6668 6.66667 13.6668C6.47778 13.6668 6.31944 13.6029 6.19167 13.4752C6.06389 13.3474 6 13.1891 6 13.0002ZM2.55 11.3502C2.41667 11.4835 2.25556 11.5502 2.06667 11.5502C1.87778 11.5502 1.72222 11.4779 1.6 11.3335C1.1 10.7446 0.708333 10.0835 0.425 9.35016C0.141667 8.61683 0 7.8335 0 7.00016C0 6.07794 0.175 5.21127 0.525 4.40016C0.875 3.58905 1.35 2.8835 1.95 2.2835C2.55 1.6835 3.25556 1.2085 4.06667 0.858496C4.87778 0.508496 5.74444 0.333496 6.66667 0.333496C7.58889 0.333496 8.45555 0.508496 9.26667 0.858496C10.0778 1.2085 10.7833 1.6835 11.3833 2.2835C11.9833 2.8835 12.4583 3.58905 12.8083 4.40016C13.1583 5.21127 13.3333 6.07794 13.3333 7.00016C13.3333 7.8335 13.1917 8.61683 12.9083 9.35016C12.625 10.0835 12.2333 10.7446 11.7333 11.3335C11.6111 11.4779 11.4583 11.5529 11.275 11.5585C11.0917 11.5641 10.9333 11.5002 10.8 11.3668C10.6778 11.2446 10.6167 11.0891 10.6167 10.9002C10.6167 10.7113 10.6778 10.5446 10.8 10.4002C11.1778 9.9335 11.4722 9.41127 11.6833 8.8335C11.8944 8.25572 12 7.64461 12 7.00016C12 5.51127 11.4833 4.25016 10.45 3.21683C9.41667 2.1835 8.15555 1.66683 6.66667 1.66683C5.17778 1.66683 3.91667 2.1835 2.88333 3.21683C1.85 4.25016 1.33333 5.51127 1.33333 7.00016C1.33333 7.64461 1.43889 8.25294 1.65 8.82516C1.86111 9.39738 2.16111 9.91683 2.55 10.3835C2.67222 10.5279 2.73611 10.6918 2.74167 10.8752C2.74722 11.0585 2.68333 11.2168 2.55 11.3502ZM4.43333 9.46683C4.3 9.60016 4.13889 9.66961 3.95 9.67516C3.76111 9.68072 3.61111 9.60572 3.5 9.45016C3.24444 9.10572 3.04167 8.72794 2.89167 8.31683C2.74167 7.90572 2.66667 7.46683 2.66667 7.00016C2.66667 5.88905 3.05556 4.94461 3.83333 4.16683C4.61111 3.38905 5.55556 3.00016 6.66667 3.00016C7.77778 3.00016 8.72222 3.38905 9.5 4.16683C10.2778 4.94461 10.6667 5.88905 10.6667 7.00016C10.6667 7.46683 10.5917 7.9085 10.4417 8.32516C10.2917 8.74183 10.0889 9.11683 9.83333 9.45016C9.72222 9.59461 9.57222 9.66961 9.38333 9.67516C9.19444 9.68072 9.03333 9.61683 8.9 9.4835C8.77778 9.36127 8.71389 9.20572 8.70833 9.01683C8.70278 8.82794 8.75556 8.65572 8.86667 8.50016C9.01111 8.27794 9.125 8.04183 9.20833 7.79183C9.29167 7.54183 9.33333 7.27794 9.33333 7.00016C9.33333 6.26683 9.07222 5.63905 8.55 5.11683C8.02778 4.59461 7.4 4.3335 6.66667 4.3335C5.93333 4.3335 5.30556 4.59461 4.78333 5.11683C4.26111 5.63905 4 6.26683 4 7.00016C4 7.28905 4.04167 7.55572 4.125 7.80016C4.20833 8.04461 4.32222 8.27794 4.46667 8.50016C4.57778 8.65572 4.63056 8.82516 4.625 9.0085C4.61944 9.19183 4.55556 9.34461 4.43333 9.46683Z"
+                          fill="black"
+                        />
+                      </svg>
+                      {% elif data.pieces[i].blog_type == 'article' %}
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1.72222 11.5C1.38611 11.5 1.09838 11.3803 0.859028 11.141C0.619676 10.9016 0.5 10.6139 0.5 10.2778V1.72222C0.5 1.38611 0.619676 1.09838 0.859028 0.859028C1.09838 0.619676 1.38611 0.5 1.72222 0.5H10.2778C10.6139 0.5 10.9016 0.619676 11.141 0.859028C11.3803 1.09838 11.5 1.38611 11.5 1.72222V10.2778C11.5 10.6139 11.3803 10.9016 11.141 11.141C10.9016 11.3803 10.6139 11.5 10.2778 11.5H1.72222ZM3.55556 9.05556H6.61111C6.78426 9.05556 6.9294 8.99699 7.04653 8.87986C7.16366 8.76273 7.22222 8.61759 7.22222 8.44444C7.22222 8.2713 7.16366 8.12616 7.04653 8.00903C6.9294 7.8919 6.78426 7.83333 6.61111 7.83333H3.55556C3.38241 7.83333 3.23727 7.8919 3.12014 8.00903C3.00301 8.12616 2.94444 8.2713 2.94444 8.44444C2.94444 8.61759 3.00301 8.76273 3.12014 8.87986C3.23727 8.99699 3.38241 9.05556 3.55556 9.05556ZM3.55556 6.61111H8.44444C8.61759 6.61111 8.76273 6.55255 8.87986 6.43542C8.99699 6.31829 9.05556 6.17315 9.05556 6C9.05556 5.82685 8.99699 5.68171 8.87986 5.56458C8.76273 5.44745 8.61759 5.38889 8.44444 5.38889H3.55556C3.38241 5.38889 3.23727 5.44745 3.12014 5.56458C3.00301 5.68171 2.94444 5.82685 2.94444 6C2.94444 6.17315 3.00301 6.31829 3.12014 6.43542C3.23727 6.55255 3.38241 6.61111 3.55556 6.61111ZM3.55556 4.16667H8.44444C8.61759 4.16667 8.76273 4.1081 8.87986 3.99097C8.99699 3.87384 9.05556 3.7287 9.05556 3.55556C9.05556 3.38241 8.99699 3.23727 8.87986 3.12014C8.76273 3.00301 8.61759 2.94444 8.44444 2.94444H3.55556C3.38241 2.94444 3.23727 3.00301 3.12014 3.12014C3.00301 3.23727 2.94444 3.38241 2.94444 3.55556C2.94444 3.7287 3.00301 3.87384 3.12014 3.99097C3.23727 4.1081 3.38241 4.16667 3.55556 4.16667Z"
+                          fill="#1C1E21"
+                        />
+                      </svg>
+                      {% endif %}
+                      <span class="text-sm!"
+                        >{{ data.pieces[i].blog_type | capitalize }}</span
+                      >
+                    </span>
+                    {% endif %} {% if data.pieces[i].category %}
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full text-sm! font-medium capitalize"
+                      style="background-color: #ffffcc; color: #1c1e21"
+                    >
+                      {{ data.pieces[i].category }}
+                    </span>
+                    {% endif %}
+                  </div>
+                  <p class="mb-2 text-base! font-bold text-lightblack">
+                    {{ piece.title }}
+                  </p>
+                  <p
+                    class="text-sm! font-normal text-lightblack tracking-wide textWrapper"
+                  >
+                    {{piece.meta}}
+                  </p>
+                </div>
+              </div>
+              <div class="w-full mt-2 justify-between items-center">
+                <a
+                  class="inline-block bg-yellow text-black rounded-lg px-3 py-2 text-sm! font-medium BlogCardWidgetLink min-w-max"
+                  href="{{ piece._url }}"
+                  aria-label="Read More about {{ piece.title }}"
+                  >Read More</a
+                >
+              </div>
+            </div>
+          </div>
+          {% endif %} {% endfor %}
+        </div>
+        {% endif %} {% area data.page, 'main' %}
+      </div>
+      <form
+        id="filterFormDesktop"
+        class="hidden lg:block lg:ml-5 mb-8 flex flex-col items-start gap-4 xl:w-1/4 lg:w-1/5 right-0 lg:sticky lg:top-20 lg:self-start"
+        onsubmit="return false;"
+      >
+        <div class="flex items-stretch gap-2 w-full">
+          <div class="relative flex-grow w-full">
+            <div class="absolute top-5 left-3">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 15L10.3333 10.3333M11.8889 6.44444C11.8889 9.45133 9.45133 11.8889 6.44444 11.8889C3.43756 11.8889 1 9.45133 1 6.44444C1 3.43756 3.43756 1 6.44444 1C9.45133 1 11.8889 3.43756 11.8889 6.44444Z"
+                  stroke="#6B7280"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <input
+              type="text"
+              id="searchBoxDesktop"
+              name="search_desktop"
+              aria-label="Search Box"
+              class="border border-black rounded-lg px-8 py-4 text-sm! w-full"
+              placeholder="Search..."
+              value="{{ data.search or '' }}"
+              oninput="toggleClearButton('desktop')"
+            />
+            <button
+              id="clearSearchDesktop"
+              class="absolute right-3 top-4 hidden"
+              onclick="clearSearch('desktop')"
+              aria-label="Clear Search"
+            >
+              ✖
+            </button>
+          </div>
+          <button
+            id="searchButtonDesktop"
+            aria-label="Search"
+            class="bg-yellow text-black border border-black px-4 py-4 rounded-lg flex items-center"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 15L10.3333 10.3333M11.8889 6.44444C11.8889 9.45133 9.45133 11.8889 6.44444 11.8889C3.43756 11.8889 1 9.45133 1 6.44444C1 3.43756 3.43756 1 6.44444 1C9.45133 1 11.8889 3.43756 11.8889 6.44444Z"
+                stroke="black"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+        <fieldset class="flex flex-col mt-5" aria-label="Categories filter">
+          <legend></legend>
+          <div class="flex items-center gap-2">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.00257 16C6.71996 16 6.48307 15.9042 6.2919 15.7125C6.10072 15.5208 6.00513 15.2833 6.00513 15V9L0.220022 1.6C-0.0293363 1.26667 -0.06674 0.916667 0.107811 0.55C0.282362 0.183333 0.585747 0 1.01797 0H14.982C15.4143 0 15.7176 0.183333 15.8922 0.55C16.0667 0.916667 16.0293 1.26667 15.78 1.6L9.99487 9V15C9.99487 15.2833 9.89928 15.5208 9.7081 15.7125C9.51693 15.9042 9.28004 16 8.99743 16H7.00257Z"
+                fill="black"
+              />
+            </svg>
+            <h2 class="text-xl! font-medium mb-0">Filter</h2>
+          </div>
+          <p class="text-base! font-bold mt-2.5 mb-4">Categories</p>
+          <label class="px-4 py-3 flex items-center gap-2"
+            ><input
+              type="radio"
+              name="category_desktop"
+              value=""
+              aria-label="All"
+              checked
+            />
+            All</label
+          >
+          <label class="px-4 py-3 flex items-center gap-2"
+            ><input
+              type="radio"
+              name="category_desktop"
+              aria-label="Creative"
+              value="Creative"
+            />
+            Creative</label
+          >
+          <label class="px-4 py-3 flex items-center gap-2"
+            ><input
+              type="radio"
+              name="category_desktop"
+              value="UX"
+              aria-label="UX"
+            />
+            UX</label
+          >
+          <label class="px-4 py-3 flex items-center gap-2"
+            ><input
+              type="radio"
+              name="category_desktop"
+              aria-label="Development"
+              value="Development"
+            />
+            Development</label
+          >
+          <label class="px-4 py-3 flex items-center gap-2"
+            ><input
+              type="radio"
+              name="category_desktop"
+              aria-label="Compliance"
+              value="Compliance"
+            />
+            Compliance</label
+          >
+          <label class="px-4 py-3 flex items-center gap-2"
+            ><input
+              type="radio"
+              name="category_desktop"
+              aria-label="Accessibility"
+              value="Accessibility"
+            />
+            Accessibility</label
+          >
+          <label class="px-4 py-3 flex items-center gap-2"
+            ><input
+              type="radio"
+              name="category_desktop"
+              aria-label="How-To"
+              value="How-To"
+            />
+            How-To</label
+          >
+        </fieldset>
+
+        <fieldset class="flex flex-col mt-5" aria-label="Type filter">
+          <legend class="text-base! font-bold mt-2.5 mb-4">Type</legend>
+          <label class="px-4 py-3 flex items-center gap-2"
+            ><input
+              type="radio"
+              name="blog_type_desktop"
+              value=""
+              aria-label="All"
+              checked
+            />
+            All</label
+          >
+          <label class="px-4 py-3 flex items-center gap-2"
+            ><input
+              type="radio"
+              name="blog_type_desktop"
+              value="podcast"
+              aria-label="Podcast"
+            />
+            <span class="inline-flex items-center gap-1 text-base! font-medium">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 13.0002V8.15016C5.8 8.02794 5.63889 7.86961 5.51667 7.67516C5.39444 7.48072 5.33333 7.25572 5.33333 7.00016C5.33333 6.6335 5.46389 6.31961 5.725 6.0585C5.98611 5.79738 6.3 5.66683 6.66667 5.66683C7.03333 5.66683 7.34722 5.79738 7.60833 6.0585C7.86944 6.31961 8 6.6335 8 7.00016C8 7.25572 7.93889 7.4835 7.81667 7.6835C7.69444 7.8835 7.53333 8.03905 7.33333 8.15016V13.0002C7.33333 13.1891 7.26944 13.3474 7.14167 13.4752C7.01389 13.6029 6.85556 13.6668 6.66667 13.6668C6.47778 13.6668 6.31944 13.6029 6.19167 13.4752C6.06389 13.3474 6 13.1891 6 13.0002ZM2.55 11.3502C2.41667 11.4835 2.25556 11.5502 2.06667 11.5502C1.87778 11.5502 1.72222 11.4779 1.6 11.3335C1.1 10.7446 0.708333 10.0835 0.425 9.35016C0.141667 8.61683 0 7.8335 0 7.00016C0 6.07794 0.175 5.21127 0.525 4.40016C0.875 3.58905 1.35 2.8835 1.95 2.2835C2.55 1.6835 3.25556 1.2085 4.06667 0.858496C4.87778 0.508496 5.74444 0.333496 6.66667 0.333496C7.58889 0.333496 8.45555 0.508496 9.26667 0.858496C10.0778 1.2085 10.7833 1.6835 11.3833 2.2835C11.9833 2.8835 12.4583 3.58905 12.8083 4.40016C13.1583 5.21127 13.3333 6.07794 13.3333 7.00016C13.3333 7.8335 13.1917 8.61683 12.9083 9.35016C12.625 10.0835 12.2333 10.7446 11.7333 11.3335C11.6111 11.4779 11.4583 11.5529 11.275 11.5585C11.0917 11.5641 10.9333 11.5002 10.8 11.3668C10.6778 11.2446 10.6167 11.0891 10.6167 10.9002C10.6167 10.7113 10.6778 10.5446 10.8 10.4002C11.1778 9.9335 11.4722 9.41127 11.6833 8.8335C11.8944 8.25572 12 7.64461 12 7.00016C12 5.51127 11.4833 4.25016 10.45 3.21683C9.41667 2.1835 8.15555 1.66683 6.66667 1.66683C5.17778 1.66683 3.91667 2.1835 2.88333 3.21683C1.85 4.25016 1.33333 5.51127 1.33333 7.00016C1.33333 7.64461 1.43889 8.25294 1.65 8.82516C1.86111 9.39738 2.16111 9.91683 2.55 10.3835C2.67222 10.5279 2.73611 10.6918 2.74167 10.8752C2.74722 11.0585 2.68333 11.2168 2.55 11.3502ZM4.43333 9.46683C4.3 9.60016 4.13889 9.66961 3.95 9.67516C3.76111 9.68072 3.61111 9.60572 3.5 9.45016C3.24444 9.10572 3.04167 8.72794 2.89167 8.31683C2.74167 7.90572 2.66667 7.46683 2.66667 7.00016C2.66667 5.88905 3.05556 4.94461 3.83333 4.16683C4.61111 3.38905 5.55556 3.00016 6.66667 3.00016C7.77778 3.00016 8.72222 3.38905 9.5 4.16683C10.2778 4.94461 10.6667 5.88905 10.6667 7.00016C10.6667 7.46683 10.5917 7.9085 10.4417 8.32516C10.2917 8.74183 10.0889 9.11683 9.83333 9.45016C9.72222 9.59461 9.57222 9.66961 9.38333 9.67516C9.19444 9.68072 9.03333 9.61683 8.9 9.4835C8.77778 9.36127 8.71389 9.20572 8.70833 9.01683C8.70278 8.82794 8.75556 8.65572 8.86667 8.50016C9.01111 8.27794 9.125 8.04183 9.20833 7.79183C9.29167 7.54183 9.33333 7.27794 9.33333 7.00016C9.33333 6.26683 9.07222 5.63905 8.55 5.11683C8.02778 4.59461 7.4 4.3335 6.66667 4.3335C5.93333 4.3335 5.30556 4.59461 4.78333 5.11683C4.26111 5.63905 4 6.26683 4 7.00016C4 7.28905 4.04167 7.55572 4.125 7.80016C4.20833 8.04461 4.32222 8.27794 4.46667 8.50016C4.57778 8.65572 4.63056 8.82516 4.625 9.0085C4.61944 9.19183 4.55556 9.34461 4.43333 9.46683Z"
+                  fill="black"
+                ></path>
+              </svg>
+              <span class="text-base!">Podcast</span>
+            </span>
+          </label>
+          <label class="px-4 py-3 flex items-center gap-2"
+            ><input
+              type="radio"
+              name="blog_type_desktop"
+              value="article"
+              aria-label="Article"
+            />
+            <span class="inline-flex items-center gap-1 text-base! font-medium">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1.72222 11.5C1.38611 11.5 1.09838 11.3803 0.859028 11.141C0.619676 10.9016 0.5 10.6139 0.5 10.2778V1.72222C0.5 1.38611 0.619676 1.09838 0.859028 0.859028C1.09838 0.619676 1.38611 0.5 1.72222 0.5H10.2778C10.6139 0.5 10.9016 0.619676 11.141 0.859028C11.3803 1.09838 11.5 1.38611 11.5 1.72222V10.2778C11.5 10.6139 11.3803 10.9016 11.141 11.141C10.9016 11.3803 10.6139 11.5 10.2778 11.5H1.72222ZM3.55556 9.05556H6.61111C6.78426 9.05556 6.9294 8.99699 7.04653 8.87986C7.16366 8.76273 7.22222 8.61759 7.22222 8.44444C7.22222 8.2713 7.16366 8.12616 7.04653 8.00903C6.9294 7.8919 6.78426 7.83333 6.61111 7.83333H3.55556C3.38241 7.83333 3.23727 7.8919 3.12014 8.00903C3.00301 8.12616 2.94444 8.2713 2.94444 8.44444C2.94444 8.61759 3.00301 8.76273 3.12014 8.87986C3.23727 8.99699 3.38241 9.05556 3.55556 9.05556ZM3.55556 6.61111H8.44444C8.61759 6.61111 8.76273 6.55255 8.87986 6.43542C8.99699 6.31829 9.05556 6.17315 9.05556 6C9.05556 5.82685 8.99699 5.68171 8.87986 5.56458C8.76273 5.44745 8.61759 5.38889 8.44444 5.38889H3.55556C3.38241 5.38889 3.23727 5.44745 3.12014 5.56458C3.00301 5.68171 2.94444 5.82685 2.94444 6C2.94444 6.17315 3.00301 6.31829 3.12014 6.43542C3.23727 6.55255 3.38241 6.61111 3.55556 6.61111ZM3.55556 4.16667H8.44444C8.61759 4.16667 8.76273 4.1081 8.87986 3.99097C8.99699 3.87384 9.05556 3.7287 9.05556 3.55556C9.05556 3.38241 8.99699 3.23727 8.87986 3.12014C8.76273 3.00301 8.61759 2.94444 8.44444 2.94444H3.55556C3.38241 2.94444 3.23727 3.00301 3.12014 3.12014C3.00301 3.23727 2.94444 3.38241 2.94444 3.55556C2.94444 3.7287 3.00301 3.87384 3.12014 3.99097C3.23727 4.1081 3.38241 4.16667 3.55556 4.16667Z"
+                  fill="#1C1E21"
+                ></path>
+              </svg>
+              <span class="text-base!">Article</span>
+            </span>
+          </label>
+        </fieldset>
+      </form>
+
+      <script>
+        let tempMobileFilters = { category: "", blogType: "" };
+
+        document.addEventListener("DOMContentLoaded", () => {
+          const urlParams = new URLSearchParams(window.location.search);
+
+          const formSelectors = [
+            {
+              prefix: "mobile",
+              form: document.getElementById("filterFormMobile"),
+              searchName: "search_mobile",
+              categoryName: "category_mobile",
+              typeName: "blog_type_mobile",
+              applyBtn: "applyFiltersBtn",
+              searchBtn: "searchButtonMobile",
+            },
+            {
+              prefix: "desktop",
+              form: document.getElementById("filterFormDesktop"),
+              searchName: "search_desktop",
+              categoryName: "category_desktop",
+              typeName: "blog_type_desktop",
+              searchBtn: "searchButtonDesktop",
+            },
+          ];
+
+          formSelectors.forEach(
+            ({
+              prefix,
+              form,
+              searchName,
+              categoryName,
+              typeName,
+              applyBtn,
+              searchBtn,
+            }) => {
+              if (!form) return;
+
+              const category = urlParams.get("category");
+              const blogType = urlParams.get("blog_type");
+              const search = urlParams.get("search");
+
+              if (category) {
+                const categoryRadio = form.querySelector(
+                  `input[name="${categoryName}"][value="${category}"]`
+                );
+                if (categoryRadio) categoryRadio.checked = true;
+              }
+
+              if (blogType) {
+                const typeRadio = form.querySelector(
+                  `input[name="${typeName}"][value="${blogType}"]`
+                );
+                if (typeRadio) typeRadio.checked = true;
+              }
+
+              if (search) {
+                const searchBoxElement = form.querySelector(
+                  `input[name="${searchName}"]`
+                );
+                if (searchBoxElement) searchBoxElement.value = search;
+              }
+
+              if (prefix === "mobile") {
+                form
+                  .querySelectorAll(
+                    `input[name="${categoryName}"], input[name="${typeName}"]`
+                  )
+                  .forEach((radio) => {
+                    radio.addEventListener("change", () => {
+                      tempMobileFilters.category =
+                        form.querySelector(
+                          `input[name="${categoryName}"]:checked`
+                        )?.value || "";
+                      tempMobileFilters.blogType =
+                        form.querySelector(`input[name="${typeName}"]:checked`)
+                          ?.value || "";
+                    });
+                  });
+
+                const searchBoxElement = form.querySelector(
+                  `input[name="${searchName}"]`
+                );
+                if (searchBoxElement) {
+                  searchBoxElement.addEventListener("keydown", (event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      applySearch("mobile");
+                    }
+                  });
+                }
+
+                document
+                  .getElementById(applyBtn)
+                  ?.addEventListener("click", () => {
+                    applyFilters("mobile");
+                  });
+
+                document
+                  .getElementById(searchBtn)
+                  ?.addEventListener("click", () => {
+                    applySearch("mobile");
+                  });
+              } else {
+                form
+                  .querySelectorAll(
+                    `input[name="${categoryName}"], input[name="${typeName}"]`
+                  )
+                  .forEach((radio) => {
+                    radio.addEventListener("change", () => {
+                      applyFilters("desktop");
+                    });
+                  });
+
+                const searchBoxElement = form.querySelector(
+                  `input[name="${searchName}"]`
+                );
+                if (searchBoxElement) {
+                  searchBoxElement.addEventListener("keydown", (event) => {
+                    if (event.key === "Enter") {
+                      event.preventDefault();
+                      applySearch("desktop");
+                    }
+                  });
+                }
+
+                document
+                  .getElementById(searchBtn)
+                  ?.addEventListener("click", () => {
+                    applySearch("desktop");
+                  });
+              }
+            }
+          );
+        });
+
+        function applySearch(prefix) {
+          const urlParams = new URLSearchParams(window.location.search);
+          const searchBox = document.querySelector(
+            `#filterForm${
+              prefix.charAt(0).toUpperCase() + prefix.slice(1)
+            } input[name="search_${prefix}"]`
+          );
+
+          if (searchBox && searchBox.value.trim()) {
+            urlParams.set("search", searchBox.value.trim());
+          } else {
+            urlParams.delete("search");
+          }
+
+          // Remove the `page` parameter when applying search
+          urlParams.delete("page");
+
+          const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+          window.location.href = newUrl;
+        }
+
+        function applyFilters(prefix) {
+          const urlParams = new URLSearchParams(window.location.search);
+
+          const formSelectors = {
+            mobile: {
+              form: document.getElementById("filterFormMobile"),
+              categoryName: "category_mobile",
+              typeName: "blog_type_mobile",
+            },
+            desktop: {
+              form: document.getElementById("filterFormDesktop"),
+              categoryName: "category_desktop",
+              typeName: "blog_type_desktop",
+            },
+          };
+
+          const formConfig = formSelectors[prefix];
+          if (!formConfig.form) return;
+
+          let selectedCategory =
+            formConfig.form.querySelector(
+              `input[name="${formConfig.categoryName}"]:checked`
+            )?.value || "";
+          let selectedType =
+            formConfig.form.querySelector(
+              `input[name="${formConfig.typeName}"]:checked`
+            )?.value || "";
+
+          if (selectedCategory) urlParams.set("category", selectedCategory);
+          else urlParams.delete("category");
+
+          if (selectedType) urlParams.set("blog_type", selectedType);
+          else urlParams.delete("blog_type");
+
+          // Remove the `page` parameter when applying filters
+          urlParams.delete("page");
+
+          const currentSearch = new URLSearchParams(window.location.search).get(
+            "search"
+          );
+          if (currentSearch) {
+            urlParams.set("search", currentSearch);
+          }
+
+          const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+          window.location.href = newUrl;
+        }
+
+        window.addEventListener("popstate", () => {
+          const urlParams = new URLSearchParams(window.location.search);
+
+          if (
+            urlParams.has("category") ||
+            urlParams.has("blog_type") ||
+            urlParams.has("search")
+          ) {
+            urlParams.delete("page");
+
+            const newUrl = `${
+              window.location.pathname
+            }?${urlParams.toString()}`;
+            window.location.replace(newUrl);
+          }
+        });
+      </script>
+
+      <script>
+        function closeFilterOverlay() {
+          const filterOverlay = document.getElementById("filterOverlay");
+          if (filterOverlay) {
+            filterOverlay.classList.add("hidden");
+          }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+          const filterHamburger = document.getElementById("filterHamburger");
+          const filterOverlay = document.getElementById("filterOverlay");
+          const closeFilter = document.getElementById("closeFilter");
+          const searchBoxMobile = document.getElementById("searchBoxMobile");
+
+          // Open filter overlay
+          if (filterHamburger && filterOverlay) {
+            filterHamburger.addEventListener("click", () => {
+              filterOverlay.classList.remove("hidden");
+            });
+          }
+
+          // Close filter overlay
+          if (closeFilter && filterOverlay) {
+            closeFilter.addEventListener("click", () => {
+              filterOverlay.classList.add("hidden");
+            });
+          }
+
+          // Close overlay when clicking outside
+          if (filterOverlay) {
+            filterOverlay.addEventListener("click", (event) => {
+              if (event.target === filterOverlay) {
+                filterOverlay.classList.add("hidden");
+              }
+            });
+          }
+
+          // Expand search box to w-full and hide filterHamburger when focused
+          if (searchBoxMobile && filterHamburger) {
+            searchBoxMobile.addEventListener("focus", () => {
+              searchBoxMobile.classList.add("w-full");
+              filterHamburger.style.display = "none"; // Hide the filter button
+            });
+
+            // Ensure search box remains expanded and restore filterHamburger only if empty
+            searchBoxMobile.addEventListener("blur", () => {
+              searchBoxMobile.classList.add("w-full"); // Keep it expanded
+              if (!searchBoxMobile.value.trim()) {
+                filterHamburger.style.display = "flex"; // Restore filter button if input is empty
+              }
+            });
+
+            // Handle Enter key for searching
+            searchBoxMobile.addEventListener("keydown", (event) => {
+              if (event.key === "Enter") {
+                event.preventDefault();
+                applySearch("mobile");
+              }
+            });
+          }
+        });
+        function toggleClearButton(prefix) {
+          const searchBox = document.getElementById(
+            `searchBox${prefix.charAt(0).toUpperCase() + prefix.slice(1)}`
+          );
+          const clearButton = document.getElementById(
+            `clearSearch${prefix.charAt(0).toUpperCase() + prefix.slice(1)}`
+          );
+
+          if (searchBox.value.trim()) {
+            clearButton.classList.remove("hidden");
+          } else {
+            clearButton.classList.add("hidden");
+          }
+        }
+
+        function clearSearch(prefix) {
+          const searchBox = document.getElementById(
+            `searchBox${prefix.charAt(0).toUpperCase() + prefix.slice(1)}`
+          );
+          searchBox.value = "";
+          toggleClearButton(prefix);
+
+          const urlParams = new URLSearchParams(window.location.search);
+          urlParams.delete("search");
+
+          const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+          window.location.href = newUrl;
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+          toggleClearButton("mobile");
+          toggleClearButton("desktop");
+        });
+      </script>
+    </div>
+  </div>
+</section>
+
+<button
+  id="scrollToTop"
+  class="scroll-to-top bg-yellow"
+  aria-label="Scroll to Top"
+>
+  <img
+    src="/images/vector.svg"
+    alt="Scroll to top"
+    width="22"
+    height="12"
+    style="width: auto; height: auto"
+  />
+</button>
+
+{% if data.totalPages > 1 %} {% render paginator.pagination(data) %} {% endif %}
+{% endblock %}

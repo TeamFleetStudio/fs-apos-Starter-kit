@@ -1,7 +1,26 @@
+.mobileLogo {
+  @media (max-width: 767px) {
+    max-height: 28px;
+    max-width: 86px;
+  }
+}
+
+.nav-item-list ul li:last-child a {
+  text-decoration: underline;
+  text-decoration-thickness: 0.55px;
+  text-underline-offset: 2px 
+}
+
+.mainNavbarSection.visible {
+  @media (max-width: 767px) {
+    display: flex !important;
+  }
+}
+
 .navigation {
   position: relative;
   // margin-top: 1.875rem;
-  margin-bottom: 1.875rem;
+  // margin-bottom: 1.875rem;
 
   @media (min-width: 1024px) {
     display: flex;

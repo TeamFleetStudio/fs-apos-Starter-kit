@@ -11,6 +11,26 @@ module.exports = {
       {
         name: '@apostrophecms/home-page',
         label: 'Home'
+      },
+      {
+        name: 'blog-page',
+        label: 'Blog page'
+      },
+      {
+        name: 'media-page',
+        label: 'Media page'
+      },
+      {
+        name: 'product-digest-page',
+        label: 'Product Digest page'
+      },
+      {
+        name: 'whitepaper-page',
+        label: 'Whitepaper page'
+      },
+      {
+        name: 'review-page',
+        label: 'Podcasts'
       }
     ]
   }

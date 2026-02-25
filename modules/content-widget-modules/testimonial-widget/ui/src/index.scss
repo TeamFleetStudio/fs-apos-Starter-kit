@@ -1,0 +1,108 @@
+.testimonial-slider {
+  .quote-circle {
+    position: absolute;
+    top: -30px;
+    left: 15%;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    z-index: 10;
+  }
+
+  .quote-circle.odd {
+    background-color: #e2ab0f;
+    color: #fff;
+  }
+
+  .quote-circle.even {
+    background-color: #000000;
+    color: #fff;
+  }
+
+  .slick-slide {
+    position: relative;
+    display: flex;
+    margin: 40px 1rem;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #ededed;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .testimonial-slider {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    overflow: visible;
+  }
+
+  .testimonial-item p {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+
+  .testimonial-item .profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .testimonial-item .profile span {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .slick-dots {
+    bottom: -30px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .slick-dots li button {
+    background-color: transparent;
+    border: none;
+    outline: none;
+  }
+  .slick-dots li button:focus {
+    outline: solid 2px #2f78c4;
+    outline-offset: 0.15rem;
+  }
+  .slick-dots li.slick-active button:before {
+    color: #e2ab0f;
+    font-size: 44px;
+  }
+
+  .slick-disabled {
+    pointer-events: none;
+    opacity: 0.35;
+  }
+  .slick-prev,
+  .slick-next,
+  .slick-next:focus,
+  .slick-prev:focus {
+    position: absolute;
+    top: calc(100% + 15px) !important;
+    transform: translateY(-50%);
+    z-index: 1;
+    cursor: pointer;
+  }
+  button.slick-next:focus,
+  button.slick-prev:focus {
+    outline: solid;
+    outline-color: #2f78c4;
+    outline-offset: 0.15rem;
+    outline-width: 2px;
+  }
+
+  .slick-dots button::before {
+    content: "" !important;
+  }
+}

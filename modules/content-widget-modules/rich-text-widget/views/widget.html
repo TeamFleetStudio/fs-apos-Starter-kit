@@ -1,3 +1,7 @@
-<section data-aos="{{ data.widget.animationEffects }}" class="apos-container widget-my-spacing{% if data.widget.customClassName %} {{ data.widget.customClassName }}{% endif %}"{% if data.widget.customId %} id="{{ data.widget.customId }}"{% endif %}>
+<section data-aos="{{ data.widget.animationEffects }}" class="widget-my-spacing {{ data.widget.customClassName }}"
+  {% if data.widget.customId %}
+    id="{{ data.widget.customId }}"
+  {% endif %}
+>
   {% area data.widget, 'richText' %}
 </section>

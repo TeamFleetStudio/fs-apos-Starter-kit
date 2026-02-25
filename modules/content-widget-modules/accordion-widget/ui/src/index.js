@@ -10,14 +10,16 @@ export default () => {
         const btnEl = button.querySelector('[data-accordion-button]');
         // Find our hidden text
         const target = button.querySelector('[data-accordion-detail]');
-
+        if(btnEl){
         btnEl.addEventListener('click', () => {
           const isExpanded = btnEl.getAttribute('aria-expanded') === 'true';
           // Update the btn's aria attribute
           btnEl.setAttribute('aria-expanded', !isExpanded);
           // Update the `hidden` attribute on the detail
           target.hidden = isExpanded;
+        
         });
+      }
       });
     }
   };
