@@ -1,0 +1,47 @@
+@import "../../../../asset/ui/src/scss/variables";
+
+.hero-banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+
+  &.bg-img-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__bg-img {
+    position: absolute;
+  }
+
+  @media only screen and (min-width: 900px) {
+    flex-direction: row;
+    align-items: center;
+
+    &__column-item {
+      width: 50%;
+    }
+  }
+
+  &:not(.bg-img-container) {
+    .hero-banner__column-item-first,
+    .hero-banner__column-item-second {
+      width: 50%;
+    }
+  }
+}
+
+.widget-my-spacing {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+[data-apos-area] [data-apos-area] {
+  margin: 0 !important;
+}
+
+.img-fluid {
+  box-shadow: none;
+}
+

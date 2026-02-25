@@ -3,7 +3,8 @@ module.exports = {
   options: {
     label: 'Product',
     openGraph: false,
-    seoFields: false
+    seoFields: false,
+    shortcut: 'g,o'
   },
   fields: {
     add: {

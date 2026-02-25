@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block title %}{{ data.piece.metaTitle }}{% endblock %}
+{% block extraHead %}{{ super() }}
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="{{data.url}}">
+{% endblock %}
+
+{% block main %}
+<div class="blogSection lg:p-16 p-8" id="main-content">
+    <section class="max-w-max flex items-center justify-center"> 
+        <a href="/media" aria-label="Back to Latest, Redirects to media page" > <button aria-label="Back to Latest, Redirects to media page" for="Back to Latest" class="flex centerCenter text-base!" style="display: flex; align-items: center; justify-content: center; column-gap: 10px; padding: 5px 15px; position: relative; border: 2px solid rgb(0, 0, 0);">Back to Latest</button></a>
+    </section>
+    <h1 class="h1 lg:my-12 mt-8 mb-2">{{ data.piece.title }}</h1>
+    <p class="ContentSection text-xl!">
+        {{data.piece.shortDescription}}
+    </p>
+    <div class="BlogImage lg:mb-12 my-8">
+        <!-- show the media post content -->
+        {% area data.piece, 'bannerImage' %}
+    </div>
+    <section class="lg:mt-12 mt-8 max-w-max flex items-center justify-center"> 
+        <a href="/media"> <button aria-label="Back to Latest" for="Back to Latest" class="flex centerCenter text-base!" style="display: flex; align-items: center; justify-content: center; column-gap: 10px; padding: 5px 15px; position: relative; border: 2px solid rgb(0, 0, 0);">
+            Back to Latest
+        </button>
+        </a>
+    </section>
+</div>
+{% endblock %}

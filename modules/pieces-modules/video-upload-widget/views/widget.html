@@ -1,0 +1,32 @@
+<div id="{{ data.widget.VideosectionID if data.widget.VideosectionID != null and data.widget.VideosectionID != '' }}" class="{{ data.widget.VideosectionClassName if data.widget.VideosectionClassName != null and data.widget.VideosectionClassName != '' }}">
+  {% for singlevideo in data.widget._video %}
+    {% set video_url = apos.attachment.url(singlevideo.video) %}
+    {% if video_url %}
+      {% set reversed_url = video_url|reverse %}
+      {% set dot_index = reversed_url.indexOf('.') %}
+      {% set video_extension = reversed_url.slice(0, dot_index)|reverse|lower %}
+      {% set video_type = '' %}
+
+      {% if video_extension == 'mp4' %}
+        {% set video_type = 'video/mp4' %}
+      {% elif video_extension == 'webm' %}
+        {% set video_type = 'video/webm' %}
+      {% else %}
+        {% set video_type = 'video/mp4' %} {# Default to mp4 if the extension is unrecognized #}
+      {% endif %}
+    {% else %}
+      {% set video_type = '' %}
+    {% endif %}
+
+    <div id="{{ singlevideo.VideoID if singlevideo.VideoID }}" class="{{ singlevideo.VideoClassName if singlevideo.VideoClassName }}">
+      {% if video_url and video_type %}
+        <video controls class="max-h-[90vh] mx-auto">
+          <source src="{{ video_url }}" type="{{ video_type }}">
+        </video>
+      {% else %}
+        <p>No video available</p>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+

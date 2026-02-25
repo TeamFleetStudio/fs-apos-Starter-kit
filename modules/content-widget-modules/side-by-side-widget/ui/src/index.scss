@@ -2,7 +2,6 @@
 
 .side-by-side {
   display: flex;
-  flex-direction: column;
   gap: 2rem;
   &__column-item {
     &.invert {

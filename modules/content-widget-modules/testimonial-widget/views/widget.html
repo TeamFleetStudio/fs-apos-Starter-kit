@@ -1,0 +1,152 @@
+<div class="{{data.widget.widgetClass}} {{data.widget.widgetId}} testimonial-slider {{'is-fluid' if data.widget.style === 'full' else 'mx-8 lg:mx-16' }}">
+  {% for testimonial in data.widget.testimonial %}
+  <div class="{{testimonial.widgetClass}} testimonial-item pt-12" style="{{ "background-color: " + testimonial.bgColor + "" if testimonial.bgColor }};">
+    <div class="quote-circle {% if loop.index % 2 == 0 %}even{% else %}odd{% endif %}" aria-hidden="true">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.425 0.151229L17.015 3.14423C15.949 3.06223 15.17 3.2809 14.678 3.80023C14.186 4.31956 13.8853 5.01656 13.776 5.89123C13.6667 6.7659 13.6393 7.7089 13.694 8.72023H17.425V17.3712H10.414V7.08023C10.414 4.56556 11.0427 2.67956 12.3 1.42223C13.5847 0.164897 15.293 -0.25877 17.425 0.151229ZM7.011 0.151229L6.601 3.14423C5.535 3.06223 4.756 3.2809 4.264 3.80023C3.772 4.31956 3.47133 5.01656 3.362 5.89123C3.25267 6.7659 3.22533 7.7089 3.28 8.72023H7.011V17.3712H0V7.08023C0 4.56556 0.628667 2.67956 1.886 1.42223C3.17067 0.164897 4.879 -0.25877 7.011 0.151229Z" fill="white"/>
+      </svg>
+    </div>
+    {% if testimonial.position === "top" %}
+    <div class="profile mb-4 px-6">
+      <div class="profileImg" aria-hidden="true">{% area testimonial, 'profile' %}</div>
+      <div>
+          <span>{{ testimonial.name }}</span>
+          <div class="designation">{{ testimonial.designation }}</div>
+      </div>
+    </div>
+    <hr aria-hidden="true" class="mb-3"/>
+    {% endif %}
+    <div class="px-6">
+      <div class="stars" 
+      style="{{ "color: " + testimonial.starColor + "" if testimonial.starColor }}" >
+      <span class="sr-only">{{ testimonial.ratings }} out of 5 stars</span>
+        <span>
+          {% for i in range(1, testimonial.ratings + 1) %}
+              ★
+          {% endfor %}
+          {% for i in range(testimonial.ratings + 1, 6) %}
+              ☆
+          {% endfor %}
+        </span>
+      </div> 
+      <div>
+          {% area testimonial, 'comments' %}
+      </div>
+    </div>
+    {% if testimonial.position === "bottom" %}
+    <hr aria-hidden="true"/>
+    <div class="profile my-4 px-6 flex">
+      <div class="profileImg" aria-hidden="true">{% area testimonial, 'profile' %}</div>
+      <div>
+          <span>{{ testimonial.name }}</span>
+          <div class="designation">{{ testimonial.designation }}</div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+<script defer>
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function () {
+    const $slider = $('.testimonial-slider');
+
+    $slider.slick({
+      accessibility: true,
+      dots: true,
+      arrows: true,
+      slidesToShow: 3.5,
+      slidesToScroll: 1,
+      adaptiveHeight: true,
+      initialSlide: 0,
+      centerMode: false,
+      infinite: false,
+      prevArrow: '<button type="button" class="slick-prev" aria-label="Previous slide" role="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.12132 10.5001H21V13.5001H8.12132L13.0607 18.4395L10.9393 20.5608L2.37868 12.0001L10.9393 3.43945L13.0607 5.56077L8.12132 10.5001Z" fill="#999999"/></svg></button>',
+      nextArrow: '<button type="button" class="slick-next" aria-label="Next slide" role="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.478 13.5563H2.92429V10.4423H15.478L10.6633 5.31522L12.7311 3.11328L21.0757 11.9993L12.7311 20.8853L10.6633 18.6833L15.478 13.5563Z" fill="#999999"/></svg></button>',
+      responsive: [
+        {
+          breakpoint: 1280,
+          settings: {
+            slidesToShow: 3.5
+          }
+        },
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2.5
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 1
+          }
+        }
+      ]
+    });
+
+    const $prevArrow = $slider.find('.slick-prev');
+    const $nextArrow = $slider.find('.slick-next');
+    const $dots = $slider.find('.slick-dots');
+
+    $prevArrow.insertBefore($dots);
+    $nextArrow.insertAfter($dots);
+
+    $slider.on('afterChange', function (event, slick, currentSlide) {
+      const $prevArrow = $('.slick-prev');
+      const $nextArrow = $('.slick-next');
+
+      if (currentSlide === 0) {
+        $prevArrow.prop('disabled', true);
+      } else {
+        $prevArrow.prop('disabled', false);
+      }
+
+      if ($nextArrow.hasClass('slick-disabled')) {
+        $nextArrow.prop('disabled', true);
+      } else {
+        $nextArrow.prop('disabled', false);
+      }
+    });
+
+    $slider.slick('slickGoTo', 0);
+  }, 100);
+});
+</script>
+
+<style>
+.testimonial-slider{
+  .slick-next:before, .slick-prev:before {
+    display: none;
+  }
+  .slick-dots li button:before {
+    font-size: 12px;
+  }
+
+  .slick-dots li.slick-active .slick-dot-icon:before, .slick-dots li button:focus .slick-dot-icon:before{
+    color: #E2AB0F !important;
+    font-size: 44px;
+  }
+
+  .slick-prev {
+    left: calc(46% - 60px);
+    @media (max-width: 1024px) {
+      left: calc(40% - 60px);
+    }
+    @media (max-width: 767px) {
+      left: calc(25% - 60px);
+    }
+  }
+
+  .slick-next {
+    right: calc(46% - 60px);
+    @media (max-width: 1024px) {
+      right: calc(40% - 60px);
+    }
+    @media (max-width: 767px) {
+      right: calc(25% - 60px);
+    }
+  }
+}
+</style>

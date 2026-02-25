@@ -1,14 +1,20 @@
-<section data-aos="{{ data.widget.animationEffects }}" data-accordion class="accordion apos-container widget-my-spacing{% if data.widget.customClassName %} {{ data.widget.customClassName }}{% endif %}"{% if data.widget.customId %} id="{{ data.widget.customId }}"{% endif %}>
+<section data-aos="{{ data.widget.animationEffects }}" data-accordion class="accordion {{ data.widget.widgetClass }}">
+  {% if data.widget.groupTitle !=='' and data.widget.groupTitle !== undefined %}
+  <h2 class="sr-only">Read our FAQ for guidance</h2>
+  <p class="font-bold text-3xl leading-8 text-black mb-3">{{ data.widget.groupTitle }}</p>
+  {% endif %}
+  <ul>
   {% for item in data.widget.accordions %}
-    <div class="accordion__item" data-accordion-item>
-      <h3 class="accordion__heading h5">
-        <button class="accordion__button" data-accordion-button aria-expanded="false">
-          {{ item.title }} <span class="accordion__button-icon"></span>
+    <li class="list-none" data-accordion-item>
+      <h3 class="m-0 border-b border-b-black font-light text-2xl!">
+        <button class="accordion__button border-0 flex justify-start w-full text-left cursor-pointer select-none pl-0 pr-6 py-4 focus-visible:outline-none" data-accordion-button aria-expanded="false">
+          <span class="accordion__button-icon pr-5"></span>{{ item.title }} 
         </button>
       </h3>
-      <div class="accordion__content" hidden data-accordion-detail>
+      <div class="accordion__content bg-white mt-2 mb-4 mx-2" hidden data-accordion-detail>
         {% area item, 'content' %}
       </div>
-    </div>
+    </li>
   {% endfor %}
+</ul>
 </section>

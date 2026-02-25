@@ -1,6 +1,4 @@
 const areaConfig = require('../../../lib/area');
-const aosSchema = require('../../../lib/aosSchema.js');
-const customAttributesSchema = require('../../../lib/customAttributesSchema');
 
 module.exports = {
   extend: '@apostrophecms/widget-type',
@@ -15,20 +13,25 @@ module.exports = {
   },
   fields: {
     add: {
+      groupTitle: {
+        type: 'string',
+        label: 'Group Title'
+      },
       accordions: {
         type: 'array',
         label: 'Accordions',
         titleField: 'title',
-        inline: true,
         fields: {
           add: {
             title: {
               type: 'string',
-              label: 'Title'
+              label: 'Title',
+              required: true
             },
             content: {
               type: 'area',
               label: 'Content',
+              required: true,
               options: {
                 widgets: areaConfig.apos
               }
@@ -36,8 +39,11 @@ module.exports = {
           }
         }
       },
-      ...aosSchema,
-      ...customAttributesSchema
+      widgetClass: {
+        type: 'string',
+        help: 'It can be use to write custom css',
+        label: 'Widget class name'
+      }
     }
   }
 };
