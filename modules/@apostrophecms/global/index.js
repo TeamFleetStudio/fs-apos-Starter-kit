@@ -58,7 +58,7 @@ module.exports = {
           },
           {
             label: 'Header Layout 1',
-            value: 'wallyax'
+            value: 'header-layout-1'
           }
         ]
       },
@@ -144,8 +144,8 @@ module.exports = {
             value: 'default'
           },
           {
-            label: 'Wallyax Footer',
-            value: 'wallyax'
+            label: 'Footer Layout 1',
+            value: 'footer-layout-1'
           }
         ]
       },
