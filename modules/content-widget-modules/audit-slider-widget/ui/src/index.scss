@@ -1,6 +1,11 @@
+.carousel-container {
+  position: relative;
+  z-index: 5;
+}
+
 .slide {
   position: relative;
-  margin: rem;
+  margin: 2.5rem 0 0 0;
   padding: 2.5rem 1rem;
   border-radius: 1rem;
   overflow: visible;
@@ -17,7 +22,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 20;
 }
 
 .progress-bar {
@@ -42,5 +47,11 @@
   }
   to {
     width: 100%;
+  }
+}
+
+.carousel-container {
+  .slick-autoplay-toggle-button {
+    margin-bottom: 0.25rem;
   }
 }

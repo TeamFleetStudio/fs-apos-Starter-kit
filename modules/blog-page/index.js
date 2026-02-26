@@ -7,7 +7,7 @@ module.exports = {
     perPage: 10
   },
   fields: {
-    // add the content field to the
+    // add tge content field to the
     // "@apostrophe/blog" piece definition
     add: {
       main: {
@@ -18,14 +18,6 @@ module.exports = {
             ...areaConfig.fullExpandedGroup
           }
         }
-      },
-      content: {
-        type: 'area',
-        options: {
-          widgets: {
-            ...areaConfig.richText
-          }
-        }
       }
     },
     // add the "content" fields to the
@@ -34,8 +26,7 @@ module.exports = {
       basics: {
         label: 'Basics',
         fields: [
-          'main',
-          'content'
+          'main'
         ]
       }
     }

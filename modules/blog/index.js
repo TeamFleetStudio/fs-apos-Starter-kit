@@ -129,6 +129,17 @@ module.exports = {
       readingTime: {
         type: 'string',
         label: 'Reading Time in Minutes'
+      },
+      bottomSection: {
+        type: 'area',
+        label: 'Bottom Section',
+        help: 'Add custom forms, widgets, or other content to appear below the blog post content',
+        options: {
+          expanded: true,
+          groups: {
+            ...areaConfig.fullExpandedGroup
+          }
+        }
       }
     },
     group: {
@@ -149,6 +160,12 @@ module.exports = {
           'podcastEmbed',
           'publishedDate',
           'readingTime'
+        ]
+      },
+      bottomSection: {
+        label: 'Bottom Section',
+        fields: [
+          'bottomSection'
         ]
       }
     }
