@@ -58,7 +58,7 @@ module.exports = {
           },
           {
             label: 'Header Layout 1',
-            value: 'wallyax'
+            value: 'header-layout-1'
           }
         ]
       },
@@ -144,8 +144,8 @@ module.exports = {
             value: 'default'
           },
           {
-            label: 'Wallyax Footer',
-            value: 'wallyax'
+            label: 'Footer Layout 1',
+            value: 'footer-layout-1'
           }
         ]
       },
@@ -213,7 +213,6 @@ module.exports = {
           footerLayout: 'default'
         }
       },
-      // Wallyax-style footer fields
       footerBgImg: {
         label: 'Footer Background Image',
         type: 'area',
@@ -224,7 +223,7 @@ module.exports = {
           }
         },
         if: {
-          footerLayout: 'wallyax'
+          footerLayout: 'footer-layout-1'
         }
       },
       footerLogo: {
@@ -242,7 +241,7 @@ module.exports = {
         type: 'string',
         textarea: true,
         if: {
-          footerLayout: 'wallyax'
+          footerLayout: 'footer-layout-1'
         }
       },
       footerPrimaryNavigation: {
@@ -268,7 +267,7 @@ module.exports = {
           }
         },
         if: {
-          footerLayout: 'wallyax'
+          footerLayout: 'footer-layout-1'
         }
       },
       footerSourceForgeScript: {
@@ -281,7 +280,7 @@ module.exports = {
           { label: 'JavaScript', value: 'javascript' }
         ],
         if: {
-          footerLayout: 'wallyax'
+          footerLayout: 'footer-layout-1'
         }
       },
       footerSocial: {
@@ -314,7 +313,7 @@ module.exports = {
           }
         },
         if: {
-          footerLayout: 'wallyax'
+          footerLayout: 'footer-layout-1'
         }
       },
       social: {

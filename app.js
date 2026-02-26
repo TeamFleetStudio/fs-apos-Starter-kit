@@ -97,6 +97,15 @@ async function startApp() {
           statusCode: 301,
         },
       },
+      '@apostrophecms/express': {
+        options: {
+          apiKeys: {
+            [process.env.APOS_ADMIN_API_KEY]: {
+              role: 'admin',
+            },
+          },
+        },
+      },
 
       helper: {},
       asset: {},

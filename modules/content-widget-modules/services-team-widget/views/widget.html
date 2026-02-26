@@ -4,7 +4,7 @@
 <section class="{{ data.widget.widgetClass }}">
     {% for card in data.widget.team %}
         <div class="flex items-center mb-8 lg:mb-3">
-            {{ ui.image(card.logo, '', 'lazy') }}
+            {{ ui.image(card.logo, 'max-w-[105px]', 'lazy') }}
             <div class="flex flex-col ml-4 ">
                 <h6 class="h6">
                     {{ card.title }}

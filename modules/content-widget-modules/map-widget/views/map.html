@@ -1,4 +1,14 @@
-{% if not data.response %}
+{% set mapType = data.widget.mapType or 'geocode' %}
+
+{% if mapType == 'embed' %}
+  {# Embedded map mode: render the iframe directly #}
+  <div
+    data-aos="{{ data.widget.animationEffects }}"
+    class="map-embed"
+  >
+    {{ data.widget.mapEmbedCode | safe }}
+  </div>
+{% elif not data.response %}
   <p>Something went wrong.</p>
 {% elif data.response.message %}
   <p>{{ data.response.message }}</p>

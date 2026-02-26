@@ -23,7 +23,13 @@ module.exports = {
       },
       bgColor: {
         type: 'color',
-        label: 'Slider Background Color'
+        label: 'Slider Background Color',
+        def: '#ffffff'
+      },
+      sliderBarColor: {
+        type: 'color',
+        label: 'Slider Bar Color',
+        def: '#000000'
       },
       slider: {
         type: 'array',
@@ -33,13 +39,23 @@ module.exports = {
           add: {
             auditCount: {
               type: 'string',
-              label: 'Audit Count',
+              label: 'Title',
               required: true
             },
             description: {
               type: 'string',
               label: 'Description',
               required: true
+            },
+            titleTextColor: {
+              type: 'color',
+              label: 'Title Text Color',
+              def: '#000000'
+            },
+            descriptionTextColor: {
+              type: 'color',
+              label: 'Description Text Color',
+              def: '#434f51'
             }
           }
         }
