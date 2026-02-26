@@ -11,7 +11,6 @@
   transition: background-color $animate-easing, opacity $animate-easing;
   border: none;
 
-  // Hover effect - will work with inline styles via opacity or filter
   &:hover:not(.swiper-button-disabled) {
     opacity: 0.8;
   }

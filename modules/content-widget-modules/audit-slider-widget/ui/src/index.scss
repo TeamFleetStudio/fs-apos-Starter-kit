@@ -1,6 +1,6 @@
 .carousel-container {
   position: relative;
-  z-index: 5; // Ensure the entire slider sits above adjacent widgets when overlapping
+  z-index: 5;
 }
 
 .slide {
@@ -22,7 +22,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 20; // Ensure this sits above nearby widgets and Slick controls
+  z-index: 20;
 }
 
 .progress-bar {
@@ -50,7 +50,6 @@
   }
 }
 
-// Slight adjustment to the Slick autoplay toggle (pause/play) button alignment
 .carousel-container {
   .slick-autoplay-toggle-button {
     margin-bottom: 0.25rem;

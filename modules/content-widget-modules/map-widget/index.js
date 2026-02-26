@@ -133,7 +133,6 @@ module.exports = {
         }
 
         try {
-          // Get API key: widget-level first, then fallback to env, then module options
           const widgetApiKey = data.widget.apiKey?.trim();
           const envApiKey = process.env.GEOCODER_API_KEY?.trim();
           const moduleApiKey = self.options.geocoderSettings?.apiKey?.trim();
@@ -156,10 +155,9 @@ module.exports = {
             };
           }
 
-          // View node-geocoder npm package for full list of options and providers - https://www.npmjs.com/package/node-geocoder
           const options = {
             ...self.options.geocoderSettings,
-            apiKey: apiKey // Use the resolved API key
+            apiKey: apiKey 
           };
           const geocoder = NodeGeocoder(options);
           const geocoderAddress = await geocoder.geocode(data.widget.address);
