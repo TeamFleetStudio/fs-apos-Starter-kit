@@ -31,7 +31,7 @@
   <link rel="preload" as="image" href="{{ bgImgColTwo }}" fetchpriority="high">
 {% endif %}
 
-<section data-aos="{{ data.widget.animationEffects }}" class="{{ 'is-fluid' if data.widget.style === 'full' else 'mx-8 lg:mx-16' }} side-by-side {{ data.widget.widgetClass }} flex flex-col md:flex-row"
+<section data-aos="{{ data.widget.animationEffects }}" class="{{ 'is-fluid' if data.widget.style === 'full' else 'mx-8 lg:mx-16' }} side-by-side {{ 'side-by-side--reversed' if data.widget.invert === true }} {{ data.widget.widgetClass }} flex flex-col md:flex-row"
 style="
     {{ "background-color: " + bgColor + "" if bgColor }}
     {% if bgImg %}
@@ -55,7 +55,7 @@ style="
   {% if bgImgColTwo %}
     <img src="{{ bgImgColTwo }}" alt="" style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none;" fetchpriority="high" loading="eager">
   {% endif %}
-  <div class="side-by-side__column-item column-item__first {{ 'invert' if data.widget.invert === true}}" style="
+  <div class="side-by-side__column-item column-item__first" style="
     {{ "background-image: url('" + bgImgColOne + "');" if bgImgColOne }}
   ">
     {% area data.widget, 'one' with data.contextOptions %}

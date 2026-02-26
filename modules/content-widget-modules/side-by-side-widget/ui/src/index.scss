@@ -4,14 +4,21 @@
   display: flex;
   gap: 2rem;
   &__column-item {
-    &.invert {
-      order: 1;
-    }
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-width: 0; // allow content to shrink instead of forcing flex overflow
+    box-sizing: border-box;
+    overflow-wrap: break-word;
   }
   @media only screen and (min-width: 900px) {
     flex-direction: row;
     &__column-item {
       width: 50%;
+    }
+    // Use flex-direction: row-reverse instead of order to avoid color inversion issues
+    &--reversed {
+      flex-direction: row-reverse;
     }
   }
 }
