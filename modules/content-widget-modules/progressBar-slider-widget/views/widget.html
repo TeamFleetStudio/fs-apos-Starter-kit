@@ -12,8 +12,8 @@
           <div class="auditContent">
             <div class="stat-number font-extrabold text-5xl xl:text-6xl 2xl:text-7xl">{{ audits.auditCount }}</div>
             <p class="stat-description font-medium text-base text-[#4E4F51]">{{ audits.description }}</p>
-            <div class="progress-bar w-full h-1.5 bg-gray-300 mt-5 relative">
-              <div class="progress-fill h-full bg-black"></div>
+            <div class="progress-bar w-full h-1.5 mt-5 relative" {% if data.widget.sliderBarBgColor %}style="background-color: {{ data.widget.sliderBarBgColor }};"{% else %}style="background-color: #d1d5db;"{% endif %}>
+              <div class="progress-fill h-full" {% if data.widget.sliderBarColor %}style="background-color: {{ data.widget.sliderBarColor }};"{% else %}style="background-color: #000000;"{% endif %}></div>
             </div>
           </div>
         {% endfor %}

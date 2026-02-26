@@ -17,7 +17,7 @@
       </div>
       <div class="stat-number text-7xl font-extrabold">{{ audits.auditCount }}+</div>
       <div class="stat-description font-medium text-base" {% if audits.descriptionTextColor %}style="color: {{ audits.descriptionTextColor }};"{% else %}style="color: #5C5D5F;"{% endif %}>{{ audits.description }}</div>
-      <div class="progress-bar w-full h-1.5 bg-gray-300 mt-5 relative">
+      <div class="progress-bar w-full h-1.5 mt-5 relative" {% if audits.sliderBarBgColor %}style="background-color: {{ audits.sliderBarBgColor }};"{% else %}style="background-color: #d1d5db;"{% endif %}>
         <div class="progress-fill h-full" {% if audits.sliderBarColor %}style="background-color: {{ audits.sliderBarColor }};"{% else %}style="background-color: #000000;"{% endif %}></div>
       </div>
     </div>

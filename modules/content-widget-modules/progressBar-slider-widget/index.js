@@ -31,6 +31,11 @@ module.exports = {
         label: 'Slider Bar Color',
         def: '#000000'
       },
+      sliderBarBgColor: {
+        type: 'color',
+        label: 'Slider Bar Background Color',
+        def: '#d1d5db'
+      },
       slider: {
         type: 'array',
         label: 'Slider Content',
