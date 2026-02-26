@@ -6,7 +6,6 @@
   &__column-item {
     display: flex;
     flex-direction: column;
-    flex: 1 1 0;
     min-width: 0; // allow content to shrink instead of forcing flex overflow
     box-sizing: border-box;
     overflow-wrap: break-word;
