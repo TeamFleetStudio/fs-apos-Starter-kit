@@ -6,7 +6,7 @@
   &__column-item {
     display: flex;
     flex-direction: column;
-    min-width: 0; // allow content to shrink instead of forcing flex overflow
+    min-width: 0; 
     box-sizing: border-box;
     overflow-wrap: break-word;
   }
@@ -15,7 +15,6 @@
     &__column-item {
       width: 50%;
     }
-    // Use flex-direction: row-reverse instead of order to avoid color inversion issues
     &--reversed {
       flex-direction: row-reverse;
     }

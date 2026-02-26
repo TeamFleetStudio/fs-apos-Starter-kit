@@ -1,6 +1,5 @@
 module.exports = {
   init(self) {
-    // Add video file group with allowed extensions
     const newGroups = [
       {
         name: 'video',
