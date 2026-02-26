@@ -68,7 +68,7 @@ module.exports = {
               label: 'Slack Webhook URL',
               help: 'Get this from your Slack app settings',
               if: {
-                'formIntegrations.slack': true
+                slack: true
               }
             },
             slackMessageTemplate: {
@@ -77,7 +77,7 @@ module.exports = {
               help: 'Use {{fieldName}} to insert form field values. Example: *New Form Submission*\\n\\nName: {{first-name}} {{last-name}}\\nEmail: {{email}}',
               textarea: true,
               if: {
-                'formIntegrations.slack': true
+                slack: true
               }
             },
             emailNotification: {
@@ -99,7 +99,7 @@ module.exports = {
                 }
               },
               if: {
-                'formIntegrations.emailNotification': true
+                emailNotification: true
               }
             },
             emailSubject: {
@@ -107,7 +107,7 @@ module.exports = {
               label: 'Email Subject',
               def: 'New Form Submission',
               if: {
-                'formIntegrations.emailNotification': true
+                emailNotification: true
               }
             },
             externalApi: {
@@ -120,7 +120,7 @@ module.exports = {
               label: 'External API URL',
               help: 'Full URL to POST form data to',
               if: {
-                'formIntegrations.externalApi': true
+                externalApi: true
               }
             },
             externalApiMethod: {
@@ -133,7 +133,7 @@ module.exports = {
               ],
               def: 'POST',
               if: {
-                'formIntegrations.externalApi': true
+                externalApi: true
               }
             }
           }
@@ -297,17 +297,6 @@ module.exports = {
                   });
               }
 
-              // Legacy Slack notification (only if not configured via formIntegrations)
-              if (!form.formIntegrations?.slack) {
-                const slackWebhookUrl = "https://hooks.slack.com/services/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";
-                const slackMessage = {
-                  text: `*New Contact Form Submission*\n\n Name: ${data['first-name']} ${data['last-name']}\n Email: ${data.email}\n Phone: ${data['phone-number']}\n Company: ${data.company}\n Job Title: ${data['job-title']}`
-                };
-
-                axios.post(slackWebhookUrl, slackMessage)
-                  .catch((error) => console.error('Slack API error:', error));
-              }
-
               req.session.message = 'Form submitted successfully';
             } 
             else if (form.slug === 'footer-form') {
@@ -432,11 +421,19 @@ module.exports = {
 
       // Send Slack notification
       async sendSlackNotification(webhookUrl, messageTemplate, formData) {
-        if (!webhookUrl) return;
+        // Use provided webhook URL or fallback to environment variable
+        const slackWebhookUrl = webhookUrl || process.env.APOS_SLACK_WEBHOOK_URL;
+        
+        if (!slackWebhookUrl) {
+          console.warn('Slack notification skipped: No webhook URL provided and APOS_SLACK_WEBHOOK_URL not set');
+          return;
+        }
 
         try {
-          const message = self.replaceTemplateVariables(messageTemplate, formData);
-          await axios.post(webhookUrl, { text: message });
+          const message = messageTemplate 
+            ? self.replaceTemplateVariables(messageTemplate, formData)
+            : `*New Form Submission*\n\n${JSON.stringify(formData, null, 2)}`;
+          await axios.post(slackWebhookUrl, { text: message });
           console.log('Slack notification sent');
         } catch (error) {
           console.error('Slack notification error:', error);
@@ -528,8 +525,8 @@ module.exports = {
           await self.saveToPieceType(req, form, data, integrations.saveToPieceType);
         }
 
-        // Send Slack notification
-        if (integrations.slack && integrations.slackWebhookUrl && integrations.slackMessageTemplate) {
+        // Send Slack notification (use env fallback if webhook URL not provided)
+        if (integrations.slack) {
           await self.sendSlackNotification(
             integrations.slackWebhookUrl,
             integrations.slackMessageTemplate,
