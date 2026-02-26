@@ -1,15 +1,27 @@
 {#
   {% import 'button-arrows.html' as buttonArrows %}
 
-  {% render buttonArrows.button(class) %}
+  {% render buttonArrows.button(class, bgColor, iconColor, border, borderColor) %}
 
   * Class name - class name for the button arrow icon
+  * bgColor - background color for the arrow button
+  * iconColor - color for the arrow icon
+  * border - boolean to show/hide border
+  * borderColor - color for the border
 #}
 
-{% fragment button(class) %}
-  <div class="button-arrow button-arrow--{{ class }}">
+{% fragment button(class, bgColor, iconColor, border, borderColor) %}
+  {% set bgColor = bgColor or '#000000' %}
+  {% set iconColor = iconColor or '#ffffff' %}
+  {% set border = border or false %}
+  {% set borderColor = borderColor or '#ffffff' %}
+  {% set borderStyle = '' %}
+  {% if border %}
+    {% set borderStyle = 'border: 1px solid ' + borderColor + ';' %}
+  {% endif %}
+  <div class="button-arrow button-arrow--{{ class }}" style="background-color: {{ bgColor }}; {{ borderStyle }}">
     <svg class="button-arrow__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M16 7H3.83L9.42 1.41L8 0L0 8L8 16L9.41 14.59L3.83 9H16V7Z" fill="#354F52"/>
+      <path d="M16 7H3.83L9.42 1.41L8 0L0 8L8 16L9.41 14.59L3.83 9H16V7Z" fill="{{ iconColor }}"/>
     </svg>
   </div>
 {% endfragment %}
@@ -17,12 +29,21 @@
 {#
   {% import 'button-arrows.html' as buttonArrows %}
 
-  {% render buttonArrows.swiper() %}
+  {% render buttonArrows.swiper({
+    bgColor: '#000000',
+    iconColor: '#ffffff',
+    border: true,
+    borderColor: '#ffffff'
+  }) %}
 #}
 
-{% fragment swiper() %}
+{% fragment swiper(options) %}
+  {% set bgColor = options.bgColor or '#000000' %}
+  {% set iconColor = options.iconColor or '#ffffff' %}
+  {% set border = options.border or false %}
+  {% set borderColor = options.borderColor or '#ffffff' %}
   <div class="swiper-button-arrows">
-    {% render button('prev') %}
-    {% render button('next') %}
+    {% render button('prev', bgColor, iconColor, border, borderColor) %}
+    {% render button('next', bgColor, iconColor, border, borderColor) %}
   </div>
 {% endfragment %}

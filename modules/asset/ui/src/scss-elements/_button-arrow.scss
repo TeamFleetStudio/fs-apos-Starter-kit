@@ -8,10 +8,12 @@
   height: 56px;
   color: $primary;
   cursor: pointer;
-  transition: background-color $animate-easing;
+  transition: background-color $animate-easing, opacity $animate-easing;
+  border: none;
 
-  &:hover {
-    background: lighten($secondary, 10%);
+  // Hover effect - will work with inline styles via opacity or filter
+  &:hover:not(.swiper-button-disabled) {
+    opacity: 0.8;
   }
 }
 

@@ -41,6 +41,29 @@ module.exports = {
         required: true,
         max: 10
       },
+      arrowBgColor: {
+        type: 'color',
+        label: 'Arrow Background Color',
+        def: '#000000'
+      },
+      arrowIconColor: {
+        type: 'color',
+        label: 'Arrow Icon Color',
+        def: '#ffffff'
+      },
+      arrowBorder: {
+        type: 'boolean',
+        label: 'Show Arrow Border',
+        def: false
+      },
+      arrowBorderColor: {
+        type: 'color',
+        label: 'Arrow Border Color',
+        def: '#ffffff',
+        if: {
+          arrowBorder: true
+        }
+      },
       ...aosSchema,
       ...customAttributesSchema
     }
