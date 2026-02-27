@@ -61,7 +61,7 @@ module.exports = {
               options: {
                 max: 1,
                 widgets: {
-                  'image': {}
+                  'simple-image': {}
                 }
               }
             },
@@ -91,7 +91,17 @@ module.exports = {
             },
             quoteCircleBgColor: {
                 type: 'color',
-                label: 'Quote Circle Background Color',
+                label: 'Icon Background Color',
+            },
+            quoteIconImage: {
+              label: 'Icon',
+              type: 'area',
+              options: {
+                max: 1,
+                widgets: {
+                  'simple-image': {}
+                }
+              }
             },
             ratings: {
                 label: 'Ratings',

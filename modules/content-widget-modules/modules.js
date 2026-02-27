@@ -36,5 +36,6 @@ module.exports = {
   'services-team-widget': {},
   'card-widget': {},
   'beyond-barriers-guests-widget': {},
-  'audit-slider-widget': {}
+  'audit-slider-widget': {},
+  'simple-image-widget': {}
 };
