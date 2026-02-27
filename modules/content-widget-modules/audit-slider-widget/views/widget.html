@@ -1,7 +1,7 @@
 <div class="carousel-container mx-auto text-center w-60 {{ data.widget.widgetClass }}" {% if data.widget.widgetId %}id="{{ data.widget.widgetId }}"{% endif %}>
   <div class="audit-slider">
     {% for audits in data.widget.slider %}
-    <div class="slide" {% if audits.bgColor %}style="background-color: {{ audits.bgColor }};"{% endif %}>
+    <div class="slide" style="background-color: {{ data.widget.sliderBgColor or '#ffffff' }}">
       <div class="circle-container" aria-hidden="true">
         <svg width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_688_9043)">
@@ -15,10 +15,10 @@
           </defs>
         </svg>
       </div>
-      <div class="stat-number text-7xl font-extrabold">{{ audits.auditCount }}+</div>
-      <div class="stat-description font-medium text-base" {% if audits.descriptionTextColor %}style="color: {{ audits.descriptionTextColor }};"{% else %}style="color: #5C5D5F;"{% endif %}>{{ audits.description }}</div>
-      <div class="progress-bar w-full h-1.5 mt-5 relative" {% if audits.sliderBarBgColor %}style="background-color: {{ audits.sliderBarBgColor }};"{% else %}style="background-color: #d1d5db;"{% endif %}>
-        <div class="progress-fill h-full" {% if audits.sliderBarColor %}style="background-color: {{ audits.sliderBarColor }};"{% else %}style="background-color: #000000;"{% endif %}></div>
+      <div class="stat-number text-7xl font-extrabold" style="color: {{ data.widget.titleTextColor or '#000000' }}">{{ audits.auditCount }}+</div>
+      <div class="stat-description font-medium text-base" style="color: {{ data.widget.descriptionTextColor or '#5C5D5F' }}">{{ audits.description }}</div>
+      <div class="progress-bar w-full h-1.5 mt-5 relative" style="background-color: {{ data.widget.sliderBarBgColor or '#d1d5db' }}">
+        <div class="progress-fill h-full" style="background-color: {{ data.widget.sliderBarColor or '#000000' }}"></div>
       </div>
     </div>
     {% endfor %}

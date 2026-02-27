@@ -7,6 +7,31 @@ module.exports = {
   },
   fields: {
     add: {
+      sliderBgColor: {
+        type: 'color',
+        label: 'Slider Background Color',
+        def: '#ffffff'
+      },
+      titleTextColor: {
+        type: 'color',
+        label: 'Title Text Color',
+        def: '#000000'
+      },
+      descriptionTextColor: {
+        type: 'color',
+        label: 'Description Text Color',
+        def: '#434f51'
+      },
+      sliderBarColor: {
+        type: 'color',
+        label: 'Slider Bar Color',
+        def: '#000000'
+      },
+      sliderBarBgColor: {
+        type: 'color',
+        label: 'Slider Bar Background Color',
+        def: '#d1d5db'
+      },
       slider: {
         type: 'array',
         label: 'Audit Slider',
@@ -22,30 +47,6 @@ module.exports = {
               type: 'string',
               label: 'Description',
               required: true,
-            },
-            sliderBarColor: {
-              type: 'color',
-              label: 'Slider Bar Color',
-              def: '#000000'
-            },
-            sliderBarBgColor: {
-              type: 'color',
-              label: 'Slider Bar Background Color',
-              def: '#d1d5db'
-            },
-            titleTextColor: {
-              type: 'color',
-              label: 'Title Text Color',
-              def: '#000000'
-            },
-            descriptionTextColor: {
-              type: 'color',
-              label: 'Description Text Color',
-              def: '#434f51'
-            },
-            bgColor: {
-                type: 'color',
-                label: 'Background Color',
             }
           }
         }

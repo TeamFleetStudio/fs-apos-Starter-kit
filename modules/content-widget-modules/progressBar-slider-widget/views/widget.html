@@ -3,17 +3,25 @@
     <div class="image_block flex-1 sm:w-1/2">
       {% area data.widget, 'image' %}
     </div>
-    <div class="slider_block sm:w-1/2 flex-1 bg-[#F0F0F0] rounded-[20px] relative p-5 pt-14">
-      <div class="circle-container" aria-hidden="true">
+    <div class="slider_block sm:w-1/2 flex-1 rounded-[20px] relative p-5 pt-14" style="background-color: {{ data.widget.sliderBgColor or '#F0F0F0' }}">
+      <div class="circle-container" aria-hidden="true"{% if data.widget.iconBgColor %} style="background-color: {{ data.widget.iconBgColor }};"{% endif %}>
         {% area data.widget, 'icon' %}
       </div>
-      <div class="progress_slider" style="{{ "background-color: " + data.widget.bgColor + "" if data.widget.bgColor }};">
+      <div class="progress_slider">
         {% for audits in data.widget.slider %}
           <div class="auditContent">
-            <div class="stat-number font-extrabold text-5xl xl:text-6xl 2xl:text-7xl">{{ audits.auditCount }}</div>
-            <p class="stat-description font-medium text-base text-[#4E4F51]">{{ audits.description }}</p>
-            <div class="progress-bar w-full h-1.5 mt-5 relative" {% if data.widget.sliderBarBgColor %}style="background-color: {{ data.widget.sliderBarBgColor }};"{% else %}style="background-color: #d1d5db;"{% endif %}>
-              <div class="progress-fill h-full" {% if data.widget.sliderBarColor %}style="background-color: {{ data.widget.sliderBarColor }};"{% else %}style="background-color: #000000;"{% endif %}></div>
+            <div class="stat-number font-extrabold text-5xl xl:text-6xl 2xl:text-7xl"{% if data.widget.titleTextColor %} style="color: {{ data.widget.titleTextColor }};"{% endif %}>{{ audits.auditCount }}</div>
+            <p class="stat-description font-medium text-base"{% if data.widget.descriptionTextColor %} style="color: {{ data.widget.descriptionTextColor }};"{% else %} style="color: #4E4F51;"{% endif %}>{{ audits.description }}</p>
+            {% if data.widget.sliderBarBgColor %}
+            <div class="progress-bar w-full h-1.5 mt-5 relative" style="background-color: {{ data.widget.sliderBarBgColor }};">
+            {% else %}
+            <div class="progress-bar w-full h-1.5 mt-5 relative" style="background-color: #d1d5db;">
+            {% endif %}
+              {% if data.widget.sliderBarColor %}
+              <div class="progress-fill h-full" style="background-color: {{ data.widget.sliderBarColor }};"></div>
+              {% else %}
+              <div class="progress-fill h-full" style="background-color: #000000;"></div>
+              {% endif %}
             </div>
           </div>
         {% endfor %}
