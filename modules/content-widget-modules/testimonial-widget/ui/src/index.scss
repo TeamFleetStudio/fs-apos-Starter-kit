@@ -13,15 +13,18 @@
     font-size: 20px;
     font-weight: bold;
     z-index: 10;
+    svg path {
+      fill: var(--testimonial-quote-icon, #ffffff);
+    }
   }
 
   .quote-circle.odd {
-    background-color: #e2ab0f;
+    background-color: var(--testimonial-quote-circle-bg, #e2ab0f);
     color: #fff;
   }
 
   .quote-circle.even {
-    background-color: #000000;
+    background-color: var(--testimonial-quote-circle-bg, #000000);
     color: #fff;
   }
 
@@ -42,6 +45,10 @@
     flex-wrap: nowrap;
     align-items: stretch;
     overflow: visible;
+  }
+
+  .testimonial-item {
+    background-color: var(--testimonial-bg, #fffcef);
   }
 
   .testimonial-item p {
@@ -76,11 +83,17 @@
     font-weight: 600;
     font-size: 14px;
     display: block;
+    color: var(--testimonial-author, #000000);
   }
 
   .testimonial-item .profile .designation {
     font-size: 12px;
     display: block;
+    color: var(--testimonial-designation, #5C5D5F);
+  }
+
+  .testimonial-item .stars {
+    color: var(--testimonial-stars, inherit);
   }
   .slick-dots {
     bottom: -30px;
