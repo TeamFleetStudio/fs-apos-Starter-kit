@@ -3,6 +3,7 @@ module.exports = {
   options: {
     label: 'Podcast',
     pluralLabel: 'Podcasts',
+    perPage: 9,
     sort: { createdAt: -1 },
     shortcut: 'g,c'
   },

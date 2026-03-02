@@ -5,8 +5,7 @@
 {% fragment footer(data) %}
   {% set footerLayout = data.global.footerLayout or 'default' %}
 
-  {% if footerLayout == 'wallyax' %}
-    {# Wallyax-style footer template #}
+  {% if footerLayout == 'footer-layout-1' %}
     {% set footerBackground = apos.image.first(data.global.footerBgImg) %}
     <section class="footer-container px-8 lg:px-16 pt-12 lg:pt-24 pb-10 lg:pb-20 bg-[#f6f6f6]">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-0">

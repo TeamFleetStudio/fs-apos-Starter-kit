@@ -1,6 +1,50 @@
 <style>
-    .embed_video iframe {
+    .embed_video {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; 
+        height: 0;
+        overflow: hidden;
         margin: auto;
+    }
+    
+    .embed_video iframe,
+    .embed_video object,
+    .embed_video embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 12px;
+    }
+    
+
+    .video-responsive-wrapper {
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%; 
+        height: 0;
+        overflow: hidden;
+    }
+    
+    .video-responsive-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 12px;
+    }
+    
+
+    @media (max-width: 768px) {
+        .embed_video,
+        .video-responsive-wrapper {
+            padding-bottom: 56.25%; 
+        }
     }
 </style>
 {% if data.widget.embedCode %} 
@@ -8,5 +52,7 @@
         {{ data.widget.embedCode | safe }}
     </div>
 {% else %}
-    <iframe style="border-radius:12px" src="https://www.youtube.com/embed/K4TOrB7at0Y" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <div class="video-responsive-wrapper">
+        <iframe src="https://www.youtube.com/embed/eEzD-Y97ges?si=u8YcU0znn4gHTaKt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+    </div>
 {% endif %}

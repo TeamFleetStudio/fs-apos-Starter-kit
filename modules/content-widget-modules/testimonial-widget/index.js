@@ -84,6 +84,15 @@ module.exports = {
                 type: 'color',
                 label: 'Background Color',
             },
+            quoteIconColor: {
+                type: 'color',
+                label: 'Quote Icon Color',
+                def: '#ffffff'
+            },
+            quoteCircleBgColor: {
+                type: 'color',
+                label: 'Quote Circle Background Color',
+            },
             ratings: {
                 label: 'Ratings',
                 type: 'integer',
@@ -94,6 +103,14 @@ module.exports = {
             starColor:{
                 type: 'color',
                 label: 'Star Color',
+            },
+            authorNameColor: {
+                type: 'color',
+                label: 'Author Name Color',
+            },
+            designationColor: {
+                type: 'color',
+                label: 'Designation Color',
             },
             widgetClass: {
               type: 'string',

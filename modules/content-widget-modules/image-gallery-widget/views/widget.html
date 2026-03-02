@@ -25,7 +25,12 @@
       {% endfor %}
     </div>
 
-    {% render buttonArrows.swiper() %}
+    {% render buttonArrows.swiper({
+      bgColor: data.widget.arrowBgColor or '#000000',
+      iconColor: data.widget.arrowIconColor or '#ffffff',
+      border: data.widget.arrowBorder or false,
+      borderColor: data.widget.arrowBorderColor or '#ffffff'
+    }) %}
   </div>
 
 </section>

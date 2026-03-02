@@ -26,8 +26,6 @@ module.exports = {
   'side-by-side-widget': {},
   'image-widget': {},
   'rich-text-widget': {},
-
-  // migrated from wallyax
   'hero-banner-widget': {},
   'progressBar-slider-widget': {},
   'image-card-widget': {},

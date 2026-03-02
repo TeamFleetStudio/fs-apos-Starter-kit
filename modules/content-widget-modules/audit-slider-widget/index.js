@@ -15,13 +15,28 @@ module.exports = {
           add: {
             auditCount: {
               type: 'integer',
-              label: 'Audit Count',
+              label: 'Title',
               required: true
             },
             description: {
               type: 'string',
               label: 'Description',
               required: true,
+            },
+            sliderBarColor: {
+              type: 'color',
+              label: 'Slider Bar Color',
+              def: '#000000'
+            },
+            titleTextColor: {
+              type: 'color',
+              label: 'Title Text Color',
+              def: '#000000'
+            },
+            descriptionTextColor: {
+              type: 'color',
+              label: 'Description Text Color',
+              def: '#434f51'
             },
             bgColor: {
                 type: 'color',
