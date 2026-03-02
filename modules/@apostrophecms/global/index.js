@@ -397,6 +397,50 @@ module.exports = {
             'custom-form': {}
           }
         }
+      },
+      blogTopRightSection: {
+        type: 'area',
+        label: 'Top Right Section',
+        help: 'The contents here will be rendered at the top right sidebar of all blog-detail pages. (global top right section)',
+        options: {
+          expanded: true,
+          groups: {
+            ...areaConfig.fullExpandedGroup
+          }
+        }
+      },
+      blogBottomSection: {
+        type: 'area',
+        label: 'Bottom Section',
+        help: 'The contents here will be rendered at the bottom of all blog-detail pages. (global bottom section)',
+        options: {
+          expanded: true,
+          groups: {
+            ...areaConfig.fullExpandedGroup
+          }
+        }
+      },
+      whitepaperBottomSection: {
+        type: 'area',
+        label: 'Bottom Section',
+        help: 'The contents here will be rendered at the bottom of all whitepaper-detail pages. (global bottom section)',
+        options: {
+          expanded: true,
+          groups: {
+            ...areaConfig.fullExpandedGroup
+          }
+        }
+      },
+      podcastBottomSection: {
+        type: 'area',
+        label: 'Bottom Section',
+        help: 'The contents here will be rendered at the bottom of all podcast-detail pages. (global bottom section)',
+        options: {
+          expanded: true,
+          groups: {
+            ...areaConfig.fullExpandedGroup
+          }
+        }
       }
     },
     group: {
@@ -437,6 +481,18 @@ module.exports = {
       Form: {
         label: 'Report Form',
         fields: ['form']
+      },
+      BLOG: {
+        label: 'BLOG',
+        fields: ['blogTopRightSection', 'blogBottomSection']
+      },
+      WHITEPAPER: {
+        label: 'WHITEPAPER',
+        fields: ['whitepaperBottomSection']
+      },
+      PODCAST: {
+        label: 'PODCAST',
+        fields: ['podcastBottomSection']
       }
     }
   }

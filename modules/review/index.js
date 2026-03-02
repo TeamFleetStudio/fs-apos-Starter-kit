@@ -1,3 +1,5 @@
+const areaConfig = require('../../lib/area');
+
 module.exports = {
   extend: '@apostrophecms/piece-type',
   options: {
@@ -67,11 +69,28 @@ module.exports = {
         label: 'Meta Title',
         type: 'string'
       },
+      bottomSection: {
+        type: 'area',
+        label: 'Bottom Section',
+        help: 'Add custom forms, widgets, or other content to appear below the review content',
+        options: {
+          expanded: true,
+          groups: {
+            ...areaConfig.fullExpandedGroup
+          }
+        }
+      },
     },
     group: {
       content: {
         label: 'Content',
         fields: [ 'title', 'description', 'featuredImage', 'duration' , 'externalUrl', 'metaTitle', 'profileImage',  'author', 'role' , 'content']
+      },
+      bottomSection: {
+        label: 'Bottom Section',
+        fields: [
+          'bottomSection'
+        ]
       }
     }
   },

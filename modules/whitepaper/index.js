@@ -41,6 +41,17 @@ module.exports = {
       metaDescription: {
         label: 'Meta Description',
         type: 'string'
+      },
+      bottomSection: {
+        type: 'area',
+        label: 'Bottom Section',
+        help: 'Add custom forms, widgets, or other content to appear below the whitepaper content',
+        options: {
+          expanded: true,
+          groups: {
+            ...areaConfig.fullExpandedGroup
+          }
+        }
       }
     },
     // add the "content" fields to the
@@ -55,6 +66,12 @@ module.exports = {
           'bannerImage',
           'metaTitle',
           'metaDescription'
+        ]
+      },
+      bottomSection: {
+        label: 'Bottom Section',
+        fields: [
+          'bottomSection'
         ]
       }
     }
