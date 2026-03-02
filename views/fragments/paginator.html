@@ -1,4 +1,45 @@
 {% fragment pagination(data) %}
+<style>
+  .xs-only {
+    display: block;
+  }
+  .mobile-only {
+    display: none;
+  }
+  .desktop-only {
+    display: none;
+  }
+  @media (min-width: 375px) {
+    .xs-only {
+      display: none;
+    }
+    .mobile-only {
+      display: block;
+    }
+  }
+  @media (min-width: 1024px) {
+    .mobile-only {
+      display: none;
+    }
+    .desktop-only {
+      display: block;
+    }
+  }
+  .prev-short {
+    display: block;
+  }
+  .prev-full {
+    display: none;
+  }
+  @media (min-width: 640px) {
+    .prev-short {
+      display: none;
+    }
+    .prev-full {
+      display: block;
+    }
+  }
+</style>
 <script>
 function goToPage(page) {
   const url = new URL(window.location.href);
@@ -7,27 +48,76 @@ function goToPage(page) {
 }
 </script>
 <div class="lg:pb-16 pb-8 text-center">
-  <div class="paginator-wrap flex justify-center items-center gap-3">
+  <div class="paginator-wrap flex flex-wrap justify-center items-center gap-2 lg:gap-3 px-4">
     <button
-      class="paginator-button bg-[#F9FAFB] text-sm rounded leading-6 py-1 px-4 uppercase text-black {{ 'opacity-50 pointer-events-none cursor-not-allowed' if data.currentPage == 1 else 'cursor-pointer hover:bg-yellowLite hover:text-blue' }}"
+      class="paginator-button bg-[#F9FAFB] text-xs lg:text-sm rounded leading-6 py-1 px-2 lg:px-4 uppercase text-black {{ 'opacity-50 pointer-events-none cursor-not-allowed' if data.currentPage == 1 else 'cursor-pointer hover:bg-yellowLite hover:text-blue' }}"
       {{ 'disabled' if data.currentPage == 1 else '' }}
       onClick="goToPage({{ data.currentPage - 1 }})"
     >
-      Previous
+      <span class="prev-short">Prev</span>
+      <span class="prev-full">Previous</span>
     </button>
 
-    {% set rangeStart = data.currentPage - 2 if data.currentPage > 2 else 1 %}
-    {% set rangeEnd = rangeStart + 4 if rangeStart + 4 <= data.totalPages else data.totalPages %}
+    {# XS range (< 375px): show only current page and last page #}
+    {% set xsRangeStart = data.currentPage %}
+    {% set xsRangeEnd = data.currentPage %}
 
-    {% if rangeStart > 1 %}
-      <button class="paginator-button bg-[#F9FAFB] text-sm rounded leading-6 py-1 px-3 cursor-pointer" onClick="goToPage(1)">01</button>
-      <span class="px-2">...</span>
+    {# Mobile range (375px - 1023px): show 3 pages centered on current (current ± 1) #}
+    {% if data.currentPage == 1 %}
+      {% set mobileRangeStart = 1 %}
+      {% set mobileRangeEnd = 3 if 3 <= data.totalPages else data.totalPages %}
+    {% elif data.currentPage == data.totalPages %}
+      {% set mobileRangeStart = (data.totalPages - 2) if (data.totalPages - 2) >= 1 else 1 %}
+      {% set mobileRangeEnd = data.totalPages %}
+    {% else %}
+      {% set mobileRangeStart = data.currentPage - 1 %}
+      {% set mobileRangeEnd = data.currentPage + 1 if data.currentPage + 1 <= data.totalPages else data.totalPages %}
     {% endif %}
 
-    {% for page in range(rangeStart, rangeEnd + 1) %}
+    {# Desktop range: show 5 pages (current ± 2) #}
+    {% set desktopRangeStart = data.currentPage - 2 if data.currentPage > 2 else 1 %}
+    {% set desktopRangeEnd = desktopRangeStart + 4 if desktopRangeStart + 4 <= data.totalPages else data.totalPages %}
+
+    {# XS: Show only current page #}
+    {% if data.currentPage == data.totalPages %}
+      {# If on last page, show only current #}
+      <button 
+        class="paginator-button xs-only text-xs lg:text-sm rounded leading-6 py-1 px-2 lg:px-3 bg-yellowLite text-blue font-bold cursor-not-allowed opacity-75" 
+        disabled 
+        aria-current="page"
+      >
+        {{ '0' ~ data.currentPage if data.currentPage < 10 else data.currentPage }}
+      </button>
+    {% else %}
+      {# Show current page and last page #}
+      <button 
+        class="paginator-button xs-only text-xs lg:text-sm rounded leading-6 py-1 px-2 lg:px-3 bg-yellowLite text-blue font-bold cursor-not-allowed opacity-75" 
+        disabled 
+        aria-current="page"
+      >
+        {{ '0' ~ data.currentPage if data.currentPage < 10 else data.currentPage }}
+      </button>
+      <span class="xs-only px-1 lg:px-2 text-xs lg:text-sm">...</span>
+      <button class="paginator-button xs-only bg-[#F9FAFB] text-xs lg:text-sm rounded leading-6 py-1 px-2 lg:px-3 cursor-pointer hover:bg-yellowLite hover:text-blue" onClick="goToPage({{ data.totalPages }})">
+        {{ '0' ~ data.totalPages if data.totalPages < 10 else data.totalPages }}
+      </button>
+    {% endif %}
+
+    {# First page button (show on mobile only if needed, always on desktop) #}
+    {% if mobileRangeStart > 1 %}
+      <button class="paginator-button mobile-only bg-[#F9FAFB] text-xs lg:text-sm rounded leading-6 py-1 px-2 lg:px-3 cursor-pointer hover:bg-yellowLite hover:text-blue" onClick="goToPage(1)">01</button>
+      <span class="mobile-only px-1 lg:px-2 text-xs lg:text-sm">...</span>
+    {% endif %}
+    {% if desktopRangeStart > 1 %}
+      <button class="paginator-button desktop-only bg-[#F9FAFB] text-xs lg:text-sm rounded leading-6 py-1 px-2 lg:px-3 cursor-pointer hover:bg-yellowLite hover:text-blue" onClick="goToPage(1)">01</button>
+      <span class="desktop-only px-1 lg:px-2 text-xs lg:text-sm">...</span>
+    {% endif %}
+
+    {# Mobile page numbers #}
+    {% for page in range(mobileRangeStart, mobileRangeEnd + 1) %}
       {% if page == data.currentPage %}
         <button 
-          class="paginator-button text-sm rounded leading-6 py-1 px-3 bg-yellowLite text-blue font-bold cursor-not-allowed opacity-75" 
+          class="paginator-button mobile-only text-xs lg:text-sm rounded leading-6 py-1 px-2 lg:px-3 bg-yellowLite text-blue font-bold cursor-not-allowed opacity-75" 
           disabled 
           aria-current="page"
         >
@@ -35,7 +125,7 @@ function goToPage(page) {
         </button>
       {% else %}
         <button
-          class="paginator-button text-sm rounded leading-6 py-1 px-3 cursor-pointer bg-[#F9FAFB] text-black hover:bg-yellowLite hover:text-blue"
+          class="paginator-button mobile-only text-xs lg:text-sm rounded leading-6 py-1 px-2 lg:px-3 cursor-pointer bg-[#F9FAFB] text-black hover:bg-yellowLite hover:text-blue"
           onClick="goToPage({{ page }})"
         >
           {{ '0' ~ page if page < 10 else page }}
@@ -43,15 +133,42 @@ function goToPage(page) {
       {% endif %}
     {% endfor %}
 
-    {% if rangeEnd < data.totalPages %}
-      <span class="px-2">...</span>
-      <button class="paginator-button bg-[#F9FAFB] text-sm rounded leading-6 py-1 px-3 cursor-pointer hover:bg-yellowLite hover:text-blue" onClick="goToPage({{ data.totalPages }})">
+    {# Desktop page numbers #}
+    {% for page in range(desktopRangeStart, desktopRangeEnd + 1) %}
+      {% if page == data.currentPage %}
+        <button 
+          class="paginator-button desktop-only text-xs lg:text-sm rounded leading-6 py-1 px-2 lg:px-3 bg-yellowLite text-blue font-bold cursor-not-allowed opacity-75" 
+          disabled 
+          aria-current="page"
+        >
+          {{ '0' ~ page if page < 10 else page }}
+        </button>
+      {% else %}
+        <button
+          class="paginator-button desktop-only text-xs lg:text-sm rounded leading-6 py-1 px-2 lg:px-3 cursor-pointer bg-[#F9FAFB] text-black hover:bg-yellowLite hover:text-blue"
+          onClick="goToPage({{ page }})"
+        >
+          {{ '0' ~ page if page < 10 else page }}
+        </button>
+      {% endif %}
+    {% endfor %}
+
+    {# Last page button #}
+    {% if mobileRangeEnd < data.totalPages %}
+      <span class="mobile-only px-1 lg:px-2 text-xs lg:text-sm">...</span>
+      <button class="paginator-button mobile-only bg-[#F9FAFB] text-xs lg:text-sm rounded leading-6 py-1 px-2 lg:px-3 cursor-pointer hover:bg-yellowLite hover:text-blue" onClick="goToPage({{ data.totalPages }})">
+        {{ '0' ~ data.totalPages if data.totalPages < 10 else data.totalPages }}
+      </button>
+    {% endif %}
+    {% if desktopRangeEnd < data.totalPages %}
+      <span class="desktop-only px-1 lg:px-2 text-xs lg:text-sm">...</span>
+      <button class="paginator-button desktop-only bg-[#F9FAFB] text-xs lg:text-sm rounded leading-6 py-1 px-2 lg:px-3 cursor-pointer hover:bg-yellowLite hover:text-blue" onClick="goToPage({{ data.totalPages }})">
         {{ '0' ~ data.totalPages if data.totalPages < 10 else data.totalPages }}
       </button>
     {% endif %}
 
     <button
-      class="paginator-button bg-[#F9FAFB] text-sm rounded leading-6 py-1 px-4 uppercase text-black {{ 'opacity-50 pointer-events-none cursor-not-allowed' if data.currentPage == data.totalPages else 'cursor-pointer hover:bg-yellowLite hover:text-blue' }}"
+      class="paginator-button bg-[#F9FAFB] text-xs lg:text-sm rounded leading-6 py-1 px-2 lg:px-4 uppercase text-black {{ 'opacity-50 pointer-events-none cursor-not-allowed' if data.currentPage == data.totalPages else 'cursor-pointer hover:bg-yellowLite hover:text-blue' }}"
       {{ 'disabled' if data.currentPage == data.totalPages else '' }}
       onClick="goToPage({{ data.currentPage + 1 }})"
     >
