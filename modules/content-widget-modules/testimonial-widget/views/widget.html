@@ -1,4 +1,12 @@
-<div class="{{data.widget.widgetClass}} {{data.widget.widgetId}} testimonial-slider {{'is-fluid' if data.widget.style === 'full' else 'mx-8 lg:mx-16' }}">
+  <div
+    class="{{data.widget.widgetClass}} {{data.widget.widgetId}} testimonial-slider {{'is-fluid' if data.widget.style === 'full' else 'mx-8 lg:mx-16' }}"
+    style="
+      --testimonial-arrow-color: {{ data.widget.arrowColor or '#999999' }};
+      --testimonial-arrow-disabled-color: {{ data.widget.arrowDisabledColor or '#cccccc' }};
+      --testimonial-dot-color: {{ data.widget.dotColor or '#cccccc' }};
+      --testimonial-dot-active-color: {{ data.widget.dotActiveColor or '#E2AB0F' }};
+    "
+  >
   {% for testimonial in data.widget.testimonial %}
   <div
     class="{{testimonial.widgetClass}} testimonial-item pt-12"
@@ -8,11 +16,13 @@
     data-stars="{{ testimonial.starColor }}"
     data-quote-bg="{{ testimonial.quoteCircleBgColor }}"
     data-quote-icon="{{ testimonial.quoteIconColor }}"
+    data-separator="{{ testimonial.separatorColor }}"
     style="
       --testimonial-bg: {{ testimonial.bgColor or '#fffcef' }};
       --testimonial-author: {{ testimonial.authorNameColor or '#000000' }};
       --testimonial-designation: {{ testimonial.designationColor or '#5C5D5F' }};
       --testimonial-quote-icon: {{ testimonial.quoteIconColor or '#ffffff' }};
+      --testimonial-separator-color: {{ testimonial.separatorColor or '#E5E7EB' }};
     "
   >
     <div class="quote-circle {% if loop.index % 2 == 0 %}even{% else %}odd{% endif %}" aria-hidden="true">
@@ -84,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const stars = $item.data('stars');
           const quoteBg = $item.data('quoteBg');
           const quoteIcon = $item.data('quoteIcon');
+          const separator = $item.data('separator');
 
           if (bg) {
             this.style.setProperty('--testimonial-bg', bg);
@@ -102,6 +113,9 @@ document.addEventListener('DOMContentLoaded', function() {
           }
           if (quoteIcon) {
             this.style.setProperty('--testimonial-quote-icon', quoteIcon);
+          }
+          if (separator) {
+            this.style.setProperty('--testimonial-separator-color', separator);
           }
         });
     }
@@ -123,8 +137,8 @@ document.addEventListener('DOMContentLoaded', function() {
       initialSlide: 0,
       centerMode: false,
       infinite: false,
-      prevArrow: '<button type="button" class="slick-prev" aria-label="Previous slide" role="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.12132 10.5001H21V13.5001H8.12132L13.0607 18.4395L10.9393 20.5608L2.37868 12.0001L10.9393 3.43945L13.0607 5.56077L8.12132 10.5001Z" fill="#999999"/></svg></button>',
-      nextArrow: '<button type="button" class="slick-next" aria-label="Next slide" role="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.478 13.5563H2.92429V10.4423H15.478L10.6633 5.31522L12.7311 3.11328L21.0757 11.9993L12.7311 20.8853L10.6633 18.6833L15.478 13.5563Z" fill="#999999"/></svg></button>',
+      prevArrow: '<button type="button" class="slick-prev" aria-label="Previous slide" role="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.12132 10.5001H21V13.5001H8.12132L13.0607 18.4395L10.9393 20.5608L2.37868 12.0001L10.9393 3.43945L13.0607 5.56077L8.12132 10.5001Z" fill=\"currentColor\"/></svg></button>',
+      nextArrow: '<button type="button" class="slick-next" aria-label="Next slide" role="button"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.478 13.5563H2.92429V10.4423H15.478L10.6633 5.31522L12.7311 3.11328L21.0757 11.9993L12.7311 20.8853L10.6633 18.6833L15.478 13.5563Z" fill=\"currentColor\"/></svg></button>',
       responsive: [
         {
           breakpoint: 1280,
@@ -182,13 +196,14 @@ document.addEventListener('DOMContentLoaded', function() {
   display: none;
 }
 
-.testimonial-slider .slick-dots li button:before {
-  font-size: 12px;
+.testimonial-slider .slick-dots li button .slick-dot-icon:before {
+  font-size: 32px;
+  color: var(--testimonial-dot-color, #cccccc);
 }
 
-.testimonial-slider .slick-dots li.slick-active .slick-dot-icon:before,
+.testimonial-slider .slick-dots li.slick-active button .slick-dot-icon:before,
 .testimonial-slider .slick-dots li button:focus .slick-dot-icon:before {
-  color: #E2AB0F !important;
+  color: var(--testimonial-dot-active-color, #E2AB0F) !important;
   font-size: 44px;
 }
 

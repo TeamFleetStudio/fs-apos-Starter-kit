@@ -122,6 +122,11 @@ module.exports = {
                 type: 'color',
                 label: 'Designation Color',
             },
+            separatorColor: {
+                type: 'color',
+                label: 'Separator Color',
+                def: '#E5E7EB'
+            },
             widgetClass: {
               type: 'string',
               help: 'It can be use to write custom css',
@@ -129,6 +134,26 @@ module.exports = {
             },
           }
         }
+      },
+      arrowColor: {
+        type: 'color',
+        label: 'Arrow Color',
+        def: '#999999'
+      },
+      arrowDisabledColor: {
+        type: 'color',
+        label: 'Arrow Disabled Color',
+        def: '#cccccc'
+      },
+      dotColor: {
+        type: 'color',
+        label: 'Dot Color',
+        def: '#cccccc'
+      },
+      dotActiveColor: {
+        type: 'color',
+        label: 'Active Dot Color',
+        def: '#E2AB0F'
       },
       widgetClass: {
         type: 'string',
