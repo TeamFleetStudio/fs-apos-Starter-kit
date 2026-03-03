@@ -21,15 +21,30 @@ module.exports = {
           }
         }
       },
-      bgColor: {
+      sliderBgColor: {
         type: 'color',
         label: 'Slider Background Color',
-        def: '#ffffff'
+        def: '#FFFFFF'
+      },
+      titleTextColor: {
+        type: 'color',
+        label: 'Title Text Color',
+        def: '#000000'
+      },
+      descriptionTextColor: {
+        type: 'color',
+        label: 'Description Text Color',
+        def: '#434f51'
       },
       sliderBarColor: {
         type: 'color',
         label: 'Slider Bar Color',
         def: '#000000'
+      },
+      sliderBarBgColor: {
+        type: 'color',
+        label: 'Slider Bar Background Color',
+        def: '#d1d5db'
       },
       slider: {
         type: 'array',
@@ -46,16 +61,6 @@ module.exports = {
               type: 'string',
               label: 'Description',
               required: true
-            },
-            titleTextColor: {
-              type: 'color',
-              label: 'Title Text Color',
-              def: '#000000'
-            },
-            descriptionTextColor: {
-              type: 'color',
-              label: 'Description Text Color',
-              def: '#434f51'
             }
           }
         }
@@ -69,6 +74,11 @@ module.exports = {
             image: {}
           }
         }
+      },
+      iconBgColor: {
+        type: 'color',
+        label: 'Slide Icon Background Color',
+        def: '#FFD700'
       },
       bgImg: {
         label: 'Background Image',

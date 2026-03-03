@@ -13,15 +13,18 @@
     font-size: 20px;
     font-weight: bold;
     z-index: 10;
+    svg path {
+      fill: var(--testimonial-quote-icon, #ffffff);
+    }
   }
 
   .quote-circle.odd {
-    background-color: #e2ab0f;
+    background-color: var(--testimonial-quote-circle-bg, #e2ab0f);
     color: #fff;
   }
 
   .quote-circle.even {
-    background-color: #000000;
+    background-color: var(--testimonial-quote-circle-bg, #000000);
     color: #fff;
   }
 
@@ -44,6 +47,10 @@
     overflow: visible;
   }
 
+  .testimonial-item {
+    background-color: var(--testimonial-bg, #fffcef);
+  }
+
   .testimonial-item p {
     font-size: 16px;
     margin: 10px 0;
@@ -58,9 +65,9 @@
   .testimonial-item .profileImg {
     flex-shrink: 0;
     img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
       object-fit: cover;
     }
   }
@@ -76,12 +83,22 @@
     font-weight: 600;
     font-size: 14px;
     display: block;
+    color: var(--testimonial-author, #000000);
   }
 
   .testimonial-item .profile .designation {
     font-size: 12px;
     display: block;
+    color: var(--testimonial-designation, #5C5D5F);
   }
+
+  .testimonial-item .stars {
+    color: var(--testimonial-stars, inherit);
+  }
+  .testimonial-item hr {
+    border-color: var(--testimonial-separator-color, #e5e7eb);
+  }
+
   .slick-dots {
     bottom: -30px;
     display: flex;
@@ -97,14 +114,26 @@
     outline: solid 2px #2f78c4;
     outline-offset: 0.15rem;
   }
-  .slick-dots li.slick-active button:before {
-    color: #e2ab0f;
+  .slick-dots li button .slick-dot-icon:before {
+    color: var(--testimonial-dot-color, #cccccc);
+    font-size: 32px;
+  }
+  .slick-dots li.slick-active button .slick-dot-icon:before {
+    color: var(--testimonial-dot-active-color, #e2ab0f) !important;
     font-size: 44px;
   }
 
   .slick-disabled {
     pointer-events: none;
     opacity: 0.35;
+  }
+  .slick-prev,
+  .slick-next {
+    color: var(--testimonial-arrow-color, #999999);
+  }
+  .slick-prev.slick-disabled,
+  .slick-next.slick-disabled {
+    color: var(--testimonial-arrow-disabled-color, #cccccc);
   }
   .slick-prev,
   .slick-next,

@@ -32,10 +32,19 @@ module.exports = {
         titleField: 'name',
         fields: {
           add: {
+            bgColor:{
+              type: 'color',
+              label: 'Slide Item Background Color',
+              help: 'This color will be applied to the background of the slide',
+            },
             name: {
               label: 'Author Name',
               type: 'string',
               required: true,
+            },
+            authorNameColor: {
+              type: 'color',
+              label: 'Author Name Color',
             },
             position: {
                 type: 'select',
@@ -61,7 +70,7 @@ module.exports = {
               options: {
                 max: 1,
                 widgets: {
-                  'image': {}
+                  'simple-image': {}
                 }
               }
             },
@@ -70,6 +79,10 @@ module.exports = {
                 type: 'string',
                 required: true
               },
+            designationColor: {
+              type: 'color',
+              label: 'Designation Color',
+            },
             comments: {
               label: 'Comments',
               type: 'area',
@@ -80,18 +93,25 @@ module.exports = {
                 }
               }
             },
-            bgColor:{
-                type: 'color',
-                label: 'Background Color',
-            },
             quoteIconColor: {
-                type: 'color',
-                label: 'Quote Icon Color',
-                def: '#ffffff'
+              type: 'color',
+              label: 'Quote Icon Color',
+              help: 'This color will be applied to the default quote icon. (does not apply if you upload an icon)',
+              def: '#ffffff'
+            },
+            quoteIconImage: {
+              label: 'Icon (custom icon)',
+              type: 'area',
+              options: {
+                max: 1,
+                widgets: {
+                  'simple-image': {}
+                }
+              }
             },
             quoteCircleBgColor: {
                 type: 'color',
-                label: 'Quote Circle Background Color',
+                label: 'Icon container Background Color',
             },
             ratings: {
                 label: 'Ratings',
@@ -102,15 +122,12 @@ module.exports = {
             },
             starColor:{
                 type: 'color',
-                label: 'Star Color',
+                label: 'Star Rating Color',
             },
-            authorNameColor: {
+            separatorColor: {
                 type: 'color',
-                label: 'Author Name Color',
-            },
-            designationColor: {
-                type: 'color',
-                label: 'Designation Color',
+                label: 'Separator Color',
+                def: '#E5E7EB'
             },
             widgetClass: {
               type: 'string',
@@ -119,6 +136,26 @@ module.exports = {
             },
           }
         }
+      },
+      arrowColor: {
+        type: 'color',
+        label: 'Arrow Color',
+        def: '#999999'
+      },
+      arrowDisabledColor: {
+        type: 'color',
+        label: 'Arrow Disabled Color',
+        def: '#cccccc'
+      },
+      dotColor: {
+        type: 'color',
+        label: 'Dot Color',
+        def: '#cccccc'
+      },
+      dotActiveColor: {
+        type: 'color',
+        label: 'Active Dot Color',
+        def: '#E2AB0F'
       },
       widgetClass: {
         type: 'string',

@@ -1,0 +1,36 @@
+<section data-aos="{{ data.widget.animationEffects }}" class="widget-my-spacing image-widget{% if data.widget.customClassName %} {{ data.widget.customClassName }}{% endif %}"{% if data.widget.customId %} id="{{ data.widget.customId }}"{% endif %}>
+  {% if data.widget.aposPlaceholder and data.manager.options.placeholderUrl %}
+    <img
+      src="{{ data.manager.options.placeholderUrl }}"
+      alt="{{ __t('apostrophe:imagePlaceholder') }}"
+      class="image-widget-placeholder{% if data.widget.imageClass %} {{ data.widget.imageClass }}{% endif %}"
+    />
+  {% else %}
+    {% set className = data.options.className or data.manager.options.className %}
+    {% set dimensionAttrs = data.options.dimensionAttrs or data.manager.options.dimensionAttrs %}
+    {% set loadingType = data.options.loadingType or data.manager.options.loadingType %}
+    {% set size = data.options.size or data.manager.options.size or 'full' %}
+
+    {% set attachment = apos.image.first(data.widget._image) %}
+
+    {% if attachment %}
+      <img {% if className or data.widget.imageClass %} class="{{ className }}{% if data.widget.imageClass %} {{ data.widget.imageClass }}{% endif %}"{% endif %}
+        {% if loadingType %} loading="{{ loadingType }}"{% endif %}
+        srcset="{{ apos.image.srcset(attachment) }}"
+        src="{{ apos.attachment.url(attachment, { size: size }) }}"
+        alt="{{ attachment._alt or '' }}"
+        {% if dimensionAttrs or attachment.width or attachment.height %}
+          {% if attachment.width %} width="{{ apos.attachment.getWidth(attachment) }}" {% endif %}
+          {% if attachment.height %} height="{{ apos.attachment.getHeight(attachment) }}" {% endif %}
+        {% endif %}
+        {% if data.contextOptions and data.contextOptions.sizes %}
+          sizes="{{ data.contextOptions.sizes }}"
+        {% endif %}
+        {% if apos.attachment.hasFocalPoint(attachment) %}
+          style="object-position: {{ apos.attachment.focalPointToObjectPosition(attachment) }}"
+        {%- endif -%}
+      />
+    {% endif %}
+  {% endif %}
+</section>
+
