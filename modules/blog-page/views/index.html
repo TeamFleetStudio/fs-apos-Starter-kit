@@ -59,7 +59,7 @@
                   width="14"
                   height="14"
                   viewBox="0 0 14 14"
-                  fill="none"
+                  fill="#1c1e21"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
@@ -72,7 +72,7 @@
                   width="14"
                   height="14"
                   viewBox="0 0 12 12"
-                  fill="none"
+                  fill="#1c1e21"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
@@ -405,7 +405,7 @@
         </div>
         {% endif %} {% if data.pieces | length > 0 %}
         <div
-          class="grid min-[1100px]:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 lg:mb-16 mb-8 BlogCardWidgetDiv text-left"
+          class="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 lg:mb-16 mb-8 BlogCardWidgetDiv text-left"
         >
           {% set startIndex = 1 if (not has_params or data.query.page == "1")
           else 0 %} {% set endIndex = 10 %} {% for i in range(startIndex,
@@ -449,7 +449,7 @@
                         width="14"
                         height="14"
                         viewBox="0 0 14 14"
-                        fill="none"
+                        fill="#1c1e21"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
@@ -462,7 +462,7 @@
                         width="14"
                         height="14"
                         viewBox="0 0 12 12"
-                        fill="none"
+                        fill="#1c1e21"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
@@ -496,7 +496,8 @@
               </div>
               <div class="w-full mt-2 justify-between items-center">
                 <a
-                  class="inline-block bg-yellow text-black rounded-lg px-3 py-2 text-sm! font-medium BlogCardWidgetLink min-w-max"
+                  class="inline-block text-black rounded-lg px-3 py-2 text-sm! font-medium BlogCardWidgetLink min-w-max"
+                  style="background-color: #ffd602;"
                   href="{{ piece._url }}"
                   aria-label="Read More about {{ piece.title }}"
                   >Read More</a

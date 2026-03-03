@@ -73,7 +73,7 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
                   width="14"
                   height="14"
                   viewBox="0 0 14 14"
-                  fill="none"
+                  fill="#1c1e21"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
@@ -86,7 +86,7 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
                   width="14"
                   height="14"
                   viewBox="0 0 12 12"
-                  fill="black"
+                  fill="#1c1e21"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
@@ -195,6 +195,9 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
           </div>
         </div>
       </div>
+      <div class="block lg:hidden max-[1024px]:mx-8">
+        {% area data.global, 'blogTopRightSection' %}
+      </div>
       {% if data.piece.podcastEmbed.code %}
       <div class="flex lg:hidden fading-border mt-4 max-[1024px]:mx-8 !w-auto">
         <div class="fading-border-inner p-3">
@@ -254,6 +257,9 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
     </div>
   </div>
   <div class="lg:w-1/4 lg:flex flex-col gap-4 lg:mt-12">
+    <div class="hidden lg:block">
+      {% area data.global, 'blogTopRightSection' %}
+    </div>
     {% if data.piece.podcastEmbed.code %}
     <div class="fading-border hidden lg:block" id="podcast">
       <div class="fading-border-inner p-3">
@@ -282,6 +288,9 @@ data.piece.metaTitle }}{% endblock %} {% block extraHead %}{{ super() }}
 
     <div class="ContentSection">
         {% area data.piece, 'bottomSection' %}
+    </div>
+    <div class="GlobalContentSection">
+        {% area data.global, 'blogBottomSection' %}
     </div>
 <button
   id="scrollToTop"

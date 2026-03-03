@@ -32,12 +32,8 @@
 
 .progress-fill {
   height: 100%; /* Fills the height of the bar */
-  background-color: black; /* Ensure visibility */
   width: 0%; /* Start at 0 */
   transition: none; /* No transition on initialization */
-}
-.progress-fill {
-  width: 0;
   animation: progress-bar-fill linear forwards;
 }
 

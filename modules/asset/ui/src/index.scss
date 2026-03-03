@@ -30,6 +30,10 @@
   line-height: unset !important;
 }
 
+.apos-login__footer {
+  display: none !important;
+}
+
 *,
 ::after,
 ::before {
@@ -419,7 +423,7 @@ input[type="radio"]:checked::before {
   transition: background-color 0.3s ease-in-out;
 }
 
-// Blog Details banner overlay - make images white in text-white container
+// Blog Details banner overlay - make bitmap images white in text-white container
 .BlogDetails {
   .BannerImage .img-fluid {
     min-height: 500px;
@@ -427,9 +431,14 @@ input[type="radio"]:checked::before {
     object-position: center;
   }
   
-  // Make SVG images white when inside text-white container
-  .text-white img,
-  .text-white svg {
+  // Invert only raster images; leave SVGs to use their own fill colors
+  .text-white img {
     filter: brightness(0) invert(1);
   }
 }
+
+// Prevent horizontal overflow on main content sections like blog/whitepaper/media/product digest detail pages
+.blogSection {
+  overflow-x: hidden;
+}
+

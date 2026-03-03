@@ -31,7 +31,15 @@
       <p class="text-lg! lg:text-2xl!">{{ review.role }}</p>
       {% endif %}
     </div>
-    <div class="post_content">{% area review, 'content'%}</div>
+    <div class="post_content">
+      {% area review, 'content'%}
+    </div>
+    <div class="ContentSection">
+        {% area data.piece, 'bottomSection' %}
+    </div>
+    <div class="GlobalContentSection">
+        {% area data.global, 'podcastBottomSection' %}
+    </div>
     <section class="lg:mt-12 mt-8 max-w-max flex items-center justify-center"> 
       <a href="/beyond-barriers"> <button aria-label="Back to Latest" for="Back to Latest" class="flex centerCenter text-base! text-black" style="display: flex; align-items: center; justify-content: center; column-gap: 10px; padding: 5px 15px; position: relative; border: 2px solid rgb(0, 0, 0);">
           Back to Latest
