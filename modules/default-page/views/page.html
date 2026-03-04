@@ -1,12 +1,14 @@
 {#
-  This is an example home page template. It inherits and extends a layout template
-  that lives in the top-level views/ folder for convenience
+  Default interior page template. Inherits and extends the shared layout.
 #}
 
 {% extends "layout.html" %}
 
+{# Dynamic page title: "Page Title - Site Name" #}
+{% block title %}{{ data.page.title }} - {{ data.global.title }}{% endblock %}
+
 {% block main %}
-  <section class="bp-content">
+  <section class="bp-content" id="main-content">
     {% area data.page, 'main' %}
   </section>
 {% endblock %}
