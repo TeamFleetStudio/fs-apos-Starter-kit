@@ -330,6 +330,11 @@ a {
 }
 
 // Skip to Table of Content styles
+@media (max-width: 1023px) {
+  .skip-table {
+    display: none;
+  }
+}
 @media (min-width: 1024px) {
   .skip-table {
     position: absolute;
@@ -436,9 +441,3 @@ input[type="radio"]:checked::before {
     filter: brightness(0) invert(1);
   }
 }
-
-// Prevent horizontal overflow on main content sections like blog/whitepaper/media/product digest detail pages
-.blogSection {
-  overflow-x: hidden;
-}
-
