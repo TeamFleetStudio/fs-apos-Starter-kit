@@ -9,10 +9,14 @@
   text-align: center;
   transition: background-color $animate-easing;
   border-radius: $border-radius;
-  &:hover {
-    color: $white;
-    background-color: bisque;
+  cursor: pointer;
+  &:hover:not(:disabled),
+  &:active:not(:disabled) {
     text-decoration: none;
+    cursor: pointer;
+  }
+  &:disabled {
+    cursor: not-allowed;
   }
 }
 
@@ -31,8 +35,14 @@
   background: $primary;
   border: none;
   color: $white;
-  &:hover {
-    background: lighten($primary, 5%);
+  cursor: pointer;
+  &:hover:not(:disabled),
+  &:active:not(:disabled) {
+    cursor: pointer;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 }
 
