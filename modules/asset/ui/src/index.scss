@@ -428,6 +428,21 @@ input[type="radio"]:checked::before {
   transition: background-color 0.3s ease-in-out;
 }
 
+.BlogGradientRight {
+  background: radial-gradient(
+    79.9% 185.41% at 87.8% 4.36%,
+    rgba(255, 214, 2, 0) 0%,
+    #ffd602 100%
+  );
+}
+.BlogGradientTop {
+  background: radial-gradient(
+    131.38% 95.1% at 50% 95.1%,
+    rgba(255, 214, 2, 0) 0%,
+    #ffd602 100%
+  );
+}
+
 // Blog Details banner overlay - make bitmap images white in text-white container
 .BlogDetails {
   .BannerImage .img-fluid {
@@ -440,4 +455,11 @@ input[type="radio"]:checked::before {
   .text-white img {
     filter: brightness(0) invert(1);
   }
+}
+
+.textWrapper {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
