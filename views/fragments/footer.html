@@ -56,6 +56,96 @@
         </div>
       </div>
     </section>
+  {% elif footerLayout == 'footer-layout-2' %}
+    {# Footer Layout 2 - FS Academy Style #}
+    <footer class="w-full bg-white border-t border-[lightgrey]">
+      <div class="w-full max-w-[1191px] mx-auto px-6 md:px-[75px] py-[50px] md:py-[85px] pb-20 lg:pb-[85px] grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+        
+        {# Logo and Legal Column #}
+        <div class="col-span-12 md:col-span-4 lg:col-span-6 flex flex-col gap-4">
+          {# Logo Section #}
+          <div class="flex flex-col gap-1">
+            {# Main Logo #}
+            <a href="/" class="block w-fit">
+              {{ ui.image(data.global.footerLogo, "object-contain max-w-[200px] h-auto") }}
+            </a>
+            
+            {# Powered by #}
+            {% if data.global.footerPoweredByLogo or data.global.footerPoweredByText %}
+              <div class="flex items-center gap-1">
+                {% if data.global.footerPoweredByText %}
+                  <span style="font-family: 'Figtree', sans-serif; font-size: 16px; color: #000;">{{ data.global.footerPoweredByText }}</span>
+                {% endif %}
+                {% if data.global.footerPoweredByLogo %}
+                  <div class="relative h-[22px]">
+                    {{ ui.image(data.global.footerPoweredByLogo, "object-contain h-full w-auto") }}
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+
+          {# Legal Links #}
+          {% if data.global.footerLegalLinks and data.global.footerLegalLinks.length > 0 %}
+            <nav class="mt-2" aria-label="Legal links" style="font-family: 'Figtree', sans-serif; font-size: 18px; color: #000; line-height: 28px;">
+              {% for legalLink in data.global.footerLegalLinks %}
+                <a 
+                  href="{{ apos.helper.linkPath(legalLink) }}"
+                  {% if apos.helper.linkTarget(legalLink) === '_blank' %}target="_blank" rel="noopener noreferrer"{% endif %}
+                  class="hover:text-[#2265CA] transition-colors"
+                  style="display: block; color: inherit; text-decoration: none;"
+                >
+                  {{ legalLink.linkText }}
+                </a>
+              {% endfor %}
+            </nav>
+          {% endif %}
+
+          {# Copyright #}
+          {% if data.global.footerCopyrightText %}
+            <div class="mt-1" style="font-family: 'Figtree', sans-serif; font-size: 18px; color: #000;">
+              <p class="m-0" style="line-height: 24px;">{{ data.global.footerCopyrightText | replace('{year}', apos.modules.settings.options.year) }}</p>
+            </div>
+          {% endif %}
+        </div>
+
+        {# Navigation Columns from footerNavigationColumns #}
+        {% if data.global.footerNavigationColumns %}
+          {% for column in data.global.footerNavigationColumns %}
+            <div class="col-span-12 md:col-span-4 lg:col-span-3">
+              {% if column.sections and column.sections.length > 0 %}
+                {% for section in column.sections %}
+                  <div class="{% if not loop.first %}mt-6{% endif %}">
+                    {% if section.title %}
+                      <h2 class="mb-3 mt-0" style="font-family: 'Figtree', sans-serif; font-weight: 700; font-size: 24px; color: #000; line-height: 28px;">
+                        {{ section.title }}
+                      </h2>
+                    {% endif %}
+                    {% if section.navItems and section.navItems.length > 0 %}
+                      <ul class="list-none p-0 m-0" style="font-family: 'Figtree', sans-serif; font-size: 18px; color: #000; line-height: 28px;">
+                        {% for navItem in section.navItems %}
+                          <li>
+                            <a 
+                              href="{{ apos.helper.linkPath(navItem) }}"
+                              {% if apos.helper.linkTarget(navItem) === '_blank' %}target="_blank" rel="noopener noreferrer"{% endif %}
+                              class="hover:text-[#2265CA] transition-colors"
+                              style="color: inherit; text-decoration: none;"
+                            >
+                              {{ navItem.linkText }}
+                            </a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+      </div>
+    </footer>
   {% else %}
     {# Default starter footer template #}
     <div class="footer apos-container is-fluid widget-py-spacing {% if data.global.footerCustomClassName %} {{ data.global.footerCustomClassName }}{% endif %}"{% if data.global.footerCustomId %} id="{{ data.global.footerCustomId }}"{% endif %}{% if data.global.footerBackgroundColor %} style="background-color: {{ data.global.footerBackgroundColor }};"{% endif %}>

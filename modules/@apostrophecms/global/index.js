@@ -1,4 +1,5 @@
 const linkSchema = require('../../../lib/linkSchema');
+const navLinkSchema = require('../../../lib/navLinkSchema');
 const buttonSchema = require('../../../lib/buttonSchema');
 const backgroundSchema = require('../../../lib/backgroundSchema');
 const customAttributesSchema = require('../../../lib/customAttributesSchema');
@@ -59,6 +60,10 @@ module.exports = {
           {
             label: 'Header Layout 1',
             value: 'header-layout-1'
+          },
+          {
+            label: 'Header Layout 2',
+            value: 'header-layout-2'
           }
         ]
       },
@@ -80,6 +85,25 @@ module.exports = {
           add: {
             ...linkSchema,
           }
+        },
+        if: {
+          headerLayout: {
+            $in: ['default', 'header-layout-1']
+          }
+        }
+      },
+      headerNavLayout2: {
+        label: 'Header Navigation Items',
+        help: 'Navigation items with dropdown submenu support',
+        type: 'array',
+        titleField: 'linkText',
+        fields: {
+          add: {
+            ...navLinkSchema,
+          }
+        },
+        if: {
+          headerLayout: 'header-layout-2'
         }
       },
       headerBtns: {
@@ -92,7 +116,9 @@ module.exports = {
           }
         },
         if: {
-          headerLayout: 'default'
+          headerLayout: {
+            $in: ['default', 'header-layout-2']
+          }
         }
       },
       headerBackgroundColor: {
@@ -116,7 +142,9 @@ module.exports = {
         step: 1,
         def: 16,
         if: {
-          headerLayout: 'default'
+          headerLayout: {
+            $in: ['default', 'header-layout-2']
+          }
         }
       },
       headerCustomClassName: {
@@ -146,6 +174,10 @@ module.exports = {
           {
             label: 'Footer Layout 1',
             value: 'footer-layout-1'
+          },
+          {
+            label: 'Footer Layout 2',
+            value: 'footer-layout-2'
           }
         ]
       },
@@ -270,6 +302,48 @@ module.exports = {
           footerLayout: 'footer-layout-1'
         }
       },
+      footerNavigationColumns: {
+        label: 'Footer Navigation Columns',
+        help: 'Add navigation columns. Each column can have up to 3 sections.',
+        type: 'array',
+        titleField: 'columnLabel',
+        fields: {
+          add: {
+            columnLabel: {
+              type: 'string',
+              label: 'Column Label (for reference only)',
+              help: 'This is just for identifying the column in the list'
+            },
+            sections: {
+              label: 'Sections (Max 3)',
+              type: 'array',
+              titleField: 'title',
+              max: 3,
+              fields: {
+                add: {
+                  title: {
+                    type: 'string',
+                    label: 'Section Title'
+                  },
+                  navItems: {
+                    label: 'Nav Items',
+                    type: 'array',
+                    titleField: 'linkText',
+                    fields: {
+                      add: {
+                        ...linkSchema
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        if: {
+          footerLayout: 'footer-layout-2'
+        }
+      },
       footerSourceForgeScript: {
         label: 'Footer Source Forge Script',
         help: 'Add JS script for SourceForge badge',
@@ -314,6 +388,49 @@ module.exports = {
         },
         if: {
           footerLayout: 'footer-layout-1'
+        }
+      },
+      footerPoweredByLogo: {
+        label: 'Powered By Logo',
+        type: 'area',
+        options: {
+          max: 1,
+          widgets: {
+            '@apostrophecms/image': {}
+          }
+        },
+        if: {
+          footerLayout: 'footer-layout-2'
+        }
+      },
+      footerPoweredByText: {
+        label: 'Powered By Text',
+        type: 'string',
+        def: 'Powered by',
+        if: {
+          footerLayout: 'footer-layout-2'
+        }
+      },
+      footerLegalLinks: {
+        label: 'Legal Links',
+        type: 'array',
+        titleField: 'linkText',
+        fields: {
+          add: {
+            ...linkSchema
+          }
+        },
+        if: {
+          footerLayout: 'footer-layout-2'
+        }
+      },
+      footerCopyrightText: {
+        label: 'Copyright Text',
+        type: 'string',
+        help: 'Use {year} to insert current year automatically',
+        def: '© {year} FS Academy',
+        if: {
+          footerLayout: 'footer-layout-2'
         }
       },
       social: {
@@ -450,7 +567,7 @@ module.exports = {
       },
       header: {
         label: 'Header',
-        fields: ['headerLayout', 'headerLogo', 'headerNav', 'headerBtns', 'headerButtonSpacing', 'headerBackgroundColor', 'headerTextColor', 'headerCustomClassName', 'headerCustomId']
+        fields: ['headerLayout', 'headerLogo', 'headerNav', 'headerNavLayout2', 'headerBtns', 'headerButtonSpacing', 'headerBackgroundColor', 'headerTextColor', 'headerCustomClassName', 'headerCustomId']
       },
       footer: {
         label: 'Footer',
@@ -467,7 +584,12 @@ module.exports = {
           'footerBgImg',
           'footerDescription',
           'footerPrimaryNavigation',
-          'footerSourceForgeScript'
+          'footerNavigationColumns',
+          'footerSourceForgeScript',
+          'footerPoweredByLogo',
+          'footerPoweredByText',
+          'footerLegalLinks',
+          'footerCopyrightText'
         ]
       },
       socialMediaPlatforms: {

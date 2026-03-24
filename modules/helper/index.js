@@ -27,6 +27,30 @@ module.exports = {
           target = '_blank';
         }
         return target;
+      },
+      submenuLinkPath: (subItem) => {
+        if (!subItem) {
+          return '#';
+        }
+        let path = '#';
+        if (subItem.submenuLinkType === 'page' && subItem._submenuLinkPage && subItem._submenuLinkPage[0] && subItem._submenuLinkPage[0]._url) {
+          path = subItem._submenuLinkPage[0]._url;
+        } else if (subItem.submenuLinkType === 'file' && subItem._submenuLinkFile && subItem._submenuLinkFile[0] && subItem._submenuLinkFile[0]._url) {
+          path = subItem._submenuLinkFile[0]._url;
+        } else if (subItem.submenuLinkType === 'custom' && subItem.submenuLinkUrl) {
+          path = subItem.submenuLinkUrl;
+        }
+        return path;
+      },
+      submenuLinkTarget: (subItem) => {
+        if (!subItem) {
+          return '_self';
+        }
+        let target = '_self';
+        if (subItem.submenuLinkTarget && Array.isArray(subItem.submenuLinkTarget) && subItem.submenuLinkTarget.length && subItem.submenuLinkTarget[0] === '_blank') {
+          target = '_blank';
+        }
+        return target;
       }
     });
   }
