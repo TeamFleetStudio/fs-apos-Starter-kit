@@ -97,8 +97,241 @@
         });
       });
     </script>
+  {% elif headerLayout == 'header-layout-2' %}
+    {# Header Layout 2 template - With dropdown support #}
+    <div class="header-layout-2-wrapper sticky top-0 z-20">
+      <header class="relative bg-white border border-[#d3d3d3] w-full h-[65px] header-layout-2 overflow-visible">
+        <div class="flex items-center justify-between h-full px-4 md:px-[50px] py-[15px] overflow-visible">
+          {# Logo #}
+          <div class="shrink-0">
+            <a href="/" class="flex items-center" title="Go to home page">
+              {{ ui.image(data.global.headerLogo, "object-contain w-[140px] h-[32px] md:w-[165px] md:h-[35px]") }}
+            </a>
+          </div>
+
+          {# Desktop Navigation #}
+          <div class="hidden lg:flex items-center gap-[40px]">
+            <div class="flex items-center gap-[25px]">
+              {% for nav in data.global.headerNavLayout2 %}
+                {% if nav.hasDropdown %}
+                  <div class="relative dropdown-wrapper">
+                    <button 
+                      type="button"
+                      class="dropdown-toggle text-black hover:text-[#2265CA] text-[16px] text-center transition-colors font-normal flex items-center gap-1 bg-transparent border-none cursor-pointer"
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      {% if nav.ariaLabel %}aria-label="{{ nav.ariaLabel }}"{% endif %}
+                      style="font-family: 'Figtree', sans-serif;"
+                    >
+                      {{ nav.linkText }}
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dropdown-arrow transition-transform" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                    </button>
+                    <ul class="dropdown-menu absolute left-0 top-full mt-2 bg-white shadow-lg rounded-lg py-2 min-w-[200px] transition-all duration-200 list-none pl-0 border border-[#d3d3d3]" style="z-index: 9999; opacity: 0; visibility: hidden;">
+                      {% for subItem in nav.submenuItems %}
+                        <li>
+                          <a 
+                            href="{{ apos.helper.submenuLinkPath(subItem) }}"
+                            {% if subItem.submenuLinkTarget[0] === '_blank' %}target="_blank"{% endif %}
+                            {% if subItem.submenuAriaLabel %}aria-label="{{ subItem.submenuAriaLabel }}"{% endif %}
+                            class="block px-4 py-2 text-black hover:bg-gray-100 hover:text-[#2265CA] transition-colors text-[14px]"
+                            style="font-family: 'Figtree', sans-serif;"
+                          >
+                            {{ subItem.submenuLinkText }}
+                          </a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% else %}
+                  {% render link.render({
+                    path: apos.helper.linkPath(nav),
+                    target: apos.helper.linkTarget(nav),
+                    ariaLabel: nav.ariaLabel,
+                    label: nav.linkText,
+                    class: "text-black hover:text-[#2265CA] text-[16px] text-center transition-colors font-normal",
+                    style: "font-family: 'Figtree', sans-serif;"
+                  }) %}
+                {% endif %}
+              {% endfor %}
+            </div>
+
+            {% if data.global.headerBtns|length > 0 %}
+              {% for btn in data.global.headerBtns %}
+                {% render buttonFrag.render(btn) %}
+              {% endfor %}
+            {% endif %}
+          </div>
+
+          {# Mobile Menu Button #}
+          <button
+            id="menuToggleButtonLayout2"
+            class="lg:hidden flex items-center justify-center w-10 h-10"
+            aria-label="Navigation menu"
+            aria-expanded="false"
+            aria-controls="mobile-navigation-layout2">
+            <svg
+              id="openIconLayout2"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M3 12H21M3 6H21M3 18H21"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+            </svg>
+            <svg
+              id="closeIconLayout2"
+              class="hidden"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M18 6L6 18M6 6L18 18"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        {# Mobile Menu - Absolute positioned overlay below header #}
+        <div
+          id="mobile-navigation-layout2"
+          role="navigation"
+          aria-label="Mobile navigation"
+          class="lg:hidden absolute left-0 right-0 top-full z-50 bg-white border border-[#d3d3d3] shadow-lg hidden">
+          <div class="px-4 py-4 flex flex-col gap-2">
+            {% for nav in data.global.headerNavLayout2 %}
+              {% if nav.hasDropdown %}
+                <div class="mobile-dropdown">
+                  <button 
+                    type="button"
+                    class="mobile-dropdown-toggle text-black hover:text-[#2265CA] text-[16px] transition-colors pb-2 flex items-center gap-1 font-normal"
+                    aria-expanded="false"
+                    style="font-family: 'Figtree', sans-serif; background: transparent; border: none; cursor: pointer; text-align: left;"
+                  >{{ nav.linkText }}<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mobile-dropdown-arrow transition-transform" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                  </button>
+                  <ul class="mobile-dropdown-menu pl-4 overflow-hidden max-h-0 transition-all duration-200 list-none">
+                    {% for subItem in nav.submenuItems %}
+                      <li class="py-1">
+                        <a 
+                          href="{{ apos.helper.submenuLinkPath(subItem) }}"
+                          {% if subItem.submenuLinkTarget[0] === '_blank' %}target="_blank"{% endif %}
+                          {% if subItem.submenuAriaLabel %}aria-label="{{ subItem.submenuAriaLabel }}"{% endif %}
+                          class="text-black hover:text-[#2265CA] text-[14px] transition-colors"
+                          style="font-family: 'Figtree', sans-serif;"
+                        >
+                          {{ subItem.submenuLinkText }}
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% else %}
+                <a
+                  href="{{ apos.helper.linkPath(nav) }}"
+                  {% if apos.helper.linkTarget(nav) %}target="{{ apos.helper.linkTarget(nav) }}"{% endif %}
+                  aria-label="{{ nav.ariaLabel }}"
+                  class="text-black hover:text-[#2265CA] text-[16px] transition-colors pb-2 font-normal"
+                  style="font-family: 'Figtree', sans-serif;">
+                  {{ nav.linkText }}
+                </a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </header>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const toggleButton = document.getElementById("menuToggleButtonLayout2");
+        const mobileMenu = document.getElementById("mobile-navigation-layout2");
+        const openIcon = document.getElementById("openIconLayout2");
+        const closeIcon = document.getElementById("closeIconLayout2");
+
+        if (toggleButton) {
+          toggleButton.addEventListener("click", () => {
+            const isExpanded = toggleButton.getAttribute("aria-expanded") === "true";
+
+            toggleButton.setAttribute("aria-expanded", !isExpanded);
+            toggleButton.setAttribute("aria-label", isExpanded ? "Open menu" : "Close menu");
+
+            mobileMenu.classList.toggle("hidden");
+
+            openIcon.classList.toggle("hidden", !isExpanded);
+            closeIcon.classList.toggle("hidden", isExpanded);
+          });
+        }
+
+        // Desktop Dropdown functions
+        const dropdownToggles = document.querySelectorAll('.header-layout-2 .dropdown-toggle');
+        
+        function openDropdown(toggle) {
+          const menu = toggle.nextElementSibling;
+          toggle.setAttribute('aria-expanded', 'true');
+          menu.style.opacity = '1';
+          menu.style.visibility = 'visible';
+        }
+        
+        function closeDropdown(toggle) {
+          const menu = toggle.nextElementSibling;
+          toggle.setAttribute('aria-expanded', 'false');
+          menu.style.opacity = '0';
+          menu.style.visibility = 'hidden';
+        }
+        
+        function closeAllDropdowns() {
+          dropdownToggles.forEach(toggle => closeDropdown(toggle));
+        }
+
+        dropdownToggles.forEach(toggle => {
+          toggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+            closeAllDropdowns();
+            if (!isExpanded) {
+              openDropdown(toggle);
+            }
+          });
+        });
+
+        document.addEventListener('click', (e) => {
+          if (!e.target.closest('.dropdown-toggle') && !e.target.closest('.dropdown-menu')) {
+            closeAllDropdowns();
+          }
+        });
+
+        // Mobile dropdown toggles
+        const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+
+        mobileDropdownToggles.forEach(toggle => {
+          toggle.addEventListener('click', () => {
+            const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+            const menu = toggle.nextElementSibling;
+            
+            toggle.setAttribute('aria-expanded', !isExpanded);
+            
+            if (!isExpanded) {
+              menu.classList.add('is-open');
+              menu.style.maxHeight = menu.scrollHeight + 'px';
+            } else {
+              menu.classList.remove('is-open');
+              menu.style.maxHeight = '0';
+            }
+          });
+        });
+      });
+    </script>
   {% else %}
-    {# Default starter header template #}
+    {# Default starter header template - Simple navigation without dropdowns #}
     <div class="navigation apos-container is-fluid {% if data.global.headerCustomClassName %} {{ data.global.headerCustomClassName }}{% endif %}"{% if data.global.headerCustomId %} id="{{ data.global.headerCustomId }}"{% endif %}{% if data.global.headerBackgroundColor %} style="background-color: {{ data.global.headerBackgroundColor }};"{% endif %}>
       <div class="navigation__logo-container">
         <a href="/" class="navigation__logo">

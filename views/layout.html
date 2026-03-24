@@ -140,4 +140,82 @@
       {{ data.global.customJavaScript.code | safe }}
   {% endif %}
   <!-- End Custom JavaScript -->
+  
+  <!-- Global Arrow Key Navigation (works like Tab) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Get all focusable elements on the page
+      function getAllFocusableElements() {
+        const focusableSelectors = [
+          'a[href]:not([disabled]):not([tabindex="-1"])',
+          'button:not([disabled]):not([tabindex="-1"])',
+          'input:not([disabled]):not([type="hidden"]):not([tabindex="-1"])',
+          'select:not([disabled]):not([tabindex="-1"])',
+          'textarea:not([disabled]):not([tabindex="-1"])',
+          '[tabindex]:not([tabindex="-1"]):not([disabled])',
+          'details:not([disabled])',
+          'summary:not([disabled])'
+        ].join(', ');
+        
+        return Array.from(document.querySelectorAll(focusableSelectors)).filter(el => {
+          // Check if element is visible
+          if (el.offsetParent === null && getComputedStyle(el).position !== 'fixed') {
+            return false;
+          }
+          // Check if element or parent has display:none or visibility:hidden
+          const style = getComputedStyle(el);
+          if (style.display === 'none' || style.visibility === 'hidden') {
+            return false;
+          }
+          // Check for dropdown menu items - only include if dropdown is open
+          const dropdownMenu = el.closest('.dropdown-menu, .mobile-dropdown-menu, .navigation__dropdown-menu');
+          if (dropdownMenu) {
+            const isVisible = dropdownMenu.classList.contains('visible') || 
+                              dropdownMenu.classList.contains('opacity-100') ||
+                              dropdownMenu.classList.contains('is-open') ||
+                              (dropdownMenu.previousElementSibling && 
+                               dropdownMenu.previousElementSibling.getAttribute('aria-expanded') === 'true');
+            return isVisible;
+          }
+          return true;
+        });
+      }
+
+      // Arrow key navigation
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') {
+          return;
+        }
+
+        const focusableElements = getAllFocusableElements();
+        const currentIndex = focusableElements.indexOf(document.activeElement);
+
+        if (currentIndex === -1) {
+          return;
+        }
+
+        e.preventDefault();
+
+        if (e.key === 'ArrowDown') {
+          // Move forward (like Tab)
+          const nextIndex = currentIndex + 1;
+          if (nextIndex < focusableElements.length) {
+            focusableElements[nextIndex].focus();
+          } else {
+            // Wrap to first element
+            focusableElements[0].focus();
+          }
+        } else if (e.key === 'ArrowUp') {
+          // Move backward (like Shift+Tab)
+          const prevIndex = currentIndex - 1;
+          if (prevIndex >= 0) {
+            focusableElements[prevIndex].focus();
+          } else {
+            // Wrap to last element
+            focusableElements[focusableElements.length - 1].focus();
+          }
+        }
+      });
+    });
+  </script>
 {% endblock %}
