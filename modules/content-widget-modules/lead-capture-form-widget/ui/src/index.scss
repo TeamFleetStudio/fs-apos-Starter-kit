@@ -1,0 +1,32 @@
+.lead-capture-form-widget {
+  // Form submission states
+  &.is-submitting {
+    .lead-capture-submit-btn {
+      .btn-text { display: none; }
+      .btn-icon { display: none; }
+      .btn-loading { display: inline; }
+    }
+  }
+
+  &.is-success {
+    .form-success { display: block; }
+    .form-error { display: none; }
+  }
+
+  &.is-error {
+    .form-error { display: block; }
+    .form-success { display: none; }
+  }
+
+  // Input focus styles
+  input:focus,
+  select:focus {
+    border-color: #2265CA;
+    box-shadow: 0 0 0 1px #2265CA;
+  }
+
+  // Button hover
+  .lead-capture-submit-btn:hover:not(:disabled) {
+    filter: brightness(1.1);
+  }
+}

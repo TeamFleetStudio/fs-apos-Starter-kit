@@ -1,0 +1,90 @@
+{% set w = data.widget %}
+
+{# Gap classes #}
+{% set gapClass = 'gap-2' %}
+{% if w.gap == 'medium' %}
+  {% set gapClass = 'gap-4' %}
+{% elif w.gap == 'large' %}
+  {% set gapClass = 'gap-6' %}
+{% endif %}
+
+{# Column classes for grid #}
+{% set colClass = 'grid-cols-2 md:grid-cols-3' %}
+{% if w.columns == '2' %}
+  {% set colClass = 'grid-cols-2' %}
+{% elif w.columns == '3' %}
+  {% set colClass = 'grid-cols-2 md:grid-cols-3' %}
+{% elif w.columns == '4' %}
+  {% set colClass = 'grid-cols-2 md:grid-cols-4' %}
+{% elif w.columns == '5' %}
+  {% set colClass = 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5' %}
+{% elif w.columns == '6' %}
+  {% set colClass = 'grid-cols-3 md:grid-cols-6' %}
+{% endif %}
+
+{# Image style classes #}
+{% set imgStyleClass = 'rounded-lg' %}
+{% if w.imageStyle == 'rounded' %}
+  {% set imgStyleClass = 'rounded-full' %}
+{% elif w.imageStyle == 'circle' %}
+  {% set imgStyleClass = 'rounded-full aspect-square object-cover' %}
+{% elif w.imageStyle == 'square' %}
+  {% set imgStyleClass = 'rounded-none' %}
+{% elif w.imageStyle == 'rounded-lg' %}
+  {% set imgStyleClass = 'rounded-lg' %}
+{% endif %}
+
+<div class="logo-grid-widget p-6 rounded-lg {{ w.customClassName or '' }}"
+  {% if w.customId %}id="{{ w.customId }}"{% endif %}
+  style="background-color: {{ w.bgColor or '#ffffff' }};"
+  {% if w.aosAnimate %}data-aos="{{ w.aosAnimate }}"{% endif %}
+  {% if w.aosDelay %}data-aos-delay="{{ w.aosDelay }}"{% endif %}
+  {% if w.aosDuration %}data-aos-duration="{{ w.aosDuration }}"{% endif %}>
+
+  {# Optional Title #}
+  {% if w.title %}
+  <h4 class="font-['Figtree'] font-semibold text-lg mb-4 text-gray-800">{{ w.title }}</h4>
+  {% endif %}
+
+  {# Logo Grid #}
+  {% if w.logos and (w.logos | length) > 0 %}
+  <div class="logo-grid grid {{ colClass }} {{ gapClass }} items-center justify-items-center">
+    {% for logo in w.logos %}
+      {% set logoImage = apos.image.first(logo.image) %}
+      {% set borderClass = 'border border-gray-200 p-2' if w.showBorder else '' %}
+      
+      {% if logoImage %}
+        {% if logo.link %}
+        <a href="{{ logo.link }}" 
+           target="{{ logo.linkTarget or '_blank' }}"
+           rel="noopener noreferrer"
+           class="logo-item flex items-center justify-center {{ borderClass }} {{ imgStyleClass }} hover:opacity-80 transition-opacity"
+           aria-label="{{ logo.altText }}">
+          <img src="{{ apos.attachment.url(logoImage, { size: 'one-third' }) }}"
+               alt="{{ logo.altText or logoImage._alt or 'Logo' }}"
+               class="max-h-8 md:max-h-10 w-auto object-contain {{ imgStyleClass }}"
+               loading="lazy">
+        </a>
+        {% else %}
+        <div class="logo-item flex items-center justify-center {{ borderClass }} {{ imgStyleClass }}">
+          <img src="{{ apos.attachment.url(logoImage, { size: 'one-third' }) }}"
+               alt="{{ logo.altText or logoImage._alt or 'Logo' }}"
+               class="max-h-8 md:max-h-10 w-auto object-contain {{ imgStyleClass }}"
+               loading="lazy">
+        </div>
+        {% endif %}
+      {% else %}
+        {# Placeholder when no image is uploaded - show clickable area #}
+        <div class="logo-item flex items-center justify-center {{ borderClass }} bg-gray-100 {{ imgStyleClass }} px-4 py-3 min-h-[50px] min-w-[100px]">
+          <span class="text-xs text-gray-500 text-center font-medium">{{ logo.altText or 'Logo' }}</span>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% else %}
+  {# Empty state - show prominent placeholder #}
+  <div class="logo-grid-empty bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+    <p class="text-gray-500 text-sm">Click to edit and add logos</p>
+  </div>
+  {% endif %}
+</div>

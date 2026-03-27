@@ -1,0 +1,90 @@
+{% set w = data.widget %}
+{% set colCount = w.columns | length %}
+
+<section class="comparison-table-widget w-full {{ w.customClassName or '' }}" 
+  {% if w.customId %}id="{{ w.customId }}"{% endif %}
+  {% if w.aosAnimate %}data-aos="{{ w.aosAnimate }}"{% endif %}>
+
+  <div class="w-full bg-white overflow-x-auto {{ w.tableClass or '' }}">
+    
+    {# Header Row - using 4 columns (1 for feature name + 3 for values) #}
+    <div class="grid grid-cols-4 gap-2 md:gap-4 mb-6 min-w-[500px] md:min-w-full">
+      {# Empty first cell for feature names column #}
+      <div></div>
+      
+      {% for col in w.columns %}
+      <div class="text-center">
+        {% if col.isHighlighted %}
+        <span class="font-['Figtree'] font-bold text-[14px] md:text-[18px] text-white rounded-[5px] px-2 md:px-4 py-1 md:py-2 inline-block" style="background-color: {{ col.highlightColor or '#2265CA' }};">
+          {{ col.title }}
+        </span>
+        {% else %}
+        <span class="font-['Figtree'] font-medium text-[14px] md:text-[18px] text-black">
+          {{ col.title }}
+        </span>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+
+    {# Feature Rows #}
+    <div class="space-y-0 min-w-[500px] md:min-w-full">
+      {% for row in w.rows %}
+      <div class="grid grid-cols-4 gap-2 md:gap-4 py-2 md:py-4 {% if not loop.last %}border-b border-[#d3d3d3]{% endif %}">
+        
+        {# Feature Name #}
+        <div class="flex items-center">
+          <span class="font-['Figtree'] text-[14px] md:text-[16px] text-black">
+            {{ row.featureName }}
+          </span>
+        </div>
+
+        {# Column 1 Value (Video Courses) #}
+        <div class="flex items-center justify-center">
+          {% if row.col1Value == 'check' %}
+            <svg class="w-5 h-5 text-[#2265CA]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+            </svg>
+          {% elif row.col1Value == 'cross' %}
+            <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          {% elif row.col1Value == 'text' %}
+            <span class="font-['Figtree'] text-[14px] md:text-[16px] text-gray-500">{{ row.col1Text }}</span>
+          {% endif %}
+        </div>
+
+        {# Column 2 Value (Bootcamps) #}
+        <div class="flex items-center justify-center">
+          {% if row.col2Value == 'check' %}
+            <svg class="w-5 h-5 text-[#2265CA]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+            </svg>
+          {% elif row.col2Value == 'cross' %}
+            <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          {% elif row.col2Value == 'text' %}
+            <span class="font-['Figtree'] text-[14px] md:text-[16px] text-gray-500">{{ row.col2Text }}</span>
+          {% endif %}
+        </div>
+
+        {# Column 3 Value (FS Academy - highlighted) #}
+        <div class="flex items-center justify-center bg-[#2265CA]/5">
+          {% if row.col3Value == 'check' %}
+            <svg class="w-5 h-5 text-[#2265CA]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+            </svg>
+          {% elif row.col3Value == 'cross' %}
+            <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          {% elif row.col3Value == 'text' %}
+            <span class="font-['Figtree'] text-[14px] md:text-[16px] text-gray-500">{{ row.col3Text }}</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

@@ -37,5 +37,10 @@ module.exports = {
   'card-widget': {},
   'beyond-barriers-guests-widget': {},
   'audit-slider-widget': {},
-  'simple-image-widget': {}
+  'simple-image-widget': {},
+  'stats-card-widget': {},
+  'comparison-table-widget': {},
+  'lead-capture-form-widget': {},
+  'benefit-card-widget': {},
+  'logo-grid-widget': {}
 };
