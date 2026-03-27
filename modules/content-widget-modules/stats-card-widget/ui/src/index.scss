@@ -1,0 +1,21 @@
+.stats-card-widget {
+  .stats-card-header-icon {
+    .apos-area {
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .stat-icon {
+    .apos-area {
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+.benefit-card-widget {
+  // Ensure proper positioning context
+  position: relative;
+  
+  // Icon styles
+  .absolute {
+    img {
+      object-fit: contain;
+    }
+  }
+}
