@@ -1,0 +1,11 @@
+.comparison-table-widget {
+  // Ensure proper font rendering
+  font-family: 'Figtree', sans-serif;
+  
+  // Responsive grid adjustment for mobile
+  @media (max-width: 640px) {
+    .grid {
+      min-width: 500px;
+    }
+  }
+}

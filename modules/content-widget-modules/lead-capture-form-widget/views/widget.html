@@ -1,0 +1,104 @@
+{% set w = data.widget %}
+
+<div class="lead-capture-form-widget bg-white border border-[#d3d3d3] rounded-[5px] shadow-[0px_0px_50px_0px_rgba(0,0,0,0.1)] w-full lg:max-w-[400px] lg:ml-auto p-6 md:p-[35px] {{ w.customClassName or '' }}" 
+  {% if w.customId %}id="{{ w.customId }}"{% endif %}
+  {% if w.aosAnimate %}data-aos="{{ w.aosAnimate }}"{% endif %}>
+  
+  {% if w.formTitle %}
+  <h3 class="font-['Figtree'] font-bold text-xl md:text-2xl text-black mb-4">{{ w.formTitle }}</h3>
+  {% endif %}
+
+  <form class="lead-capture-form flex flex-col gap-[20px]" 
+        action="{{ w.formAction or '/api/lead-capture' }}" 
+        method="POST"
+        data-success-message="{{ w.successMessage or 'We will get back to you soon!' }}"
+        data-error-message="{{ w.errorMessage or 'Something went wrong. Please try again.' }}">
+    
+    {# Full Name Field #}
+    <div class="flex flex-col gap-[10px]">
+      <label for="fullName-{{ w._id }}" class="font-['Figtree'] text-[16px] md:text-[20px] text-black">
+        Full name <span class="text-red-500">*</span>
+      </label>
+      <input
+        id="fullName-{{ w._id }}"
+        type="text"
+        name="fullName"
+        placeholder="Enter your official full name"
+        autocomplete="name"
+        required
+        class="h-[50px] text-[16px] md:text-[20px] px-4 border border-[#d3d3d3] rounded-[5px] font-['Figtree'] focus:outline-none focus:border-[#2265CA] focus:ring-1 focus:ring-[#2265CA]"
+      />
+    </div>
+
+    {# Email Address Field #}
+    <div class="flex flex-col gap-[10px]">
+      <label for="email-{{ w._id }}" class="font-['Figtree'] text-[16px] md:text-[20px] text-black">
+        Email Address <span class="text-red-500">*</span>
+      </label>
+      <input
+        id="email-{{ w._id }}"
+        type="email"
+        name="email"
+        placeholder="Enter your email address"
+        autocomplete="email"
+        required
+        class="h-[50px] text-[16px] md:text-[20px] px-4 border border-[#d3d3d3] rounded-[5px] font-['Figtree'] focus:outline-none focus:border-[#2265CA] focus:ring-1 focus:ring-[#2265CA]"
+      />
+    </div>
+
+    {# Phone Number Field #}
+    {% if w.showPhoneField !== false %}
+    <div class="flex flex-col gap-[10px]">
+      <label for="phone-{{ w._id }}" class="font-['Figtree'] text-[16px] md:text-[20px] text-black">
+        Phone Number <span class="text-red-500">*</span>
+      </label>
+      <div class="flex">
+        <select 
+          name="countryCode" 
+          class="h-[50px] text-[16px] md:text-[20px] px-2 border border-[#d3d3d3] border-r-0 rounded-l-[5px] font-['Figtree'] focus:outline-none focus:border-[#2265CA] bg-gray-50"
+        >
+          <option value="+91">🇮🇳 +91</option>
+          <option value="+1">🇺🇸 +1</option>
+          <option value="+44">🇬🇧 +44</option>
+          <option value="+61">🇦🇺 +61</option>
+          <option value="+971">🇦🇪 +971</option>
+          <option value="+65">🇸🇬 +65</option>
+        </select>
+        <input
+          id="phone-{{ w._id }}"
+          type="tel"
+          name="phone"
+          placeholder="Enter your phone number"
+          autocomplete="tel"
+          required
+          class="flex-1 h-[50px] text-[16px] md:text-[20px] px-4 border border-[#d3d3d3] rounded-r-[5px] font-['Figtree'] focus:outline-none focus:border-[#2265CA] focus:ring-1 focus:ring-[#2265CA]"
+        />
+      </div>
+    </div>
+    {% endif %}
+
+    {# Submit Button #}
+    <button
+      type="submit"
+      class="lead-capture-submit-btn text-white font-['Figtree'] font-medium text-[18px] md:text-[24px] py-[10px] px-[20px] rounded-full transition-colors flex items-center justify-center gap-[10px] w-full mt-[10px] hover:opacity-90 disabled:bg-gray-400 disabled:cursor-not-allowed"
+      style="background-color: {{ w.buttonColor or '#2265CA' }};"
+    >
+      <span class="btn-text">{{ w.buttonText or 'Request callback' }}</span>
+      <span class="btn-loading hidden">Submitting...</span>
+      <svg class="btn-icon w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
+      </svg>
+    </button>
+
+    {# Success Message (hidden by default) #}
+    <div class="form-success hidden bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-[5px] font-['Figtree'] text-[14px] md:text-[16px]">
+      ✓ {{ w.successMessage or "We'll get back to you soon!" }}
+    </div>
+
+    {# Error Message (hidden by default) #}
+    <div class="form-error hidden bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-[5px] font-['Figtree'] text-[14px] md:text-[16px]">
+      ✗ {{ w.errorMessage or 'Something went wrong. Please try again.' }}
+    </div>
+  </form>
+</div>

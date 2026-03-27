@@ -1,0 +1,17 @@
+.logo-grid-widget {
+  .logo-grid {
+    // Ensure proper wrapping
+    flex-wrap: wrap;
+  }
+  
+  .logo-item {
+    // Consistent sizing for logos
+    min-width: 80px;
+    
+    img {
+      // Prevent images from being too large
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}

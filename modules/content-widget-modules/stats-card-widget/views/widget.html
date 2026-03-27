@@ -1,0 +1,117 @@
+{% set w = data.widget %}
+
+{# Lucide Icon Macros #}
+{% macro lucideIcon(name, color) %}
+  {% set iconColor = color or 'currentColor' %}
+  {% if name == 'trending-up' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+  {% elif name == 'sprout' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>
+  {% elif name == 'briefcase-business' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12h.01"/><path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M22 13a18.15 18.15 0 0 1-20 0"/><rect width="20" height="14" x="2" y="6" rx="2"/></svg>
+  {% elif name == 'users' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+  {% elif name == 'chart-bar' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+  {% elif name == 'chart-line' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+  {% elif name == 'dollar-sign' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+  {% elif name == 'target' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+  {% elif name == 'award' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+  {% elif name == 'rocket' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+  {% elif name == 'zap' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+  {% elif name == 'star' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+  {% elif name == 'heart' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+  {% elif name == 'thumbs-up' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+  {% elif name == 'check-circle' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+  {% elif name == 'globe' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+  {% elif name == 'building' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+  {% elif name == 'graduation-cap' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+  {% elif name == 'clock' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+  {% elif name == 'calendar' %}
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="{{ iconColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+  {% endif %}
+{% endmacro %}
+
+<div class="stats-card-widget relative {{ w.customClassName or '' }}" 
+  {% if w.customId %}id="{{ w.customId }}"{% endif %}
+  style="background-color: {{ w.bgColor or '#f7faff' }};"
+  {% if w.aosAnimate %}data-aos="{{ w.aosAnimate }}"{% endif %}
+  {% if w.aosDelay %}data-aos-delay="{{ w.aosDelay }}"{% endif %}
+  {% if w.aosDuration %}data-aos-duration="{{ w.aosDuration }}"{% endif %}>
+  
+  {# Header Icon in Circle - positioned at top center #}
+  {% set headerImage = apos.image.first(w.headerIcon) %}
+  {% if headerImage %}
+  <div class="stats-card-header-icon absolute -top-10 left-1/2 transform -translate-x-1/2 z-10">
+    <div class="w-20 h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-lg">
+      <img src="{{ apos.attachment.url(headerImage, { size: 'one-sixth' }) }}" 
+           alt="{{ headerImage._alt or 'Stats icon' }}" 
+           class="w-12 h-12 object-contain">
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="stats-card-content pt-14 pb-8 px-8 text-center rounded-2xl" style="background-color: {{ w.bgColor or '#f7faff' }};">
+    {# Title #}
+    {% if w.title %}
+    <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+      {% if w.titleHighlight %}
+        {{ w.title | replace(w.titleHighlight, '<span class="text-[#2360FF]">' + w.titleHighlight + '</span>') | safe }}
+      {% else %}
+        {{ w.title }}
+      {% endif %}
+    </h3>
+    {% endif %}
+
+    {# Subtitle #}
+    {% if w.subtitle %}
+    <p class="text-gray-600 mb-8">{{ w.subtitle }}</p>
+    {% endif %}
+
+    {# Stats Grid #}
+    {% if w.stats and (w.stats | length) > 0 %}
+    <div class="stats-grid grid grid-cols-1 md:grid-cols-{{ w.stats | length }} gap-6 mt-6">
+      {% for stat in w.stats %}
+      {% set iconColor = '#2360FF' if stat.valueColor == 'primary' else '#000000' %}
+      <div class="stat-item flex flex-col items-center text-center p-4">
+        {# Stat Value with Lucide icon or Custom SVG #}
+        <div class="stat-value flex items-center gap-2 text-3xl md:text-4xl font-bold mb-1 {% if stat.valueColor == 'primary' %}text-[#2360FF]{% else %}text-gray-900{% endif %}">
+          {% if stat.icon == 'custom-svg' and stat.customSvg %}
+          <span class="stat-icon flex-shrink-0">{{ stat.customSvg | safe }}</span>
+          {% elif stat.icon and stat.icon != 'custom-svg' %}
+          <span class="stat-icon flex-shrink-0">{{ lucideIcon(stat.icon, iconColor) }}</span>
+          {% endif %}
+          <span>{{ stat.value }}</span>
+        </div>
+
+        {# Stat Label #}
+        <div class="stat-label font-semibold mb-1 {% if stat.labelColor == 'primary' %}text-[#2360FF]{% else %}text-gray-900{% endif %}">
+          {{ stat.label }}
+        </div>
+
+        {# Stat Description #}
+        {% if stat.description %}
+        <div class="stat-description text-sm text-gray-600">
+          {{ stat.description }}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>

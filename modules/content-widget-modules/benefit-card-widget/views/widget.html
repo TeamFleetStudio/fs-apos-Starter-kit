@@ -1,0 +1,39 @@
+{% set w = data.widget %}
+
+<div class="benefit-card-widget relative border border-[#d3d3d3] rounded-[5px] pt-[50px] pb-[30px] px-[30px] {{ w.customClassName or '' }}" 
+  {% if w.customId %}id="{{ w.customId }}"{% endif %}
+  {% if w.aosAnimate %}data-aos="{{ w.aosAnimate }}"{% endif %}>
+  
+  {# Icon - positioned above the card at top-left #}
+  {% set iconImage = apos.image.first(w.icon) %}
+  {% if iconImage %}
+  <div class="absolute left-[29px] -top-[33px] w-[64px] h-[64px]">
+    <img 
+      src="{{ apos.attachment.url(iconImage, { size: 'one-sixth' }) }}" 
+      alt="{{ iconImage._alt or '' }}" 
+      width="64"
+      height="64"
+      class="object-contain w-full h-full"
+    />
+  </div>
+  {% endif %}
+
+  {# Content #}
+  <div class="flex flex-col gap-[25px]">
+    {% if w.title %}
+    <h4 class="font-['Figtree'] font-semibold text-[18px] md:text-[20px] text-black leading-snug">
+      {{ w.title }}
+    </h4>
+    {% endif %}
+
+    {% if w.description %}
+    <p class="font-['Figtree'] font-normal text-[13px] md:text-[14px] text-black leading-snug">
+      {% if w.highlightText %}
+        {{ w.description | replace(w.highlightText, '<strong>' + w.highlightText + '</strong>') | safe }}
+      {% else %}
+        {{ w.description }}
+      {% endif %}
+    </p>
+    {% endif %}
+  </div>
+</div>
