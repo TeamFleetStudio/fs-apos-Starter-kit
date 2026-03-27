@@ -13,7 +13,7 @@
         <span class="mx-1">></span>
       </li>
       {% endif %}
-      <li class="text-[#020407] font-bold capitalize">
+      <li class="text-[#020407] !font-bold capitalize">
         <a href="{{ data.page._url }}" class="text-[#020407]"
           >{{ data.page.title }}</a
         >
@@ -28,14 +28,14 @@
         data.query.page == "1" or not data.query.page %} {% if (not has_params
         or data.query.page === "1") %}
         <div
-          class="BlogCardWidgetDiv mb-5 min-h-72 h-fit w-full text-left rounded-3xl lg:flex relative overflow-hidden"
+          class="BlogCardWidgetDiv !mb-5 min-h-72 h-fit w-full text-left rounded-3xl lg:flex relative overflow-hidden"
           style="background-color: #ffd602"
         >
           <div
             class="BlogBannerContent lg:w-3/5 py-4 lg:py-7 lg:pl-10 pl-4 pr-4 lg:pr-0 relative z-10"
           >
             <p
-              class="text-3xl! font-bold text-lightblack capitalize mb-3 lg:mb-0"
+              class="text-3xl! !font-bold text-lightblack capitalize !mb-3 lg:!mb-0"
             >
               {{ data.page.title }}
             </p>
@@ -45,13 +45,13 @@
               ></div>
               {% area data.pieces[0], 'bannerImage' %}
             </div>
-            <h1 class="text-xl! text-lightblack font-bold mt-3 lg:mt-6 mb-3">
+            <h1 class="text-xl! text-lightblack !font-bold !mt-3 lg:!mt-6 !mb-3">
               {{ data.pieces[0].title }}
             </h1>
-            <div class="flex flex-wrap gap-2 mb-3 font-medium">
+            <div class="flex flex-wrap gap-2 !mb-3 !font-medium">
               {% if data.pieces[0].blog_type %}
               <span
-                class="inline-flex items-center px-3 py-1 gap-2 rounded-full text-base! font-medium"
+                class="inline-flex items-center px-3 py-1 gap-2 rounded-full text-base! !font-medium"
                 style="background-color: #d1f7d1; color: #1c1e21"
               >
                 {% if data.pieces[0].blog_type == 'podcast' %}
@@ -87,18 +87,18 @@
               </span>
               {% endif %} {% if data.pieces[0].category %}
               <span
-                class="inline-flex items-center px-3 py-1 rounded-full text-sm! font-medium capitalize"
+                class="inline-flex items-center px-3 py-1 rounded-full text-sm! !font-medium capitalize"
                 style="background-color: #ffffcc; color: #1c1e21"
               >
                 {{ data.pieces[0].category }}
               </span>
               {% endif %}
             </div>
-            <p class="text-base! font-normal text-lightblack tracking-wide my-3">
+            <p class="text-base! !font-normal text-lightblack tracking-wide my-3">
               {{ data.pieces[0].meta }}
             </p>
             <a
-              class="inline-block bg-black text-yellow border border-black rounded-lg px-2.5 py-2.5 text-base! font-medium BlogCardWidgetLink min-w-max w-full lg:w-fit text-center lg:text-left"
+              class="inline-block bg-black text-yellow border border-black rounded-lg px-2.5 py-2.5 text-base! !font-medium BlogCardWidgetLink min-w-max w-full lg:w-fit text-center lg:text-left"
               href="{{ data.pieces[0]._url }}"
               aria-label="Read Full article about {{ data.pieces[0].title }}"
               >Read More</a
@@ -116,7 +116,7 @@
               >
             {% endif %}
             <div
-              class="BlogGradientRight absolute inset-0 -left-2 bg-gradient-to-r from-[#FFD602] from-10% via-[#FFEE80]/70 via-40% to-transparent to-90%"
+              class="BlogGradientRight absolute inset-0 "
             ></div>
           </div>
         </div>
@@ -150,7 +150,7 @@
                 id="searchBoxMobile"
                 name="search_mobile"
                 aria-label="Search Box"
-                class="border border-black rounded-lg px-8 py-4 text-sm! w-full"
+                class="border border-black rounded-lg px-8 py-4 text-sm! w-full placeholder:text-base placeholder:text-[#5f6368] placeholder:font-medium placeholder:tracking-[0.025em] focus:outline-offset-4"
                 placeholder="Search..."
                 value="{{ data.search or '' }}"
                 oninput="toggleClearButton('mobile')"
@@ -167,7 +167,8 @@
             <button
               id="searchButtonMobile"
               aria-label="Search"
-              class="bg-yellow text-black border border-black px-4 py-4 rounded-lg flex items-center"
+              class="text-black border border-black px-4 py-4 rounded-lg flex items-center"
+              style="background-color: #ffd602;"
             >
               <svg
                 width="16"
@@ -187,7 +188,8 @@
             </button>
             <div
               id="filterHamburger"
-              class="filter-hamburger bg-yellow p-4 items-center flex rounded-xl border border-black cursor-pointer"
+              class="filter-hamburger p-4 items-center flex rounded-xl border border-black cursor-pointer"
+              style="background-color: #ffd602;"
               aria-label="Open Filter Menu"
               aria-expanded="true"
             >
@@ -212,7 +214,7 @@
           >
             <fieldset
               id="categoriesFieldset"
-              class="filter-fieldset flex flex-col mt-5 w-full"
+              class="filter-fieldset flex flex-col !p-0 !mt-5 w-full"
               aria-label="Categories filter"
             >
               <legend></legend>
@@ -230,7 +232,7 @@
                       fill="black"
                     />
                   </svg>
-                  <h2 class="text-3xl! font-bold mb-0">Filter</h2>
+                  <h2 class="text-3xl! !font-bold !mb-0">Filter</h2>
                 </div>
                 <div>
                   <button
@@ -253,7 +255,7 @@
                   </button>
                 </div>
               </div>
-              <p class="text-xl! font-bold mt-2.5 mb-4">Categories</p>
+              <p class="text-xl! !font-bold !mt-2.5 !mb-4">Categories</p>
               <label class="px-4 py-3 flex items-center gap-2"
                 ><input
                   type="radio"
@@ -322,10 +324,10 @@
 
             <fieldset
               id="typeFieldset"
-              class="filter-fieldset flex flex-col mt-5 w-full"
+              class="filter-fieldset flex flex-col !p-0 !mt-5 w-full"
               aria-label="Type filter"
             >
-              <legend class="text-xl! font-bold mt-2.5 mb-4">Type</legend>
+              <legend class="text-xl! !font-bold !mt-2.5 !mb-4">Type</legend>
               <label class="px-4 py-3 flex items-center gap-2"
                 ><input
                   type="radio"
@@ -344,7 +346,7 @@
                   value="podcast"
                 />
                 <span
-                  class="inline-flex items-center gap-1 text-base! font-medium"
+                  class="inline-flex items-center gap-1 text-base! !font-medium"
                 >
                   <svg
                     width="14"
@@ -369,7 +371,7 @@
                   value="article"
                 />
                 <span
-                  class="inline-flex items-center gap-1 text-base! font-medium"
+                  class="inline-flex items-center gap-1 text-base! !font-medium"
                 >
                   <svg
                     width="14"
@@ -390,7 +392,7 @@
 
             <button
               id="applyFiltersBtn"
-              class="mt-auto w-full bg-black text-yellow text-lg! font-medium tracking-wide py-5 px-auto rounded-lg"
+              class="!mt-auto w-full bg-black text-yellow text-lg! !font-medium tracking-wide py-5 px-auto rounded-lg"
               onclick="applyFilters(); closeFilterOverlay();"
             >
               Apply Filters
@@ -405,12 +407,12 @@
         </div>
         {% endif %} {% if data.pieces | length > 0 %}
         <div
-          class="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 lg:mb-16 mb-8 BlogCardWidgetDiv text-left"
+          class="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 lg:!mb-16 !mb-8 BlogCardWidgetDiv text-left"
         >
           {% set startIndex = 1 if (not has_params or data.query.page == "1")
           else 0 %} {% set endIndex = 10 %} {% for i in range(startIndex,
           endIndex) %} {% set piece = data.pieces[i] %} {% if piece %}
-          <div class="fading-border">
+          <div class="fading-border" style="box-shadow: 0 -2px 8px -2px #fff,inset 0 -2px 8px -2px #fff;">
             <div
               class="fading-border-inner p-4 BlogCardWidget flex flex-col justify-between h-full"
             >
@@ -438,10 +440,10 @@
           {% endif %}
                 </a>
                 <div class="mt-4">
-                  <div class="flex flex-wrap gap-2 mb-2 font-medium">
+                  <div class="flex flex-wrap gap-2 !mb-2 !font-medium">
                     {% if data.pieces[i].blog_type %}
                     <span
-                      class="inline-flex items-center px-3 py-1 gap-2 rounded-full text-base! font-medium"
+                      class="inline-flex items-center px-3 py-1 gap-2 rounded-full text-base! !font-medium"
                       style="background-color: #d1f7d1; color: #1c1e21"
                     >
                       {% if data.pieces[i].blog_type == 'podcast' %}
@@ -477,26 +479,26 @@
                     </span>
                     {% endif %} {% if data.pieces[i].category %}
                     <span
-                      class="inline-flex items-center px-3 py-1 rounded-full text-sm! font-medium capitalize"
+                      class="inline-flex items-center px-3 py-1 rounded-full text-sm! !font-medium capitalize"
                       style="background-color: #ffffcc; color: #1c1e21"
                     >
                       {{ data.pieces[i].category }}
                     </span>
                     {% endif %}
                   </div>
-                  <p class="mb-2 text-base! font-bold text-lightblack">
+                  <p class="mb-2 text-base! !font-bold text-lightblack">
                     {{ piece.title }}
                   </p>
                   <p
-                    class="text-sm! font-normal text-lightblack tracking-wide textWrapper"
+                    class="text-sm! !font-normal text-lightblack tracking-wide textWrapper"
                   >
                     {{piece.meta}}
                   </p>
                 </div>
               </div>
-              <div class="w-full mt-2 justify-between items-center">
+              <div class="w-full !mt-2 justify-between items-center">
                 <a
-                  class="inline-block text-black rounded-lg px-3 py-2 text-sm! font-medium BlogCardWidgetLink min-w-max"
+                  class="inline-block text-black rounded-lg px-3 py-2 text-sm! !font-medium BlogCardWidgetLink min-w-max"
                   style="background-color: #ffd602;"
                   href="{{ piece._url }}"
                   aria-label="Read More about {{ piece.title }}"
@@ -511,7 +513,7 @@
       </div>
       <form
         id="filterFormDesktop"
-        class="hidden lg:block lg:ml-5 mb-8 flex flex-col items-start gap-4 xl:w-1/4 lg:w-1/5 right-0 lg:sticky lg:top-20 lg:self-start"
+        class="hidden lg:block lg:!ml-5 !mb-8 flex flex-col items-start gap-4 xl:w-1/4 lg:w-1/5 right-0 lg:sticky lg:top-20 lg:self-start"
         onsubmit="return false;"
       >
         <div class="flex items-stretch gap-2 w-full">
@@ -538,7 +540,7 @@
               id="searchBoxDesktop"
               name="search_desktop"
               aria-label="Search Box"
-              class="border border-black rounded-lg px-8 py-4 text-sm! w-full"
+              class="border border-black rounded-lg px-8 py-4 text-sm! w-full placeholder:text-base placeholder:text-[#5f6368] placeholder:font-medium placeholder:tracking-[0.025em] focus:outline-offset-4"
               placeholder="Search..."
               value="{{ data.search or '' }}"
               oninput="toggleClearButton('desktop')"
@@ -555,7 +557,8 @@
           <button
             id="searchButtonDesktop"
             aria-label="Search"
-            class="bg-yellow text-black border border-black px-4 py-4 rounded-lg flex items-center"
+            class="text-black border border-black px-4 py-4 rounded-lg flex items-center"
+            style="background-color: #ffd602;"
           >
             <svg
               width="16"
@@ -574,7 +577,7 @@
             </svg>
           </button>
         </div>
-        <fieldset class="flex flex-col mt-5" aria-label="Categories filter">
+        <fieldset class="flex flex-col !p-0 !mt-5" aria-label="Categories filter">
           <legend></legend>
           <div class="flex items-center gap-2">
             <svg
@@ -589,9 +592,9 @@
                 fill="black"
               />
             </svg>
-            <h2 class="text-xl! font-medium mb-0">Filter</h2>
+            <h2 class="text-xl! !font-medium !mb-0">Filter</h2>
           </div>
-          <p class="text-base! font-bold mt-2.5 mb-4">Categories</p>
+          <p class="text-base! !font-bold !mt-2.5 !mb-4">Categories</p>
           <label class="px-4 py-3 flex items-center gap-2"
             ><input
               type="radio"
@@ -658,8 +661,8 @@
           >
         </fieldset>
 
-        <fieldset class="flex flex-col mt-5" aria-label="Type filter">
-          <legend class="text-base! font-bold mt-2.5 mb-4">Type</legend>
+        <fieldset class="flex flex-col !p-0 !mt-5" aria-label="Type filter">
+          <legend class="text-base! !font-bold !mt-2.5 !mb-4">Type</legend>
           <label class="px-4 py-3 flex items-center gap-2"
             ><input
               type="radio"
@@ -677,7 +680,7 @@
               value="podcast"
               aria-label="Podcast"
             />
-            <span class="inline-flex items-center gap-1 text-base! font-medium">
+            <span class="inline-flex items-center gap-1 text-base! !font-medium">
               <svg
                 width="14"
                 height="14"
@@ -700,7 +703,7 @@
               value="article"
               aria-label="Article"
             />
-            <span class="inline-flex items-center gap-1 text-base! font-medium">
+            <span class="inline-flex items-center gap-1 text-base! !font-medium">
               <svg
                 width="14"
                 height="14"
