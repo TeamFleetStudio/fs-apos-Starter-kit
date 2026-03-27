@@ -7,7 +7,7 @@ module.exports = {
     label: 'Stats Card Widget',
     icon: 'chart-box-icon',
     description: 'Display stats with a header icon, title, and stat columns',
-    previewImage: 'svg'
+    previewImage: 'png'
   },
   icons: {
     'chart-box-icon': 'ChartBox'

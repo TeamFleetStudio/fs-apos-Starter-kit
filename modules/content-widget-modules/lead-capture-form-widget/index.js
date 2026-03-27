@@ -7,7 +7,7 @@ module.exports = {
     label: 'Lead Capture Form',
     icon: 'form-select-icon',
     description: 'A styled lead capture form with name, email, and phone fields',
-    previewImage: 'svg'
+    previewImage: 'png'
   },
   icons: {
     'form-select-icon': 'FormSelect'

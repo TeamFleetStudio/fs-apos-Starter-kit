@@ -7,7 +7,7 @@ module.exports = {
     label: 'Benefit Card Widget',
     icon: 'card-text-icon',
     description: 'A card with icon positioned at top-left, title and description',
-    previewImage: 'svg'
+    previewImage: 'png'
   },
   icons: {
     'card-text-icon': 'CardText'

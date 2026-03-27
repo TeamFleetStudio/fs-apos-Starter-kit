@@ -7,7 +7,7 @@ module.exports = {
     label: 'Comparison Table Widget',
     icon: 'table-icon',
     description: 'A comparison table to show feature differences between options',
-    previewImage: 'svg'
+    previewImage: 'png'
   },
   icons: {
     'table-icon': 'Table'
