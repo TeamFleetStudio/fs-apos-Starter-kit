@@ -90,7 +90,48 @@
 </script>
 {% endif %}
 
-<div class="p-4 {{ prependIfPrefix('') }} {{ widget.customClassName or '' }}" data-apos-form-wrapper {% if widget.customId %}id="{{ widget.customId }}"{% endif %} {% if formStyle %}style="{{ formStyle }}"{% endif %}>
+{% if widget.mobileModalMode %}
+<div class="apos-form-mobile-modal-container" data-apos-mobile-modal>
+  {# Floating button — visible only on mobile #}
+  <button
+    type="button"
+    class="apos-form-mobile-fab{% if widget.mobileButtonWidth == 'full' %} apos-fab-full{% elif widget.mobileButtonWidth == 'contained' %} apos-fab-contained{% endif %}"
+    data-apos-mobile-modal-open
+    {% set fabStyle = '' %}
+    {% if widget.mobileButtonBgColor %}{% set fabStyle = fabStyle + 'background-color:' + widget.mobileButtonBgColor + ';' %}{% endif %}
+    {% if widget.mobileButtonTextColor %}{% set fabStyle = fabStyle + 'color:' + widget.mobileButtonTextColor + ';' %}{% endif %}
+    {% if widget.mobileButtonBorderRadius is defined %}{% set fabStyle = fabStyle + 'border-radius:' + widget.mobileButtonBorderRadius + 'px;' %}{% endif %}
+    {% if widget.mobileButtonShadow and widget.mobileButtonShadowColor %}{% set fabStyle = fabStyle + 'box-shadow:0 4px 16px ' + widget.mobileButtonShadowColor + ';' %}{% elif not widget.mobileButtonShadow %}{% set fabStyle = fabStyle + 'box-shadow:none;' %}{% endif %}
+    {% if fabStyle %}style="{{ fabStyle }}"{% endif %}
+  >
+    {% if widget.mobileButtonIcon and widget.mobileButtonIconPlacement == 'start' %}
+      {% if widget.mobileButtonIconType == 'image' and widget.mobileButtonIconImage %}
+        <span class="fab-icon"><img src="{{ apos.attachment.url(widget.mobileButtonIconImage, { size: 'one-sixth' }) }}" alt="" style="width:1em;height:1em;object-fit:contain;vertical-align:middle;" /></span>
+      {% elif widget.mobileButtonIconSvg and widget.mobileButtonIconSvg.code %}
+        <span class="fab-icon">{{ widget.mobileButtonIconSvg.code | safe }}</span>
+      {% endif %}
+    {% endif %}
+    {{ widget.mobileButtonLabel or 'Open Form' }}
+    {% if widget.mobileButtonIcon and widget.mobileButtonIconPlacement != 'start' %}
+      {% if widget.mobileButtonIconType == 'image' and widget.mobileButtonIconImage %}
+        <span class="fab-icon"><img src="{{ apos.attachment.url(widget.mobileButtonIconImage, { size: 'one-sixth' }) }}" alt="" style="width:1em;height:1em;object-fit:contain;vertical-align:middle;" /></span>
+      {% elif widget.mobileButtonIconSvg and widget.mobileButtonIconSvg.code %}
+        <span class="fab-icon">{{ widget.mobileButtonIconSvg.code | safe }}</span>
+      {% endif %}
+    {% endif %}
+  </button>
+
+  {# Modal overlay — visible only on mobile when opened #}
+  <div class="apos-form-modal-overlay" data-apos-mobile-modal-overlay>
+    <div class="apos-form-modal-content">
+      <button type="button" class="apos-form-modal-close" data-apos-mobile-modal-close aria-label="Close">&times;</button>
+      <div class="apos-form-modal-body" data-apos-mobile-modal-body></div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="p-4 {{ prependIfPrefix('') }} {{ widget.customClassName or '' }}{% if widget.mobileModalMode %} apos-form-desktop-only{% endif %}" data-apos-form-wrapper {% if widget.customId %}id="{{ widget.customId }}"{% endif %} {% if formStyle %}style="{{ formStyle }}"{% endif %}>
 {% if form %}
   {% set params = false %}
   {% if form.queryParamList %}

@@ -185,6 +185,102 @@ module.exports = {
         if: { submitIcon: true }
       },
 
+      // Mobile modal mode
+      mobileModalMode: {
+        type: 'boolean',
+        label: 'Mobile Modal Mode',
+        help: 'On screens below 1024px, form hides and a floating button opens it in a modal.',
+        def: false
+      },
+      mobileButtonLabel: {
+        type: 'string',
+        label: 'Modal Button Label',
+        def: 'Open Form',
+        if: { mobileModalMode: true }
+      },
+      mobileButtonBgColor: {
+        type: 'color',
+        label: 'Modal Button Background Color',
+        if: { mobileModalMode: true }
+      },
+      mobileButtonTextColor: {
+        type: 'color',
+        label: 'Modal Button Text Color',
+        if: { mobileModalMode: true }
+      },
+      mobileButtonBorderRadius: {
+        type: 'range',
+        label: 'Modal Button Border Radius (px)',
+        min: 0,
+        max: 50,
+        step: 1,
+        def: 8,
+        if: { mobileModalMode: true }
+      },
+      mobileButtonWidth: {
+        type: 'select',
+        label: 'Modal Button Width',
+        choices: [
+          { label: 'Fit Content', value: 'fit' },
+          { label: 'Full Width', value: 'full' },
+          { label: 'Contained', value: 'contained' }
+        ],
+        def: 'fit',
+        if: { mobileModalMode: true }
+      },
+      mobileButtonIcon: {
+        type: 'boolean',
+        label: 'Modal Button Icon',
+        def: false,
+        if: { mobileModalMode: true }
+      },
+      mobileButtonIconType: {
+        type: 'select',
+        label: 'Icon Type',
+        choices: [
+          { label: 'SVG Code', value: 'svg' },
+          { label: 'Image', value: 'image' }
+        ],
+        def: 'svg',
+        if: { mobileModalMode: true, mobileButtonIcon: true }
+      },
+      mobileButtonIconSvg: {
+        type: 'codeEditor',
+        label: 'SVG Icon HTML',
+        languages: [
+          { label: 'HTML', value: 'html' }
+        ],
+        defaultLanguage: 'html',
+        if: { mobileModalMode: true, mobileButtonIcon: true, mobileButtonIconType: 'svg' }
+      },
+      mobileButtonIconImage: {
+        type: 'attachment',
+        label: 'Icon Image',
+        fileGroup: 'images',
+        if: { mobileModalMode: true, mobileButtonIcon: true, mobileButtonIconType: 'image' }
+      },
+      mobileButtonIconPlacement: {
+        type: 'select',
+        label: 'Icon Placement',
+        def: 'end',
+        choices: [
+          { label: 'Start', value: 'start' },
+          { label: 'End', value: 'end' }
+        ],
+        if: { mobileModalMode: true, mobileButtonIcon: true }
+      },
+      mobileButtonShadow: {
+        type: 'boolean',
+        label: 'Modal Button Shadow',
+        def: true,
+        if: { mobileModalMode: true }
+      },
+      mobileButtonShadowColor: {
+        type: 'color',
+        label: 'Shadow Color',
+        if: { mobileModalMode: true, mobileButtonShadow: true }
+      },
+
       // Custom attributes
       ...customAttributesSchema
     },
@@ -227,6 +323,24 @@ module.exports = {
           'submitIconSvg',
           'submitIconImage',
           'submitIconPlacement'
+        ]
+      },
+      mobileModal: {
+        label: 'Mobile Modal',
+        fields: [
+          'mobileModalMode',
+          'mobileButtonLabel',
+          'mobileButtonBgColor',
+          'mobileButtonTextColor',
+          'mobileButtonBorderRadius',
+          'mobileButtonWidth',
+          'mobileButtonIcon',
+          'mobileButtonIconType',
+          'mobileButtonIconSvg',
+          'mobileButtonIconImage',
+          'mobileButtonIconPlacement',
+          'mobileButtonShadow',
+          'mobileButtonShadowColor'
         ]
       },
       customAttributes: {

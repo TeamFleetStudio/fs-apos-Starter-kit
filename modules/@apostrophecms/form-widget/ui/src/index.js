@@ -149,7 +149,8 @@ export default () => {
     }, true); // useCapture so it fires before the form module's handler
 
     // Preserve form container height on successful submission
-    const wrapper = el.querySelector('[data-apos-form-wrapper]');
+    // Use form.closest to find wrapper reliably (el might BE the wrapper itself)
+    const wrapper = form.closest('[data-apos-form-wrapper]') || el.querySelector('[data-apos-form-wrapper]') || el;
     const thankYou = el.querySelector('[data-apos-form-thank-you]');
     if (wrapper && thankYou) {
       // Capture the wrapper height before submission
@@ -201,6 +202,75 @@ export default () => {
           return false;
         }
       }, true);
+    }
+
+    // --- Mobile Modal Mode ---
+    // The modal container is a sibling of the form wrapper, so search from parent
+    const widgetRoot = el.parentElement || el.closest('[data-apos-widget]') || document;
+    const mobileModalContainer = widgetRoot.querySelector('[data-apos-mobile-modal]') || el.querySelector('[data-apos-mobile-modal]');
+    if (mobileModalContainer) {
+      const openBtn = mobileModalContainer.querySelector('[data-apos-mobile-modal-open]');
+      const overlay = mobileModalContainer.querySelector('[data-apos-mobile-modal-overlay]');
+      const closeBtn = mobileModalContainer.querySelector('[data-apos-mobile-modal-close]');
+      const modalBody = mobileModalContainer.querySelector('[data-apos-mobile-modal-body]');
+
+      // Move overlay to document.body so it's not clipped by any parent overflow/transform
+      if (overlay && overlay.parentNode !== document.body) {
+        document.body.appendChild(overlay);
+      }
+
+      function isMobile() {
+        return window.innerWidth < 1024;
+      }
+
+      function openModal() {
+        if (!isMobile()) return;
+        // Move form wrapper into modal body
+        if (wrapper && modalBody && !modalBody.contains(wrapper)) {
+          modalBody.appendChild(wrapper);
+          wrapper.style.display = '';
+          wrapper.classList.remove('apos-form-desktop-only');
+        }
+        overlay.classList.add('apos-form-modal-open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        overlay.classList.remove('apos-form-modal-open');
+        document.body.style.overflow = '';
+      }
+
+      if (openBtn) {
+        openBtn.addEventListener('click', openModal);
+      }
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+      }
+      // Close on overlay background click
+      if (overlay) {
+        overlay.addEventListener('click', function (e) {
+          if (e.target === overlay) {
+            closeModal();
+          }
+        });
+      }
+      // Close on Escape key
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && overlay && overlay.classList.contains('apos-form-modal-open')) {
+          closeModal();
+        }
+      });
+
+      // On resize: move form back to original position if going to desktop
+      function handleResize() {
+        if (!isMobile() && modalBody && modalBody.contains(wrapper)) {
+          // Move form wrapper back after the mobile modal container
+          mobileModalContainer.parentNode.insertBefore(wrapper, mobileModalContainer.nextSibling);
+          wrapper.classList.add('apos-form-desktop-only');
+          closeModal();
+        }
+      }
+      window.addEventListener('resize', handleResize);
     }
 
     return result;

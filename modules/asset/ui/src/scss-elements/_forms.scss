@@ -161,3 +161,151 @@
   --iti-path-flags-1x: url('/images/flags.webp');
   --iti-path-flags-2x: url('/images/flags@2x.webp');
 }
+
+// --- Mobile Modal Mode ---
+
+// On desktop (>=1024px): form shows normally, floating button & modal hidden
+// On mobile (<1024px): form wrapper hidden, floating button visible
+
+.apos-form-mobile-modal-container {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .apos-form-desktop-only {
+    display: none !important;
+  }
+
+  .apos-form-mobile-modal-container {
+    display: block;
+  }
+}
+
+// Floating action button
+.apos-form-mobile-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9998;
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  background-color: #000;
+  color: #fff;
+  border-radius: 8px;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &:active {
+    transform: translateX(-50%) scale(0.96);
+  }
+
+  // Width variants
+  &.apos-fab-full {
+    width: calc(100% - 2rem);
+    left: 1rem;
+    transform: none;
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  &.apos-fab-contained {
+    width: calc(100% - 4rem);
+    left: 2rem;
+    transform: none;
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  .fab-icon {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
+
+    svg {
+      width: 1em;
+      height: 1em;
+      fill: currentColor;
+    }
+  }
+}
+
+// Modal overlay
+.apos-form-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0;
+
+  &.apos-form-modal-open {
+    display: flex;
+  }
+}
+
+// Modal content panel
+.apos-form-modal-content {
+  position: relative;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 1rem 1rem 0 0;
+  box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.15);
+  animation: apos-modal-slide-up 0.3s ease-out;
+}
+
+@keyframes apos-modal-slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Close button
+.apos-form-modal-close {
+  position: sticky;
+  top: 0;
+  float: right;
+  z-index: 1;
+  border: none;
+  background: transparent;
+  font-size: 1.75rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  color: #333;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+// Modal body — clear the float
+.apos-form-modal-body {
+  clear: both;
+
+  // Reset the desktop-only hiding when inside modal
+  .apos-form-desktop-only {
+    display: block !important;
+  }
+}
