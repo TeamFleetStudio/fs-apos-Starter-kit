@@ -16,6 +16,7 @@ module.exports = {
       '@apostrophecms/form-select-field': {},
       '@apostrophecms/form-radio-field': {},
       '@apostrophecms/form-checkboxes-field': {},
+      '@apostrophecms/form-phone-field': {},
       '@apostrophecms/form-conditional': {},
       ...areaConfig.richText
     }

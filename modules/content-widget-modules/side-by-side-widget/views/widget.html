@@ -55,13 +55,15 @@ style="
   {% if bgImgColTwo %}
     <img src="{{ bgImgColTwo }}" alt="" style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none;" fetchpriority="high" loading="eager">
   {% endif %}
-  <div class="side-by-side__column-item column-item__first" style="
+  <div class="side-by-side__column-item column-item__first{% if data.widget.stickyColumn == 'first' %} side-by-side--sticky{% endif %}" style="
     {{ "background-image: url('" + bgImgColOne + "');" if bgImgColOne }}
+    {% if data.widget.stickyColumn == 'first' and data.widget.stickyTopOffset %}top: {{ data.widget.stickyTopOffset }}px;{% endif %}
   ">
     {% area data.widget, 'one' with data.contextOptions %}
   </div>
-  <div class="side-by-side__column-item column-item__second" style="
+  <div class="side-by-side__column-item column-item__second{% if data.widget.stickyColumn == 'second' %} side-by-side--sticky{% endif %}" style="
     {{ "background-image: url('" + bgImgColTwo + "');" if bgImgColTwo }}
+    {% if data.widget.stickyColumn == 'second' and data.widget.stickyTopOffset %}top: {{ data.widget.stickyTopOffset }}px;{% endif %}
   ">
     {% area data.widget, 'two' with data.contextOptions %}
   </div>
