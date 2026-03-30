@@ -101,7 +101,7 @@
   }
   .apos-form-input,
   .apos-form-fieldset {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
   .my-form__check-wrapper + .my-form__check-wrapper {
     margin-top: 0.5rem;
@@ -136,6 +136,23 @@
         color: $primary;
       }
     }
+  }
+
+  // Field-specific error messages below inputs
+  .apos-form-field-error {
+    display: none;
+    color: #dc2626;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+
+    &.apos-form-error {
+      display: block;
+    }
+  }
+
+  // Error state for inputs
+  .apos-form-input-error {
+    border-color: #dc2626 !important;
   }
 }
 

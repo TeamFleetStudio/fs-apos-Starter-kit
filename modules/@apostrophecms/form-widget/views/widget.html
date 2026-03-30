@@ -105,7 +105,7 @@
   {% endif %}
   <form
     data-apos-form-form="{{ form._id }}"
-    class="{{ prependIfPrefix('__form') }}" autocomplete="off"
+    class="{{ prependIfPrefix('__form') }}" autocomplete="off" novalidate
     {% if form.enableQueryParams %}data-apos-form-params='{{params}}'{% endif %}
     {% if form.linkUrl %}data-apos-form-third-party-url="{{ form.linkUrl }}"{% endif %}
     {% if enableRecaptcha %}
@@ -149,6 +149,14 @@
       [data-apos-form-form="{{ form._id }}"] .iti__tel-input::placeholder,
       [data-apos-form-form="{{ form._id }}"] .apos-form-phone-tel::placeholder {
         color: {{ widget.inputPlaceholderColor }} !important;
+      }
+    </style>
+    {% endif %}
+
+    {% if widget.errorTextColor %}
+    <style>
+      [data-apos-form-form="{{ form._id }}"] .apos-form-field-error {
+        color: {{ widget.errorTextColor }} !important;
       }
     </style>
     {% endif %}

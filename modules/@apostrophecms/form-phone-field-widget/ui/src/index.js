@@ -2,19 +2,27 @@ import intlTelInput from 'intl-tel-input/build/js/intlTelInputWithUtils.js';
 
 // Store intl-tel-input instances keyed by input element
 const itiInstances = new WeakMap();
+// Expose for cross-module access (form-widget validation)
+window.__itiInstances = itiInstances;
 
 function initPhoneFields() {
   const inputs = document.querySelectorAll('[data-apos-form-phone] input[type="tel"]:not([data-iti-init])');
   inputs.forEach((input) => {
     const defaultCountry = input.getAttribute('data-apos-phone-default-country') || 'in';
+    // Preserve the custom placeholder set from CMS
+    const customPlaceholder = input.getAttribute('placeholder');
     const iti = intlTelInput(input, {
       initialCountry: defaultCountry,
       countrySearch: true,
       nationalMode: false,
       formatOnDisplay: true,
-      autoPlaceholder: 'aggressive',
+      autoPlaceholder: 'off',
       countryOrder: ['in', 'us', 'gb', 'ae', 'au', 'sg']
     });
+    // Restore the custom placeholder (intl-tel-input may clear it)
+    if (customPlaceholder) {
+      input.setAttribute('placeholder', customPlaceholder);
+    }
     itiInstances.set(input, iti);
     input.setAttribute('data-iti-init', 'true');
   });

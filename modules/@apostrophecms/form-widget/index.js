@@ -81,6 +81,10 @@ module.exports = {
         step: 1,
         def: 16
       },
+      errorTextColor: {
+        type: 'color',
+        label: 'Error Message Text Color'
+      },
 
       // Submit button styling
       submitBgColor: {
@@ -203,7 +207,8 @@ module.exports = {
           'inputBorderRadius',
           'inputPlaceholderColor',
           'labelFontSize',
-          'inputFontSize'
+          'inputFontSize',
+          'errorTextColor'
         ]
       },
       buttonStyles: {
