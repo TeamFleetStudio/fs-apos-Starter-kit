@@ -106,4 +106,41 @@
   .my-form__check-wrapper + .my-form__check-wrapper {
     margin-top: 0.5rem;
   }
+
+  // Phone field with intl-tel-input
+  .apos-form-phone-wrapper {
+    .iti {
+      width: 100%;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .iti__tel-input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 1rem;
+      padding-left: 52px;
+      border: 1px solid $primary;
+      border-radius: 0.25rem;
+      color: $primary;
+      background-color: white;
+      font-size: inherit;
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.1rem rgba($primary, 50%);
+      }
+
+      &::placeholder {
+        opacity: 1;
+        color: $primary;
+      }
+    }
+  }
+}
+
+// Override intl-tel-input flag image paths to use public directory
+:root {
+  --iti-path-flags-1x: url('/images/flags.webp');
+  --iti-path-flags-2x: url('/images/flags@2x.webp');
 }

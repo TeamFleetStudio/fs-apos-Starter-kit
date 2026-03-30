@@ -83,6 +83,7 @@ async function startApp() {
       '@apostrophecms/form-file-field-widget': {},
       '@apostrophecms/form-checkboxes-field-widget': {},
       '@apostrophecms/form-boolean-field-widget': {},
+      '@apostrophecms/form-phone-field-widget': {},
       '@apostrophecms/form-conditional-widget': {},
 
       '@apostrophecms/sitemap': {
