@@ -1,0 +1,30 @@
+{# ids must be unique doc-wide #}
+{% set id = apos.util.generateId() %}
+{% set widget = data.widget %}
+{% set prependIfPrefix = apos.modules['@apostrophecms/form'].prependIfPrefix %}
+{% import "fragments/utility.html" as utils with context %}
+
+<div data-apos-form-select class="apos-form-input-wrapper">
+  <label for="{{ id }}"
+    class="apos-form-label {{ prependIfPrefix('__label') }}"
+  >
+    {{ widget.fieldLabel}}
+    {{ utils.optional(widget.required) }}
+    {{ utils.required(widget.required) }}
+  </label>
+  <select
+    class="apos-form-input {{ prependIfPrefix('__input') }}" id="{{ id }}"
+    name="{{ widget.fieldName}}"
+    {% if widget.required %}data-apos-required{% endif %}
+    {% if widget.errorMessage %}data-apos-error-message="{{ widget.errorMessage }}"{% endif %}
+    {% if widget.allowMultiple %}multiple {% if widget.size %}size="{{ widget.size }}"{% endif %}{% endif %}
+  >
+    <option value="">{{ __t("aposForm:selectBlank") }}</option>
+    {% for choice in widget.choices %}
+      <option value="{{ choice.value }}">{{ choice.label }}</option>
+    {% endfor %}
+  </select>
+  <span
+    class="apos-form-field-error {{ prependIfPrefix('__field-error') }}"
+    data-apos-input-message="{{ widget.fieldName }}" hidden></span>
+</div>

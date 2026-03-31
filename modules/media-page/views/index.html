@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% import 'fragments/paginator.html' as paginator %}
-{% block title %}{{ data.page.title }} - {{ data.global.title }}{% endblock %}
+{% block title %}{{ data.page.title }} | {{ data.global.title }}{% endblock %}
 {% block main %}
 <div id="main-content">
   {% area data.page, 'main' %}

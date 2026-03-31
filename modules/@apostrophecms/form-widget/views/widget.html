@@ -5,6 +5,28 @@
 {% set captchaSite = apos.modules['@apostrophecms/form'].options.recaptchaSite or (data.global.useRecaptcha and data.global.recaptchaSite) %}
 {% set enableRecaptcha = form.enableRecaptcha and captchaSite %}
 
+{# Build inline style strings from widget customization fields #}
+{% set formStyle = '' %}
+{% if widget.formBgColor %}{% set formStyle = formStyle + 'background-color:' + widget.formBgColor + ';' %}{% endif %}
+{% if widget.formTextColor %}{% set formStyle = formStyle + 'color:' + widget.formTextColor + ';' %}{% endif %}
+{% if widget.formBorder and widget.formBorderColor %}{% set formStyle = formStyle + 'border:' + (widget.formBorderWidth or 1) + 'px solid ' + widget.formBorderColor + ';' %}{% endif %}
+{% if widget.formBorderRadius %}{% set formStyle = formStyle + 'border-radius:' + widget.formBorderRadius + 'px;' %}{% endif %}
+
+{% set inputStyle = '' %}
+{% if widget.inputBorderWidth %}{% set inputStyle = inputStyle + 'border-width:' + widget.inputBorderWidth + 'px !important;border-style:solid !important;' %}{% endif %}
+{% if widget.inputBorderColor %}{% set inputStyle = inputStyle + 'border-color:' + widget.inputBorderColor + ' !important;' %}{% endif %}
+{% if widget.inputBorderRadius %}{% set inputStyle = inputStyle + 'border-radius:' + widget.inputBorderRadius + 'px !important;' %}{% endif %}
+
+{% set btnStyle = '' %}
+{% if widget.submitBgColor %}{% set btnStyle = btnStyle + 'background:' + widget.submitBgColor + ';' %}{% endif %}
+{% if widget.submitTextColor %}{% set btnStyle = btnStyle + 'color:' + widget.submitTextColor + ';' %}{% endif %}
+{% if widget.submitBorder and widget.submitBorderColor %}{% set btnStyle = btnStyle + 'border:' + (widget.submitBorderWidth or 1) + 'px solid ' + widget.submitBorderColor + ';' %}{% endif %}
+{% if widget.submitBorderRadius %}{% set btnStyle = btnStyle + 'border-radius:' + widget.submitBorderRadius + 'px;' %}{% endif %}
+
+{% set btnAlignMap = { 'left': 'flex-start', 'center': 'center', 'right': 'flex-end' } %}
+{% set btnWrapStyle = '' %}
+{% if widget.submitAlignment %}{% set btnAlign = btnAlignMap[widget.submitAlignment] or 'flex-start' %}{% set btnWrapStyle = 'display:flex;justify-content:' + btnAlign + ';' %}{% endif %}
+
 {% if enableRecaptcha %}
 <script src="https://www.google.com/recaptcha/api.js?render={{ captchaSite }}"></script>
 <script>
@@ -68,7 +90,48 @@
 </script>
 {% endif %}
 
-<div class="{{ prependIfPrefix('') }}" data-apos-form-wrapper>
+{% if widget.mobileModalMode %}
+<div class="apos-form-mobile-modal-container" data-apos-mobile-modal>
+  {# Floating button — visible only on mobile #}
+  <button
+    type="button"
+    class="apos-form-mobile-fab{% if widget.mobileButtonWidth == 'full' %} apos-fab-full{% elif widget.mobileButtonWidth == 'contained' %} apos-fab-contained{% endif %}"
+    data-apos-mobile-modal-open
+    {% set fabStyle = '' %}
+    {% if widget.mobileButtonBgColor %}{% set fabStyle = fabStyle + 'background-color:' + widget.mobileButtonBgColor + ';' %}{% endif %}
+    {% if widget.mobileButtonTextColor %}{% set fabStyle = fabStyle + 'color:' + widget.mobileButtonTextColor + ';' %}{% endif %}
+    {% if widget.mobileButtonBorderRadius is defined %}{% set fabStyle = fabStyle + 'border-radius:' + widget.mobileButtonBorderRadius + 'px;' %}{% endif %}
+    {% if widget.mobileButtonShadow and widget.mobileButtonShadowColor %}{% set fabStyle = fabStyle + 'box-shadow:0 4px 16px ' + widget.mobileButtonShadowColor + ';' %}{% elif not widget.mobileButtonShadow %}{% set fabStyle = fabStyle + 'box-shadow:none;' %}{% endif %}
+    {% if fabStyle %}style="{{ fabStyle }}"{% endif %}
+  >
+    {% if widget.mobileButtonIcon and widget.mobileButtonIconPlacement == 'start' %}
+      {% if widget.mobileButtonIconType == 'image' and widget.mobileButtonIconImage %}
+        <span class="fab-icon"><img src="{{ apos.attachment.url(widget.mobileButtonIconImage, { size: 'one-sixth' }) }}" alt="" style="width:1em;height:1em;object-fit:contain;vertical-align:middle;" /></span>
+      {% elif widget.mobileButtonIconSvg and widget.mobileButtonIconSvg.code %}
+        <span class="fab-icon">{{ widget.mobileButtonIconSvg.code | safe }}</span>
+      {% endif %}
+    {% endif %}
+    {{ widget.mobileButtonLabel or 'Open Form' }}
+    {% if widget.mobileButtonIcon and widget.mobileButtonIconPlacement != 'start' %}
+      {% if widget.mobileButtonIconType == 'image' and widget.mobileButtonIconImage %}
+        <span class="fab-icon"><img src="{{ apos.attachment.url(widget.mobileButtonIconImage, { size: 'one-sixth' }) }}" alt="" style="width:1em;height:1em;object-fit:contain;vertical-align:middle;" /></span>
+      {% elif widget.mobileButtonIconSvg and widget.mobileButtonIconSvg.code %}
+        <span class="fab-icon">{{ widget.mobileButtonIconSvg.code | safe }}</span>
+      {% endif %}
+    {% endif %}
+  </button>
+
+  {# Modal overlay — visible only on mobile when opened #}
+  <div class="apos-form-modal-overlay" data-apos-mobile-modal-overlay>
+    <div class="apos-form-modal-content">
+      <button type="button" class="apos-form-modal-close" data-apos-mobile-modal-close aria-label="Close">&times;</button>
+      <div class="apos-form-modal-body" data-apos-mobile-modal-body></div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="p-4 {{ prependIfPrefix('') }} {{ widget.customClassName or '' }}{% if widget.mobileModalMode %} apos-form-desktop-only{% endif %}" data-apos-form-wrapper {% if widget.customId %}id="{{ widget.customId }}"{% endif %} {% if formStyle %}style="{{ formStyle }}"{% endif %}>
 {% if form %}
   {% set params = false %}
   {% if form.queryParamList %}
@@ -83,7 +146,7 @@
   {% endif %}
   <form
     data-apos-form-form="{{ form._id }}"
-    class="{{ prependIfPrefix('__form') }}" autocomplete="off"
+    class="{{ prependIfPrefix('__form') }}" autocomplete="off" novalidate
     {% if form.enableQueryParams %}data-apos-form-params='{{params}}'{% endif %}
     {% if form.linkUrl %}data-apos-form-third-party-url="{{ form.linkUrl }}"{% endif %}
     {% if enableRecaptcha %}
@@ -92,15 +155,98 @@
   >
     {% area form, 'contents' %}
 
+    {% if inputStyle %}
+    <style>
+      [data-apos-form-form="{{ form._id }}"] .apos-form-input,
+      [data-apos-form-form="{{ form._id }}"] select.apos-form-input,
+      [data-apos-form-form="{{ form._id }}"] .iti__tel-input,
+      [data-apos-form-form="{{ form._id }}"] .apos-form-phone-tel {
+        {{ inputStyle }}
+      }
+    </style>
+    {% endif %}
+
+    {% if widget.formTextColor or widget.labelFontSize %}
+    <style>
+      [data-apos-form-form="{{ form._id }}"] .apos-form-label {
+        {% if widget.formTextColor %}color: {{ widget.formTextColor }};{% endif %}
+        {% if widget.labelFontSize %}font-size: {{ widget.labelFontSize }}px !important;{% endif %}
+      }
+    </style>
+    {% endif %}
+
+    {% if widget.inputFontSize %}
+    <style>
+      [data-apos-form-form="{{ form._id }}"] .apos-form-input,
+      [data-apos-form-form="{{ form._id }}"] .iti__tel-input {
+        font-size: {{ widget.inputFontSize }}px !important;
+      }
+    </style>
+    {% endif %}
+
+    {% if widget.inputPlaceholderColor %}
+    <style>
+      [data-apos-form-form="{{ form._id }}"] .apos-form-input::placeholder,
+      [data-apos-form-form="{{ form._id }}"] .iti__tel-input::placeholder,
+      [data-apos-form-form="{{ form._id }}"] .apos-form-phone-tel::placeholder {
+        color: {{ widget.inputPlaceholderColor }} !important;
+      }
+    </style>
+    {% endif %}
+
+    {% if widget.errorTextColor %}
+    <style>
+      [data-apos-form-form="{{ form._id }}"] .apos-form-field-error {
+        color: {{ widget.errorTextColor }} !important;
+      }
+    </style>
+    {% endif %}
+
     {% if enableRecaptcha %}
       <input type="hidden" name="recaptchaToken" id="recaptchaToken-{{ form._id }}" />
     {% endif %}
-    <button
-      type="submit" class="{{ prependIfPrefix('__submit') }}"
-      data-apos-form-submit
-    >
-      {{ form.submitLabel or __t('aposForm:widgetSubmit') }}
-    </button>
+
+    {% if widget.submitBgColor or widget.submitTextColor or (widget.submitBorder and widget.submitBorderColor) or widget.submitBorderRadius %}
+    <style>
+      [data-apos-form-form="{{ form._id }}"] [data-apos-form-submit] {
+        {% if widget.submitBgColor %}background: {{ widget.submitBgColor }} !important;{% endif %}
+        {% if widget.submitTextColor %}color: {{ widget.submitTextColor }} !important;{% endif %}
+        {% if widget.submitBorder and widget.submitBorderColor %}border: {{ widget.submitBorderWidth or 1 }}px solid {{ widget.submitBorderColor }} !important;{% endif %}
+        {% if widget.submitBorderRadius %}border-radius: {{ widget.submitBorderRadius }}px !important;{% endif %}
+      }
+    </style>
+    {% endif %}
+
+    <style>
+      [data-apos-form-form="{{ form._id }}"] [data-apos-form-submit] {
+        {% if widget.submitWidth == 'fit' %}
+          width: auto !important;
+        {% elif widget.submitWidth == 'contained' %}
+          width: calc(100% - 4rem) !important;
+          margin-left: 2rem;
+          margin-right: 2rem;
+        {% else %}
+          width: 100% !important;
+        {% endif %}
+      }
+    </style>
+
+    <div {% if btnWrapStyle %}style="{{ btnWrapStyle }}"{% endif %}>
+      <button
+        type="submit" class="{{ prependIfPrefix('__submit') }}"
+        data-apos-form-submit
+        style="display:inline-flex;align-items:center;justify-content:center;gap:0.5rem;{% if widget.submitIcon and widget.submitIconPlacement == 'start' %}flex-direction:row-reverse;{% endif %}"
+      >
+        {{ form.submitLabel or __t('aposForm:widgetSubmit') }}
+        {% if widget.submitIcon and widget.submitIconType == 'image' and widget.submitIconImage %}
+          <span class="form-btn-icon {{ 'mr-2' if widget.submitIconPlacement == 'start' else 'ml-2' }}">
+            <img src="{{ apos.attachment.url(widget.submitIconImage, { size: 'one-sixth' }) }}" alt="" style="width:1em;height:1em;object-fit:contain;vertical-align:middle;" />
+          </span>
+        {% elif widget.submitIcon and widget.submitIconSvg and widget.submitIconSvg.code %}
+          <span class="form-btn-icon {{ 'mr-2' if widget.submitIconPlacement == 'start' else 'ml-2' }}">{{ widget.submitIconSvg.code | safe }}</span>
+        {% endif %}
+      </button>
+    </div>
   </form>
   <p role="alert" data-apos-form-submit-error
     class="apos-form-hidden apos-form-error {{ prependIfPrefix('__error') }}"
