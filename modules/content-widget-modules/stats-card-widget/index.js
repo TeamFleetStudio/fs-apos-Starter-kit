@@ -1,5 +1,6 @@
 const aosSchema = require('../../../lib/aosSchema.js');
 const customAttributesSchema = require('../../../lib/customAttributesSchema');
+const areaConfig = require('../../../lib/area');
 
 module.exports = {
   extend: '@apostrophecms/widget-type',
@@ -25,18 +26,13 @@ module.exports = {
         }
       },
       title: {
-        type: 'string',
-        label: 'Title',
-        required: true
-      },
-      titleHighlight: {
-        type: 'string',
-        label: 'Title Highlight Text',
-        help: 'This part of the title will be styled in primary color'
-      },
-      subtitle: {
-        type: 'string',
-        label: 'Subtitle'
+        type: 'area',
+        label: 'Title & Subtitle',
+        options: {
+          widgets: {
+            ...areaConfig.richText
+          }
+        }
       },
       bgColor: {
         type: 'color',
@@ -92,31 +88,27 @@ module.exports = {
               required: true
             },
             valueColor: {
-              type: 'select',
+              type: 'color',
               label: 'Value Color',
-              choices: [
-                { label: 'Primary (Blue)', value: 'primary' },
-                { label: 'Black', value: 'black' }
-              ],
-              def: 'primary'
+              def: '#2360FF'
             },
             label: {
-              type: 'string',
-              label: 'Label (bold text)',
-              required: true
-            },
-            labelColor: {
-              type: 'select',
-              label: 'Label Color',
-              choices: [
-                { label: 'Primary (Blue)', value: 'primary' },
-                { label: 'Black', value: 'black' }
-              ],
-              def: 'black'
+              type: 'area',
+              label: 'Label',
+              options: {
+                widgets: {
+                  ...areaConfig.richText
+                }
+              }
             },
             description: {
-              type: 'string',
-              label: 'Description'
+              type: 'area',
+              label: 'Description',
+              options: {
+                widgets: {
+                  ...areaConfig.richText
+                }
+              }
             }
           }
         }

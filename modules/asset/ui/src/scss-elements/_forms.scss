@@ -187,7 +187,7 @@
   bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 9998;
+  z-index: 999;
   padding: 0.875rem 2rem;
   font-size: 1rem;
   font-weight: 600;
@@ -250,8 +250,8 @@
   z-index: 9999;
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
-  align-items: flex-end;
-  padding: 0;
+  align-items: center;
+  padding: 20px ;
 
   &.apos-form-modal-open {
     display: flex;
@@ -262,23 +262,24 @@
 .apos-form-modal-content {
   position: relative;
   width: 100%;
+  max-width: 500px;
   max-height: 90vh;
   overflow-y: auto;
   background: #fff;
-  border-radius: 1rem 1rem 0 0;
+  border-radius: 12px;
   box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.15);
-  animation: apos-modal-slide-up 0.3s ease-out;
+  animation: apos-modal-fade-in 0.3s ease-out;
 }
 
-@keyframes apos-modal-slide-up {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+@keyframes apos-modal-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 // Close button
@@ -292,7 +293,7 @@
   font-size: 1.75rem;
   line-height: 1;
   cursor: pointer;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem;
   color: #333;
 
   &:hover {

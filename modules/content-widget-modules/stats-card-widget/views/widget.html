@@ -48,7 +48,7 @@
 
 <div class="stats-card-widget relative {{ w.customClassName or '' }}" 
   {% if w.customId %}id="{{ w.customId }}"{% endif %}
-  style="background-color: {{ w.bgColor or '#f7faff' }};"
+  style="z-index: -1;"
   {% if w.aosAnimate %}data-aos="{{ w.aosAnimate }}"{% endif %}
   {% if w.aosDelay %}data-aos-delay="{{ w.aosDelay }}"{% endif %}
   {% if w.aosDuration %}data-aos-duration="{{ w.aosDuration }}"{% endif %}>
@@ -56,7 +56,7 @@
   {# Header Icon in Circle - positioned at top center #}
   {% set headerImage = apos.image.first(w.headerIcon) %}
   {% if headerImage %}
-  <div class="stats-card-header-icon absolute -top-10 left-1/2 transform -translate-x-1/2 z-10">
+  <div class="stats-card-header-icon absolute -top-10 left-1/2 transform -translate-x-1/2" style="z-index: 2;">
     <div class="w-20 h-20 rounded-full bg-white flex items-center justify-center overflow-hidden shadow-lg">
       <img src="{{ apos.attachment.url(headerImage, { size: 'one-sixth' }) }}" 
            alt="{{ headerImage._alt or 'Stats icon' }}" 
@@ -65,31 +65,21 @@
   </div>
   {% endif %}
 
-  <div class="stats-card-content pt-14 pb-8 px-8 text-center rounded-2xl" style="background-color: {{ w.bgColor or '#f7faff' }};">
-    {# Title #}
-    {% if w.title %}
-    <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-      {% if w.titleHighlight %}
-        {{ w.title | replace(w.titleHighlight, '<span class="text-[#2360FF]">' + w.titleHighlight + '</span>') | safe }}
-      {% else %}
-        {{ w.title }}
-      {% endif %}
-    </h3>
-    {% endif %}
-
-    {# Subtitle #}
-    {% if w.subtitle %}
-    <p class="text-gray-600 mb-8">{{ w.subtitle }}</p>
+  <div class="stats-card-content pt-14 pb-8 px-8 text-center rounded-2xl relative" style="z-index: 0; background-color: {{ w.bgColor or '#f7faff' }};">
+    {% if not apos.area.isEmpty(w, 'title') %}
+    <div class="stats-card-title mb-8">
+      {% area w, 'title' %}
+    </div>
     {% endif %}
 
     {# Stats Grid #}
     {% if w.stats and (w.stats | length) > 0 %}
     <div class="stats-grid grid grid-cols-1 md:grid-cols-{{ w.stats | length }} gap-6 mt-6">
       {% for stat in w.stats %}
-      {% set iconColor = '#2360FF' if stat.valueColor == 'primary' else '#000000' %}
+      {% set iconColor = stat.valueColor or '#2360FF' %}
       <div class="stat-item flex flex-col items-center text-center p-4">
         {# Stat Value with Lucide icon or Custom SVG #}
-        <div class="stat-value flex items-center gap-2 text-3xl md:text-4xl font-bold mb-1 {% if stat.valueColor == 'primary' %}text-[#2360FF]{% else %}text-gray-900{% endif %}">
+        <div class="stat-value flex items-center gap-2 text-3xl md:text-4xl font-bold mb-1" style="color: {{ stat.valueColor or '#2360FF' }};">
           {% if stat.icon == 'custom-svg' and stat.customSvg %}
           <span class="stat-icon flex-shrink-0">{{ stat.customSvg | safe }}</span>
           {% elif stat.icon and stat.icon != 'custom-svg' %}
@@ -99,14 +89,16 @@
         </div>
 
         {# Stat Label #}
-        <div class="stat-label font-semibold mb-1 {% if stat.labelColor == 'primary' %}text-[#2360FF]{% else %}text-gray-900{% endif %}">
-          {{ stat.label }}
+        {% if not apos.area.isEmpty(stat, 'label') %}
+        <div class="stat-label font-semibold mb-1">
+          {% area stat, 'label' %}
         </div>
+        {% endif %}
 
         {# Stat Description #}
-        {% if stat.description %}
+        {% if not apos.area.isEmpty(stat, 'description') %}
         <div class="stat-description text-sm text-gray-600">
-          {{ stat.description }}
+          {% area stat, 'description' %}
         </div>
         {% endif %}
       </div>

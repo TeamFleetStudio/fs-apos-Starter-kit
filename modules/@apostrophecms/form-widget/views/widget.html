@@ -124,15 +124,15 @@
   {# Modal overlay — visible only on mobile when opened #}
   <div class="apos-form-modal-overlay" data-apos-mobile-modal-overlay>
     <div class="apos-form-modal-content">
-      <button type="button" class="apos-form-modal-close" data-apos-mobile-modal-close aria-label="Close">&times;</button>
-      <div class="apos-form-modal-body" data-apos-mobile-modal-body></div>
+      <div class="apos-form-modal-body" data-apos-mobile-modal-body>
+        <button type="button" class="apos-form-modal-close" data-apos-mobile-modal-close aria-label="Close">&times;</button>
+      </div>
     </div>
   </div>
 </div>
 {% endif %}
 
-<div class="p-4 {{ prependIfPrefix('') }} {{ widget.customClassName or '' }}{% if widget.mobileModalMode %} apos-form-desktop-only{% endif %}" data-apos-form-wrapper {% if widget.customId %}id="{{ widget.customId }}"{% endif %} {% if formStyle %}style="{{ formStyle }}"{% endif %}>
-{% if form %}
+<div class="p-4 {{ prependIfPrefix('') }} {{ widget.customClassName or '' }}{% if widget.mobileModalMode %} apos-form-desktop-only{% endif %}" data-apos-form-wrapper {% if widget.customId %}id="{{ widget.customId }}"{% endif %} {% if formStyle %}style="{{ formStyle }}"{% endif %}>{% area widget, 'formContent' %}{% if form %}
   {% set params = false %}
   {% if form.queryParamList %}
     {% set params = '' %}
