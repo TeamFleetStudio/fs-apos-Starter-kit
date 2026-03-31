@@ -5,7 +5,7 @@ const areaConfig = require('../../../lib/area');
 module.exports = {
   extend: '@apostrophecms/widget-type',
   options: {
-    label: 'Icon Bullet List Widget',
+    label: 'Icon List Widget',
     icon: 'format-list-checks-icon',
     description: 'A list of items with custom icons as bullets'
   },
