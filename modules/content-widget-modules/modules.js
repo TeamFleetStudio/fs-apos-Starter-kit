@@ -40,7 +40,7 @@ module.exports = {
   'simple-image-widget': {},
   'stats-card-widget': {},
   'comparison-table-widget': {},
-  'lead-capture-form-widget': {},
   'benefit-card-widget': {},
-  'logo-grid-widget': {}
+  'logo-grid-widget': {},
+  'icon-bullet-list-widget': {}
 };

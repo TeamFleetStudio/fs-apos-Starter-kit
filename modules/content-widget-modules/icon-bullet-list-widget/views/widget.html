@@ -1,0 +1,63 @@
+{% set w = data.widget %}
+
+<section class="icon-bullet-list-widget {{ w.customClassName or '' }}" 
+  {% if w.customId %}id="{{ w.customId }}"{% endif %}
+  {% if w.animationEffects and w.animationEffects != 'no-animation' %}data-aos="{{ w.animationEffects }}"{% endif %}>
+
+  {# List Items #}
+  <ul class="flex flex-col gap-4 list-none p-0 m-0">
+    {% for item in w.items %}
+    <li class="flex items-start gap-3 {% if item.iconPlacement == 'end' %}flex-row-reverse{% endif %}">
+      
+      {# Icon Container #}
+      {% set hasBackground = item.iconBackground %}
+      {% set hasBorderWidth = item.iconBorderWidth %}
+      {% set hasBorderColor = item.iconBorderColor %}
+      {% set hasBorderRadius = item.iconBorderRadius %}
+      
+      {% set iconStyles = '' %}
+      {% if hasBackground %}
+        {% set iconStyles = iconStyles + 'background-color: ' + item.iconBackground + ';' %}
+      {% endif %}
+      {% if hasBorderRadius %}
+        {% set iconStyles = iconStyles + 'border-radius: ' + item.iconBorderRadius + 'px;' %}
+      {% endif %}
+      {% if hasBorderWidth %}
+        {% set iconStyles = iconStyles + 'border-width: ' + item.iconBorderWidth + 'px;border-style: solid;' %}
+      {% endif %}
+      {% if hasBorderColor %}
+        {% set iconStyles = iconStyles + 'border-color: ' + item.iconBorderColor + ';' %}
+      {% endif %}
+
+      {# SVG Icon #}
+      {% if item.iconType == 'svg' and item.customSvg and item.customSvg.code %}
+        <span class="flex-shrink-0 self-{{ item.iconVerticalAlign or 'start' }} icon-svg flex items-center justify-center {% if hasBackground %}p-1{% endif %}"
+          {% if iconStyles %}style="{{ iconStyles }}"{% endif %}>
+          {{ item.customSvg.code | safe }}
+        </span>
+      
+      {# Image Icon #}
+      {% elif item.iconType == 'image' %}
+        {% set iconImage = apos.image.first(item.iconImage) %}
+        {% if iconImage %}
+          <span class="flex-shrink-0 self-{{ item.iconVerticalAlign or 'start' }} flex items-center justify-center {% if hasBackground %}p-1{% endif %}"
+            {% if iconStyles %}style="{{ iconStyles }}"{% endif %}>
+            <img 
+              src="{{ apos.attachment.url(iconImage, { size: 'one-sixth' }) }}" 
+              alt="" 
+              style="width:{{ item.iconSize or 20 }}px;height:{{ item.iconSize or 20 }}px;object-fit:contain;"
+            />
+          </span>
+        {% endif %}
+      {% endif %}
+
+      {# Text Content - Rich Text #}
+      <div class="icon-bullet-content flex-1 min-w-0">
+        {% if item.content and item.content.items | length %}
+          {% area item, 'content' %}
+        {% endif %}
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
