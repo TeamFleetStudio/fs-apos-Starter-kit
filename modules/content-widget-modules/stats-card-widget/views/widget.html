@@ -48,7 +48,7 @@
 
 <div class="stats-card-widget relative {{ w.customClassName or '' }}" 
   {% if w.customId %}id="{{ w.customId }}"{% endif %}
-  style="background-color: {{ w.bgColor or '#f7faff' }};"
+  style="z-index: -1; background-color: {{ w.bgColor or '#f7faff' }};"
   {% if w.aosAnimate %}data-aos="{{ w.aosAnimate }}"{% endif %}
   {% if w.aosDelay %}data-aos-delay="{{ w.aosDelay }}"{% endif %}
   {% if w.aosDuration %}data-aos-duration="{{ w.aosDuration }}"{% endif %}>

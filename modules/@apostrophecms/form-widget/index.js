@@ -1,8 +1,21 @@
 const customAttributesSchema = require('../../../lib/customAttributesSchema');
+const area = require('../../../lib/area');
 
 module.exports = {
   fields: {
     add: {
+      formContent: {
+        type: 'area',
+        label: 'Form Content',
+        options: {
+          widgets: {
+            'rich-text': {},
+            columns: {},
+            image: {},
+            'icon-bullet-list': {}
+          }
+        }
+      },
       // Form styling
       formBgColor: {
         type: 'color',
@@ -287,7 +300,7 @@ module.exports = {
     group: {
       basics: {
         label: 'Form',
-        fields: ['_form']
+        fields: ['_form', 'formContent']
       },
       formStyles: {
         label: 'Form Styles',
