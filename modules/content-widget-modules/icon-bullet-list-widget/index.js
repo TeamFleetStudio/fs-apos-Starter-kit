@@ -29,10 +29,12 @@ module.exports = {
               ]
             },
             customSvg: {
-              type: 'string',
+              type: 'codeEditor',
               label: 'Custom SVG',
-              help: 'Paste your SVG HTML code here',
-              textarea: true,
+              languages: [
+                { label: 'HTML', value: 'html' }
+              ],
+              defaultLanguage: 'html',
               if: {
                 iconType: 'svg'
               }
@@ -55,9 +57,30 @@ module.exports = {
               label: 'Icon Placement',
               def: 'start',
               choices: [
-                { label: 'Start (Left)', value: 'start' },
-                { label: 'End (Right)', value: 'end' }
+                { label: 'Start', value: 'start' },
+                { label: 'End', value: 'end' }
               ]
+            },
+            iconVerticalAlign: {
+              type: 'select',
+              label: 'Icon Vertical Alignment',
+              def: 'center',
+              choices: [
+                { label: 'Top', value: 'start' },
+                { label: 'Center', value: 'center' },
+                { label: 'Bottom', value: 'end' }
+              ]
+            },
+            iconSize: {
+              type: 'range',
+              label: 'Icon Size (px)',
+              min: 12,
+              max: 500,
+              step: 4,
+              def: 20,
+              if: {
+                iconType: 'image'
+              }
             },
             iconBackground: {
               type: 'color',
@@ -65,14 +88,24 @@ module.exports = {
               help: 'Background color for the icon (e.g., #dcfce7 for light green)'
             },
             iconBorderRadius: {
-              type: 'string',
-              label: 'Icon Border Radius',
-              help: 'e.g., 50% for circle, 8px for rounded, 0 for square'
+              type: 'range',
+              label: 'Icon Border Radius (px)',
+              min: 0,
+              max: 50,
+              step: 1,
+              def: 0
             },
-            iconBorder: {
-              type: 'string',
-              label: 'Icon Border',
-              help: 'e.g., 1px solid #ccc, 2px solid #10B981'
+            iconBorderWidth: {
+              type: 'range',
+              label: 'Icon Border Width (px)',
+              min: 0,
+              max: 10,
+              step: 1,
+              def: 0
+            },
+            iconBorderColor: {
+              type: 'color',
+              label: 'Icon Border Color'
             },
             content: {
               type: 'area',
