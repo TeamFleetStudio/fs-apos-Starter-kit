@@ -76,6 +76,7 @@ async function startApp() {
         options: { shortcut: 'a,f' }
       },
       '@apostrophecms/form-widget': {},
+      '@apostrophecms/form-base-field-widget': {},
       '@apostrophecms/form-text-field-widget': {},
       '@apostrophecms/form-textarea-field-widget': {},
       '@apostrophecms/form-select-field-widget': {},
@@ -83,6 +84,7 @@ async function startApp() {
       '@apostrophecms/form-file-field-widget': {},
       '@apostrophecms/form-checkboxes-field-widget': {},
       '@apostrophecms/form-boolean-field-widget': {},
+      '@apostrophecms/form-phone-field-widget': {},
       '@apostrophecms/form-conditional-widget': {},
 
       '@apostrophecms/sitemap': {

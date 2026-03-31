@@ -134,6 +134,27 @@ module.exports = {
           bgImgType: 'bgIndividual'
         }
       },
+      stickyColumn: {
+        type: 'select',
+        label: 'Sticky Column (Desktop)',
+        help: 'Make one column stick while the other scrolls. Ideal when one side has shorter content.',
+        choices: [
+          { label: 'None', value: 'none' },
+          { label: 'First Column', value: 'first' },
+          { label: 'Second Column', value: 'second' }
+        ],
+        def: 'none'
+      },
+      stickyTopOffset: {
+        type: 'range',
+        label: 'Sticky Top Offset (px)',
+        help: 'Distance from the top of the viewport when sticky',
+        min: 0,
+        max: 200,
+        step: 1,
+        def: 0,
+        if: { $or: [{ stickyColumn: 'first' }, { stickyColumn: 'second' }] }
+      },
       widgetClass: {
         type: 'string',
         label: 'Widget Class Name',
