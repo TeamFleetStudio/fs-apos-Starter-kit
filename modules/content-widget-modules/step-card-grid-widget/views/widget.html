@@ -14,7 +14,9 @@
 {# Card border styles #}
 {% set cardBorderStyle = '' %}
 {% if w.hasBorder %}
-  {% set cardBorderStyle = 'border-width: ' + (w.borderWidth or 1) + 'px; border-style: solid; border-color: ' + (w.borderColor or '#d3d3d3') + '; border-radius: ' + (w.borderRadius or 14) + 'px;' %}
+  {% set bw = w.borderWidth if w.borderWidth is defined and w.borderWidth is not none else 1 %}
+  {% set br = w.borderRadius if w.borderRadius is defined and w.borderRadius is not none else 14 %}
+  {% set cardBorderStyle = 'border-width: ' + bw + 'px; border-style: solid; border-color: ' + (w.borderColor or '#d3d3d3') + '; border-radius: ' + br + 'px;' %}
 {% endif %}
 
 
@@ -37,10 +39,10 @@
           {% if card.cardIconBgColor %}
             {% set iconContainerStyle = iconContainerStyle + 'background-color: ' + card.cardIconBgColor + ';' %}
           {% endif %}
-          {% if card.cardIconBorderRadius is defined %}
+          {% if card.cardIconBorderRadius is defined and card.cardIconBorderRadius is not none %}
             {% set iconContainerStyle = iconContainerStyle + 'border-radius: ' + (card.cardIconBorderRadius) + 'px;' %}
           {% endif %}
-          {% if card.cardIconBorderWidth %}
+          {% if card.cardIconBorderWidth is defined and card.cardIconBorderWidth is not none %}
             {% set iconContainerStyle = iconContainerStyle + 'border-width: ' + card.cardIconBorderWidth + 'px; border-style: solid;' %}
           {% endif %}
           {% if card.cardIconBorderColor %}
