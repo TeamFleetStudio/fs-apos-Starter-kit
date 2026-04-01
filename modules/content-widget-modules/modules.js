@@ -42,5 +42,6 @@ module.exports = {
   'comparison-table-widget': {},
   'benefit-card-widget': {},
   'logo-grid-widget': {},
-  'icon-bullet-list-widget': {}
+  'icon-bullet-list-widget': {},
+  'step-card-grid-widget': {}
 };

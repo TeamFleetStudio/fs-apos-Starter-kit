@@ -1,0 +1,220 @@
+{% set w = data.widget %}
+
+{% set colsDesktop = w.gridColsDesktop or '4' %}
+{% set colsTablet = w.gridColsTablet or '2' %}
+{% set colsMobile = w.gridColsMobile or '1' %}
+
+{# Build responsive grid-template-columns via CSS custom properties #}
+{% set gridStyle %}
+  --cols-sm: {{ colsMobile }};
+  --cols-md: {{ colsTablet }};
+  --cols-lg: {{ colsDesktop }};
+{% endset %}
+
+{# Card border styles #}
+{% set cardBorderStyle = '' %}
+{% if w.hasBorder %}
+  {% set cardBorderStyle = 'border-width: ' + (w.borderWidth or 1) + 'px; border-style: solid; border-color: ' + (w.borderColor or '#d3d3d3') + '; border-radius: ' + (w.borderRadius or 14) + 'px;' %}
+{% endif %}
+
+
+
+<section
+  class="step-card-grid-widget {{ w.customClassName or '' }}"
+  {% if w.customId %}id="{{ w.customId }}"{% endif %}
+  {% if w.animationEffects and w.animationEffects != 'no-animation' %}data-aos="{{ w.animationEffects }}"{% endif %}
+>
+  <div class="step-card-grid{% if w.hasIcon %} step-card-grid--has-icon{% endif %}" style="{{ gridStyle }}">
+    {% for card in w.cards %}
+      <div class="step-card-grid__item">
+        {# Card #}
+        <div
+          class="step-card-grid__card"
+          style="{{ cardBorderStyle }} {% if card.cardBgColor %}background-color: {{ card.cardBgColor }};{% else %}background-color: #ffffff;{% endif %}"
+        >
+          {# Icon container #}
+          {% set iconContainerStyle = '' %}
+          {% if card.cardIconBgColor %}
+            {% set iconContainerStyle = iconContainerStyle + 'background-color: ' + card.cardIconBgColor + ';' %}
+          {% endif %}
+          {% if card.cardIconBorderRadius is defined %}
+            {% set iconContainerStyle = iconContainerStyle + 'border-radius: ' + (card.cardIconBorderRadius) + 'px;' %}
+          {% endif %}
+          {% if card.cardIconBorderWidth %}
+            {% set iconContainerStyle = iconContainerStyle + 'border-width: ' + card.cardIconBorderWidth + 'px; border-style: solid;' %}
+          {% endif %}
+          {% if card.cardIconBorderColor %}
+            {% set iconContainerStyle = iconContainerStyle + 'border-color: ' + card.cardIconBorderColor + ';' %}
+          {% endif %}
+
+          <div class="step-card-grid__icon-container" style="{{ iconContainerStyle }}">
+            {% if card.cardIconType == 'svg' and card.cardIconSvg and card.cardIconSvg.code %}
+              <span class="step-card-grid__icon-svg">{{ card.cardIconSvg.code | safe }}</span>
+            {% elif card.cardIconType == 'image' %}
+              {% set iconImg = apos.image.first(card.cardIconImage) %}
+              {% if iconImg %}
+                <img
+                  src="{{ apos.attachment.url(iconImg, { size: 'one-sixth' }) }}"
+                  alt="{{ iconImg._alt or '' }}"
+                  class="step-card-grid__icon-img"
+                />
+              {% endif %}
+            {% endif %}
+          </div>
+
+          {# Text content #}
+          <div class="step-card-grid__content">
+            {% if card.content and card.content.items and card.content.items | length %}
+              {% area card, 'content' %}
+            {% endif %}
+          </div>
+        </div>
+
+        {# Section icon between cards (e.g. arrow) #}
+        {% if w.hasIcon and not loop.last %}
+          <div class="step-card-grid__separator-icon">
+            {% if w.sectionIconType == 'svg' and w.sectionIconSvg and w.sectionIconSvg.code %}
+              <span class="step-card-grid__separator-svg">{{ w.sectionIconSvg.code | safe }}</span>
+            {% elif w.sectionIconType == 'image' %}
+              {% set sepImg = apos.image.first(w.sectionIconImage) %}
+              {% if sepImg %}
+                <img
+                  src="{{ apos.attachment.url(sepImg, { size: 'one-sixth' }) }}"
+                  alt=""
+                  class="step-card-grid__separator-img"
+                />
+              {% endif %}
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+  .step-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .step-card-grid__item {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .step-card-grid__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    flex: 1;
+  }
+
+  .step-card-grid__icon-container {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-card-grid__icon-svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .step-card-grid__icon-svg svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .step-card-grid__icon-img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  .step-card-grid__content {
+    text-align: center;
+  }
+
+  .step-card-grid__title {
+    font-family: 'Figtree', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #0a0a0a;
+    line-height: 28px;
+    margin-bottom: 8px;
+  }
+
+  .step-card-grid__description {
+    font-family: 'Figtree', sans-serif;
+    font-size: 13px;
+    color: #4a5565;
+    line-height: 20px;
+  }
+
+  .step-card-grid__separator-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+
+  .step-card-grid__separator-svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .step-card-grid__separator-img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+
+  /* ── Responsive breakpoints ── */
+
+  /* Small mobile (640px+) */
+  @media (min-width: 640px) {
+    .step-card-grid {
+      grid-template-columns: repeat(var(--cols-sm, 1), 1fr);
+    }
+    .step-card-grid__title {
+      font-size: 18px;
+    }
+    .step-card-grid__description {
+      font-size: 14px;
+    }
+  }
+
+  /* Tablet (768px+) */
+  @media (min-width: 768px) {
+    .step-card-grid {
+      grid-template-columns: repeat(var(--cols-md, 2), 1fr);
+    }
+  }
+
+  /* Hide separator icon on tablet and mobile */
+  @media (max-width: 1023px) {
+    .step-card-grid__separator-icon {
+      display: none;
+    }
+  }
+
+  /* Desktop (1024px+) */
+  @media (min-width: 1024px) {
+    .step-card-grid {
+      grid-template-columns: repeat(var(--cols-lg, 4), 1fr);
+    }
+    .step-card-grid--has-icon {
+      gap: 0;
+    }
+  }
+</style>
