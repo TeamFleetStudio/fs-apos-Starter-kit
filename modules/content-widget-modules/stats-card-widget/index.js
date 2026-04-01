@@ -42,7 +42,7 @@ module.exports = {
       stats: {
         type: 'array',
         label: 'Statistics',
-        titleField: 'label',
+        titleField: 'value',
         fields: {
           add: {
             icon: {
