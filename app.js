@@ -120,6 +120,9 @@ async function startApp() {
               role: 'admin',
             },
           },
+          csrfExceptions: [
+            '/api/v1/@apostrophecms/form/verify-payment'
+          ]
         },
       },
 
