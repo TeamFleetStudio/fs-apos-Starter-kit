@@ -278,3 +278,67 @@
   </div>
 {% endif %}
 </div>
+
+{# --- Payment Modal (triggered on successful form submission) --- #}
+{% set triggerPayment = form.formIntegrations.triggerPaymentModal if form and form.formIntegrations else false %}
+{% if triggerPayment %}
+  {% set g = data.global %}
+  {% set modalBg = g.paymentModalBgColor or '#ffffff' %}
+  {% set modalText = g.paymentModalTextColor or '#000000' %}
+  {% set btnBg = g.paymentModalButtonBgColor or '#2265CA' %}
+  {% set btnText = g.paymentModalButtonTextColor or '#ffffff' %}
+  {% set rpMode = g.razorpayMode or 'button' %}
+
+  <div
+    class="apos-payment-modal-overlay apos-form-hidden"
+    data-apos-payment-modal
+    data-apos-payment-form-id="{{ form._id }}"
+    data-razorpay-mode="{{ rpMode }}"
+    {% if rpMode == 'button' and g.razorpayButtonId %}
+      data-razorpay-button-id="{{ g.razorpayButtonId }}"
+    {% endif %}
+    {% if rpMode == 'checkout' %}
+      data-razorpay-key="{{ g.razorpayKeyId }}"
+      data-razorpay-amount="{{ g.razorpayAmount }}"
+      data-razorpay-currency="{{ g.razorpayCurrency or 'INR' }}"
+      data-razorpay-company="{{ g.razorpayCompanyName }}"
+      data-razorpay-description="{{ g.razorpayDescription }}"
+    {% endif %}
+    {% if g.razorpaySuccessUrl %}
+      data-razorpay-success-url="{{ g.razorpaySuccessUrl }}"
+    {% endif %}
+  >
+    <div class="apos-payment-modal-content" style="background:{{ modalBg }};color:{{ modalText }};">
+      <button type="button" class="apos-payment-modal-close" data-apos-payment-modal-close aria-label="Close">&times;</button>
+
+      {% if g.paymentModalTitle %}
+        <h2 class="apos-payment-modal-title">{{ g.paymentModalTitle }}</h2>
+      {% endif %}
+      {% if g.paymentModalSubtitle %}
+        <p class="apos-payment-modal-subtitle">{{ g.paymentModalSubtitle }}</p>
+      {% endif %}
+
+      {% if not apos.area.isEmpty(g, 'paymentModalBody') %}
+        <div class="apos-payment-modal-body">
+          {% area g, 'paymentModalBody' %}
+        </div>
+      {% endif %}
+
+      {# Razorpay renders here #}
+      <div class="apos-payment-modal-action" data-apos-payment-action>
+        {% if rpMode == 'checkout' %}
+          <button
+            type="button"
+            class="apos-payment-modal-pay-btn"
+            data-apos-payment-checkout-btn
+            style="background:{{ btnBg }};color:{{ btnText }};"
+          >
+            {{ g.paymentModalButtonLabel or 'Pay Now' }}
+          </button>
+        {% elif rpMode == 'button' %}
+          {# Razorpay hosted button will be injected here by JS #}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}

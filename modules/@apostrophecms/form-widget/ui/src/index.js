@@ -273,6 +273,155 @@ export default () => {
       window.addEventListener('resize', handleResize);
     }
 
+    // --- Payment Modal Integration ---
+    const formId = form.getAttribute('data-apos-form-form');
+    const widgetScope = el.parentElement || el.closest('[data-apos-widget]') || document;
+    const paymentOverlay = widgetScope.querySelector('[data-apos-payment-modal][data-apos-payment-form-id="' + formId + '"]')
+      || document.querySelector('[data-apos-payment-modal][data-apos-payment-form-id="' + formId + '"]');
+
+    if (paymentOverlay) {
+      // Move overlay to body so it's not clipped
+      if (paymentOverlay.parentNode !== document.body) {
+        document.body.appendChild(paymentOverlay);
+      }
+
+      const closeBtn = paymentOverlay.querySelector('[data-apos-payment-modal-close]');
+      const actionContainer = paymentOverlay.querySelector('[data-apos-payment-action]');
+      const rpMode = paymentOverlay.getAttribute('data-razorpay-mode');
+      const successUrl = paymentOverlay.getAttribute('data-razorpay-success-url');
+      let razorpayInitialized = false;
+
+      function openPaymentModal() {
+        paymentOverlay.classList.remove('apos-form-hidden');
+        paymentOverlay.classList.add('apos-payment-modal-open');
+        document.body.style.overflow = 'hidden';
+
+        // Store formId for the payment success page to use
+        try {
+          localStorage.setItem('apos_payment_formId', formId);
+        } catch (e) {
+          // localStorage may be unavailable
+        }
+
+        // Initialize Razorpay on first open
+        if (!razorpayInitialized && actionContainer) {
+          razorpayInitialized = true;
+
+          if (rpMode === 'button') {
+            const buttonId = paymentOverlay.getAttribute('data-razorpay-button-id');
+            if (buttonId) {
+              actionContainer.innerHTML = '';
+              const rpForm = document.createElement('form');
+              const rpScript = document.createElement('script');
+              rpScript.src = 'https://checkout.razorpay.com/v1/payment-button.js';
+              rpScript.async = true;
+              rpScript.setAttribute('data-payment_button_id', buttonId);
+              rpForm.appendChild(rpScript);
+              actionContainer.appendChild(rpForm);
+            }
+          } else if (rpMode === 'checkout') {
+            // Load Razorpay checkout script if not present
+            if (!document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]')) {
+              const rpScript = document.createElement('script');
+              rpScript.src = 'https://checkout.razorpay.com/v1/checkout.js';
+              rpScript.async = true;
+              document.head.appendChild(rpScript);
+            }
+          }
+        }
+      }
+
+      function closePaymentModal() {
+        paymentOverlay.classList.add('apos-form-hidden');
+        paymentOverlay.classList.remove('apos-payment-modal-open');
+        document.body.style.overflow = '';
+      }
+
+      // Listen for form submission success
+      const thankYouEl = el.querySelector('[data-apos-form-thank-you]');
+      if (thankYouEl) {
+        const paymentObserver = new MutationObserver(function () {
+          // Apostrophe adds 'apos-form-visible' on success (doesn't remove 'apos-form-hidden')
+          if (thankYouEl.classList.contains('apos-form-visible')) {
+            // Small delay to let the user see the thank-you briefly
+            setTimeout(function () {
+              openPaymentModal();
+            }, 600);
+            paymentObserver.disconnect();
+          }
+        });
+        paymentObserver.observe(thankYouEl, { attributes: true, attributeFilter: ['class'] });
+      }
+
+      // Close button
+      if (closeBtn) {
+        closeBtn.addEventListener('click', closePaymentModal);
+      }
+
+      // Close on overlay click
+      paymentOverlay.addEventListener('click', function (e) {
+        if (e.target === paymentOverlay) {
+          closePaymentModal();
+        }
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && paymentOverlay.classList.contains('apos-payment-modal-open')) {
+          closePaymentModal();
+        }
+      });
+
+      // Custom checkout button handler
+      const checkoutBtn = paymentOverlay.querySelector('[data-apos-payment-checkout-btn]');
+      if (checkoutBtn && rpMode === 'checkout') {
+        checkoutBtn.addEventListener('click', function () {
+          const key = paymentOverlay.getAttribute('data-razorpay-key');
+          const amount = paymentOverlay.getAttribute('data-razorpay-amount');
+          const currency = paymentOverlay.getAttribute('data-razorpay-currency') || 'INR';
+          const company = paymentOverlay.getAttribute('data-razorpay-company') || '';
+          const description = paymentOverlay.getAttribute('data-razorpay-description') || '';
+
+          if (!key || !window.Razorpay) {
+            console.warn('Razorpay not loaded or key missing');
+            return;
+          }
+
+          const options = {
+            key: key,
+            amount: amount,
+            currency: currency,
+            name: company,
+            description: description,
+            handler: function (response) {
+              if (successUrl) {
+                const url = new URL(successUrl, window.location.origin);
+                url.searchParams.set('payment_id', response.razorpay_payment_id);
+                if (response.razorpay_order_id) {
+                  url.searchParams.set('order_id', response.razorpay_order_id);
+                }
+                window.location.href = url.toString();
+              } else {
+                closePaymentModal();
+                alert('Payment successful! ID: ' + response.razorpay_payment_id);
+              }
+            },
+            modal: {
+              ondismiss: function () {
+                // User closed Razorpay modal, keep payment modal open
+              }
+            },
+            theme: {
+              color: paymentOverlay.querySelector('.apos-payment-modal-pay-btn')?.style?.background || '#2265CA'
+            }
+          };
+
+          const rzp = new window.Razorpay(options);
+          rzp.open();
+        });
+      }
+    }
+
     return result;
   };
 };
