@@ -47,6 +47,18 @@ module.exports = {
         help: 'Enter Google Font name for body text (e.g., Bungee, Rubik Storm). Defaults to Merriweather.',
         def: 'Merriweather'
       },
+      skipLinkTextColor: {
+        type: 'color',
+        label: 'Skip Link Text Color',
+        help: 'Font color of the "Skip to main content" button (default: #ffffff)',
+        def: '#ffffff'
+      },
+      skipLinkBgColor: {
+        type: 'color',
+        label: 'Skip Link Background Color',
+        help: 'Background color of the "Skip to main content" button (default: #000000)',
+        def: '#000000'
+      },
       headerLayout: {
         type: 'select',
         label: 'Header Layout',
@@ -563,7 +575,7 @@ module.exports = {
     group: {
       brand: {
         label: 'Brand',
-        fields: ['title', 'logo', 'primaryColor', 'secondaryColor', 'headingFontFamily', 'bodyFontFamily']
+        fields: ['title', 'logo', 'primaryColor', 'secondaryColor', 'headingFontFamily', 'bodyFontFamily', 'skipLinkTextColor', 'skipLinkBgColor']
       },
       header: {
         label: 'Header',
