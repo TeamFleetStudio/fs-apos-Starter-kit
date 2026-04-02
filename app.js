@@ -75,6 +75,20 @@ async function startApp() {
       '@apostrophecms/form': {
         options: { shortcut: 'a,f' }
       },
+
+      // Email transport (used by form email confirmations)
+      '@apostrophecms/email': {
+        options: {
+          nodemailer: {
+            host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
+            port: parseInt(process.env.SMTP_PORT) || 587,
+            auth: {
+              user: process.env.SMTP_USER,
+              pass: process.env.SMTP_PASSWORD
+            }
+          }
+        }
+      },
       '@apostrophecms/form-widget': {},
       '@apostrophecms/form-base-field-widget': {},
       '@apostrophecms/form-text-field-widget': {},
@@ -114,6 +128,7 @@ async function startApp() {
       settings: {},
 
       'default-page': {},
+      'payment-success-page': {},
       'content-widget-modules': {
         options: { ignoreNoCodeWarning: true }
       },

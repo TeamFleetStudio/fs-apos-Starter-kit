@@ -570,6 +570,119 @@ module.exports = {
             ...areaConfig.fullExpandedGroup
           }
         }
+      },
+      // --- Payment Modal Settings ---
+      paymentModalTitle: {
+        type: 'string',
+        label: 'Modal Title',
+        help: 'Heading shown in the payment modal (e.g., "Complete your registration")',
+        def: 'Complete your registration'
+      },
+      paymentModalSubtitle: {
+        type: 'string',
+        label: 'Modal Subtitle',
+        help: 'Subheading text below the title',
+        def: 'One step away from confirming your seat!'
+      },
+      paymentModalBody: {
+        type: 'area',
+        label: 'Modal Body Content',
+        help: 'Rich text content shown in the modal (pricing, benefits, details, etc.)',
+        options: {
+          widgets: areaConfig.richText
+        }
+      },
+      paymentModalButtonLabel: {
+        type: 'string',
+        label: 'Payment Button Label',
+        help: 'Text on the button that triggers Razorpay (e.g., "Pay Now")',
+        def: 'Pay Now'
+      },
+      paymentModalButtonBgColor: {
+        type: 'color',
+        label: 'Payment Button Background Color',
+        def: '#2265CA'
+      },
+      paymentModalButtonTextColor: {
+        type: 'color',
+        label: 'Payment Button Text Color',
+        def: '#ffffff'
+      },
+      paymentModalBgColor: {
+        type: 'color',
+        label: 'Modal Background Color',
+        def: '#ffffff'
+      },
+      paymentModalTextColor: {
+        type: 'color',
+        label: 'Modal Text Color',
+        def: '#000000'
+      },
+      razorpayMode: {
+        type: 'select',
+        label: 'Razorpay Integration Mode',
+        help: 'Choose how Razorpay is loaded. "Payment Button" uses a hosted Razorpay button ID. "Custom Checkout" uses your Razorpay Key ID for the standard checkout modal.',
+        def: 'button',
+        choices: [
+          { label: 'Hosted Payment Button', value: 'button' },
+          { label: 'Custom Checkout', value: 'checkout' }
+        ]
+      },
+      razorpayButtonId: {
+        type: 'string',
+        label: 'Razorpay Payment Button ID',
+        help: 'The hosted payment button ID from Razorpay dashboard ',
+        if: {
+          razorpayMode: 'button'
+        }
+      },
+      razorpayKeyId: {
+        type: 'string',
+        label: 'Razorpay Key ID',
+        help: 'Your Razorpay API Key ID (e.g., rzp_live_xxxx or rzp_test_xxxx)',
+        if: {
+          razorpayMode: 'checkout'
+        }
+      },
+      razorpayAmount: {
+        type: 'integer',
+        label: 'Amount (in paise)',
+        help: 'Payment amount in smallest currency unit. e.g., for ₹4999 enter 499900',
+        if: {
+          razorpayMode: 'checkout'
+        }
+      },
+      razorpayCurrency: {
+        type: 'string',
+        label: 'Currency',
+        help: 'Three-letter currency code (e.g., INR, USD)',
+        def: 'INR',
+        if: {
+          razorpayMode: 'checkout'
+        }
+      },
+      razorpayCompanyName: {
+        type: 'string',
+        label: 'Company Name',
+        help: 'Shown in the Razorpay checkout modal',
+        def: '',
+        if: {
+          razorpayMode: 'checkout'
+        }
+      },
+      razorpayDescription: {
+        type: 'string',
+        label: 'Payment Description',
+        help: 'Shown in the Razorpay checkout modal',
+        def: '',
+        if: {
+          razorpayMode: 'checkout'
+        }
+      },
+      razorpaySuccessUrl: {
+        type: 'string',
+        label: 'Success Redirect URL',
+        help: 'URL to redirect after successful payment (leave empty to stay on page)'
       }
     },
     group: {
@@ -627,6 +740,27 @@ module.exports = {
       PODCAST: {
         label: 'PODCAST',
         fields: ['podcastBottomSection']
+      },
+      paymentModal: {
+        label: 'Payment Modal',
+        fields: [
+          'paymentModalTitle',
+          'paymentModalSubtitle',
+          'paymentModalBody',
+          'paymentModalButtonLabel',
+          'paymentModalButtonBgColor',
+          'paymentModalButtonTextColor',
+          'paymentModalBgColor',
+          'paymentModalTextColor',
+          'razorpayMode',
+          'razorpayButtonId',
+          'razorpayKeyId',
+          'razorpayAmount',
+          'razorpayCurrency',
+          'razorpayCompanyName',
+          'razorpayDescription',
+          'razorpaySuccessUrl'
+        ]
       }
     }
   }
