@@ -146,6 +146,7 @@
   {% endif %}
   <form
     data-apos-form-form="{{ form._id }}"
+    data-form-slug="{{ form.slug }}"
     class="{{ prependIfPrefix('__form') }}" autocomplete="off" novalidate
     {% if form.enableQueryParams %}data-apos-form-params='{{params}}'{% endif %}
     {% if form.linkUrl %}data-apos-form-third-party-url="{{ form.linkUrl }}"{% endif %}
