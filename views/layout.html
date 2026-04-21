@@ -78,6 +78,33 @@
       {% endif %}
     </style>
   {% endif %}
+  {# Typography Settings - Override font sizes via CSS custom properties #}
+  <style>
+    :root {
+      --h1-font-size: {{ data.global.h1FontSize or '58px' }};
+      --h1-line-height: {{ data.global.h1LineHeight or '60px' }};
+      --h2-font-size: {{ data.global.h2FontSize or '40px' }};
+      --h2-line-height: {{ data.global.h2LineHeight or '46px' }};
+      --h3-font-size: {{ data.global.h3FontSize or '36px' }};
+      --h3-line-height: {{ data.global.h3LineHeight or '36px' }};
+      --h4-font-size: {{ data.global.h4FontSize or '30px' }};
+      --h4-line-height: {{ data.global.h4LineHeight or '32px' }};
+      --h5-font-size: {{ data.global.h5FontSize or '26px' }};
+      --h5-line-height: {{ data.global.h5LineHeight or '28px' }};
+      --h6-font-size: {{ data.global.h6FontSize or '24px' }};
+      --h6-line-height: {{ data.global.h6LineHeight or '24px' }};
+      --p-font-size: {{ data.global.pFontSize or '22px' }};
+      --p-line-height: {{ data.global.pLineHeight or '32px' }};
+      --p1-font-size: {{ data.global.p1FontSize or '20px' }};
+      --p1-line-height: {{ data.global.p1LineHeight or '28px' }};
+      --p2-font-size: {{ data.global.p2FontSize or '18px' }};
+      --p2-line-height: {{ data.global.p2LineHeight or '26px' }};
+      --p3-font-size: {{ data.global.p3FontSize or '16px' }};
+      --p3-line-height: {{ data.global.p3LineHeight or '24px' }};
+      --hr-color: {{ data.global.hrColor or '#000000' }};
+      --hr-height: {{ data.global.hrHeight or '1px' }};
+    }
+  </style>
   {# Skip to main content styles #}
   <style>
     .skip-to-main {
