@@ -111,83 +111,83 @@ module.exports = {
                 emailNotification: true
               }
             },
-            externalApi: {
-              type: 'boolean',
-              label: 'Call External API',
-              def: false
-            },
-            externalApiUrl: {
-              type: 'string',
-              label: 'External API URL',
-              help: 'Full URL to POST form data to',
-              if: {
-                externalApi: true
-              }
-            },
-            externalApiMethod: {
-              type: 'select',
-              label: 'HTTP Method',
-              choices: [
-                { label: 'POST', value: 'POST' },
-                { label: 'PUT', value: 'PUT' },
-                { label: 'PATCH', value: 'PATCH' }
-              ],
-              def: 'POST',
-              if: {
-                externalApi: true
-              }
-            },
-            externalApiFieldMapping: {
+            externalApis: {
               type: 'array',
-              label: 'Field Mapping',
-              help: 'Map form field names to API field names. e.g., form field "full-name" → API field "full_name". Unmapped fields are excluded.',
-              titleField: 'formField',
+              label: 'External API Webhooks',
+              help: 'Add one or more webhooks to call on form submission. Drag to set execution order.',
+              titleField: 'label',
               fields: {
                 add: {
-                  formField: {
+                  label: {
                     type: 'string',
-                    label: 'Form Field Name',
-                    help: 'The field name from your form (e.g., full-name, email, phone-number)',
+                    label: 'Label',
+                    help: 'A name to identify this webhook (e.g., "Interakt track", "CRM sync")',
                     required: true
                   },
-                  apiField: {
+                  url: {
                     type: 'string',
-                    label: 'API Field Name',
-                    help: 'The key the external API expects (e.g., full_name, email_address, phone_number)',
+                    label: 'Webhook URL',
+                    help: 'Full URL to POST form data to',
                     required: true
                   },
-                  defaultValue: {
-                    type: 'string',
-                    label: 'Default Value (optional)',
-                    help: 'If form field is empty or not present, send this value instead'
+                  method: {
+                    type: 'select',
+                    label: 'HTTP Method',
+                    choices: [
+                      { label: 'POST', value: 'POST' },
+                      { label: 'PUT', value: 'PUT' },
+                      { label: 'PATCH', value: 'PATCH' }
+                    ],
+                    def: 'POST'
+                  },
+                  fieldMapping: {
+                    type: 'array',
+                    label: 'Field Mapping',
+                    help: 'Map form field names to API field names. e.g., form field "full-name" → API field "full_name". Unmapped fields are excluded.',
+                    titleField: 'formField',
+                    fields: {
+                      add: {
+                        formField: {
+                          type: 'string',
+                          label: 'Form Field Name',
+                          help: 'The field name from your form (e.g., full-name, email, phone-number)',
+                          required: true
+                        },
+                        apiField: {
+                          type: 'string',
+                          label: 'API Field Name',
+                          help: 'The key the external API expects (e.g., full_name, email_address, phone_number)',
+                          required: true
+                        },
+                        defaultValue: {
+                          type: 'string',
+                          label: 'Default Value (optional)',
+                          help: 'If form field is empty or not present, send this value instead'
+                        }
+                      }
+                    }
+                  },
+                  staticFields: {
+                    type: 'array',
+                    label: 'Static Fields',
+                    help: 'Extra key-value pairs to always send with the API call (e.g., event_name, payment_status)',
+                    titleField: 'key',
+                    fields: {
+                      add: {
+                        key: {
+                          type: 'string',
+                          label: 'Field Name',
+                          required: true
+                        },
+                        value: {
+                          type: 'string',
+                          label: 'Value',
+                          required: true
+                        }
+                      }
+                    }
                   }
                 }
-              },
-              if: {
-                externalApi: true
-              }
-            },
-            externalApiStaticFields: {
-              type: 'array',
-              label: 'Static Fields',
-              help: 'Extra key-value pairs to always send with the API call (e.g., event_name, payment_status)',
-              titleField: 'key',
-              fields: {
-                add: {
-                  key: {
-                    type: 'string',
-                    label: 'Field Name',
-                    required: true
-                  },
-                  value: {
-                    type: 'string',
-                    label: 'Value',
-                    required: true
-                  }
-                }
-              },
-              if: {
-                externalApi: true
               }
             },
             triggerPaymentModal: {
@@ -1102,15 +1102,13 @@ module.exports = {
           );
         }
 
-        // Call external API
-        if (integrations.externalApi && integrations.externalApiUrl) {
-          await self.callExternalApi(
-            integrations.externalApiUrl,
-            integrations.externalApiMethod,
-            data,
-            integrations.externalApiFieldMapping,
-            integrations.externalApiStaticFields
-          );
+        // Call external API webhooks in order
+        if (integrations.externalApis && integrations.externalApis.length > 0) {
+          for (const api of integrations.externalApis) {
+            if (api.url) {
+              await self.callExternalApi(api.url, api.method, data, api.fieldMapping, api.staticFields);
+            }
+          }
         }
 
         // Track user in Interakt before payment opens (fire-and-forget)
