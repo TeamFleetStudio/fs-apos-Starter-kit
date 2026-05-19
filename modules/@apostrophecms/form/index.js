@@ -297,6 +297,20 @@ module.exports = {
               },
               if: { triggerPaymentModal: true, interaktNotify: true }
             },
+            interaktFormNameField: {
+              type: 'string',
+              label: 'Form Field for User Name (pre-payment track)',
+              help: 'Form submission field name for the user\'s name (e.g., full-name)',
+              def: 'full-name',
+              if: { triggerPaymentModal: true, interaktNotify: true }
+            },
+            interaktFormPhoneField: {
+              type: 'string',
+              label: 'Form Field for Phone (pre-payment track)',
+              help: 'Form submission field name for the user\'s phone (e.g., phone-number)',
+              def: 'phone-number',
+              if: { triggerPaymentModal: true, interaktNotify: true }
+            },
 
             // ─── Brevo CRM Sync ───
             brevoSync: {
@@ -852,6 +866,45 @@ module.exports = {
         }
       },
 
+      // ─── Pre-Payment: Track user in Interakt using form submission data ───
+      async trackInteraktUser(integrations, formData) {
+        const apiKey = integrations.interaktApiKey;
+        if (!apiKey) return;
+
+        const nameFormField = integrations.interaktFormNameField || 'full-name';
+        const phoneFormField = integrations.interaktFormPhoneField || 'phone-number';
+
+        const name = formData[nameFormField] || '';
+        const phoneRaw = String(formData[phoneFormField] || '');
+        const phoneDigits = phoneRaw.replace(/[\s\-()+']+/g, '');
+        const countryCode = phoneDigits.startsWith('91') ? '91' : phoneDigits.slice(0, 2);
+        const phoneNumber = phoneDigits.startsWith(countryCode)
+          ? phoneDigits.slice(countryCode.length)
+          : phoneDigits;
+
+        if (!phoneNumber) {
+          console.warn('Interakt pre-payment track: No phone number found, skipping');
+          return;
+        }
+
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${apiKey}`
+        };
+
+        try {
+          await axios.post('https://api.interakt.ai/v1/public/track/users/', {
+            userId: phoneNumber,
+            phoneNumber,
+            countryCode: `+${countryCode}`,
+            traits: { name }
+          }, { headers, timeout: 10000 });
+          console.log('Interakt pre-payment user tracked');
+        } catch (error) {
+          console.warn('Interakt pre-payment track error:', error?.response?.data || error.message);
+        }
+      },
+
       // ─── Post-Payment: Send Interakt WhatsApp notification ───
       async sendInteraktNotification(integrations, pbRecord) {
         const apiKey = integrations.interaktApiKey;
@@ -881,14 +934,6 @@ module.exports = {
         };
 
         try {
-          // Track user
-          await axios.post('https://api.interakt.ai/v1/public/track/users/', {
-            userId: phoneNumber,
-            phoneNumber,
-            countryCode: `+${countryCode}`,
-            traits: { name }
-          }, { headers, timeout: 10000 });
-
           // Build body values from config
           const bodyValues = (integrations.interaktBodyValues || []).map(
             item => self.resolveValue(item.value, pbRecord)
@@ -1066,6 +1111,13 @@ module.exports = {
             integrations.externalApiFieldMapping,
             integrations.externalApiStaticFields
           );
+        }
+
+        // Track user in Interakt before payment opens (fire-and-forget)
+        if (integrations.interaktNotify && integrations.triggerPaymentModal) {
+          self.trackInteraktUser(integrations, data).catch(err => {
+            console.warn('Interakt pre-payment track failed:', err.message);
+          });
         }
       },
       async checkRecaptcha(req, input, formErrors, tokenParam) {
