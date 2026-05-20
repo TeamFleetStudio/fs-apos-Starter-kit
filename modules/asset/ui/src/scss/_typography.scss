@@ -8,8 +8,8 @@
 
 h1 {
   @extend %heading;
-  font-size: var(--h1-font-size, 58px);
-  line-height: var(--h1-line-height, 60px);
+  font-size: 58px;
+  line-height: 60px;
   @media (max-width: 1024px) {
     font-size: 48px;
     line-height: 43px;
@@ -22,8 +22,8 @@ h1 {
 
 h2 {
   @extend %heading;
-  font-size: var(--h2-font-size, 40px);
-  line-height: var(--h2-line-height, 46px);
+  font-size: 40px;
+  line-height: 46px;
   font-weight: 300;
   @media (max-width: 1024px) {
     font-size: 40px;
@@ -37,8 +37,8 @@ h2 {
 
 h3 {
   @extend %heading;
-  font-size: var(--h3-font-size, 36px);
-  line-height: var(--h3-line-height, 36px);
+  font-size: 36px;
+  line-height: 36px;
   font-weight: 300;
   @media (max-width: 1024px) {
     font-size: 32px;
@@ -48,8 +48,8 @@ h3 {
 
 h4 {
   @extend %heading;
-  font-size: var(--h4-font-size, 30px);
-  line-height: var(--h4-line-height, 32px);
+  font-size: 30px;
+  line-height: 32px;
   font-weight: 400;
   margin:0;
   @media (max-width: 1024px) {
@@ -64,8 +64,8 @@ h4 {
 
 h5 {
   @extend %heading;
-  font-size: var(--h5-font-size, 26px);
-  line-height: var(--h5-line-height, 28px);
+  font-size: 26px;
+  line-height: 28px;
   font-weight: 800;
   @media (max-width: 767px) {
     font-size: 24px;
@@ -75,8 +75,8 @@ h5 {
 
 h6 {
   @extend %heading;
-  font-size: var(--h6-font-size, 24px);
-  line-height: var(--h6-line-height, 24px);
+  font-size: 24px;
+  line-height: 24px;
   font-weight: 600;
   @media (max-width: 767px) {
     font-size: 22px;
@@ -113,12 +113,6 @@ h6 {
   @include font-size($h7-font-size);
 }
 
-hr {
-  border: none;
-  border-top: var(--hr-height, 1px) solid var(--hr-color, #000000);
-  margin: 1rem 0;
-}
-
 strong {
   font-weight: $bold-font-weight !important;
 }
@@ -126,8 +120,8 @@ strong {
 p:not([class]),
 p.p, .post_content li {
   font-weight: 300;
-  font-size: var(--p-font-size, 22px);
-  line-height: var(--p-line-height, 32px);
+  font-size: 22px;
+  line-height: 32px;
 }
 
 .small {
@@ -137,8 +131,8 @@ p.p, .post_content li {
   font-weight: $lead-font-weight;
 }
 .p1{
-  font-size: var(--p1-font-size, 20px);
-  line-height: var(--p1-line-height, 28px);
+  font-size: 20px;
+  line-height: 28px;
   font-weight: normal;
   @media (max-width: 1024px) {
     font-size: 18px;
@@ -146,8 +140,8 @@ p.p, .post_content li {
   }
 }
 .p2{
-  font-size: var(--p2-font-size, 18px);
-  line-height: var(--p2-line-height, 26px);
+  font-size: 18px;
+  line-height: 26px;
   font-weight: normal;
   @media (max-width: 1024px) {
     font-size: 16px;
@@ -155,8 +149,8 @@ p.p, .post_content li {
   }
 }
 .p3{
-  font-size: var(--p3-font-size, 16px);
-  line-height: var(--p3-line-height, 24px);
+  font-size: 16px;
+  line-height: 24px;
   font-weight: normal;
   @media (max-width: 1024px) {
     font-size: 14px;

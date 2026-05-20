@@ -22,7 +22,7 @@ async function startApp() {
   }
 
   process.env.PORT = port;
-  const appName = 'spotlight-cms-starter-app';
+  const appName = 'fleetstudio';
   const baseUrl = process.env.APOS_BASE_URL || `http://localhost:${port}`;
 
   if (!process.env.APOS_MONGODB_URI) {
