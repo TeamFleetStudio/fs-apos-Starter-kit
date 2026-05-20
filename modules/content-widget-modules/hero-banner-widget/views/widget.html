@@ -8,7 +8,7 @@
 
 {% set bgColor = data.widget["bg-color"] | default("") %}
 
-<section data-aos="{{ data.widget.animationEffects }}" class="hero-banner apos-container is-fluid {{ data.widget["section-class"] }} {{ 'bg-img-container' if bgImage }}"
+<section data-aos="{{ data.widget.animationEffects }}" class="hero-banner container is-fluid {{ data.widget["section-class"] }} {{ 'bg-img-container' if bgImage }}"
   style="
     {{ "background-color: " + bgColor + ";" if bgColor }}
     {{ "background-image: url('" + bgImg + "');" if bgImg }}
