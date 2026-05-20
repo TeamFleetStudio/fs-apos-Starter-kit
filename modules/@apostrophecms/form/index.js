@@ -111,83 +111,83 @@ module.exports = {
                 emailNotification: true
               }
             },
-            externalApi: {
-              type: 'boolean',
-              label: 'Call External API',
-              def: false
-            },
-            externalApiUrl: {
-              type: 'string',
-              label: 'External API URL',
-              help: 'Full URL to POST form data to',
-              if: {
-                externalApi: true
-              }
-            },
-            externalApiMethod: {
-              type: 'select',
-              label: 'HTTP Method',
-              choices: [
-                { label: 'POST', value: 'POST' },
-                { label: 'PUT', value: 'PUT' },
-                { label: 'PATCH', value: 'PATCH' }
-              ],
-              def: 'POST',
-              if: {
-                externalApi: true
-              }
-            },
-            externalApiFieldMapping: {
+            externalApis: {
               type: 'array',
-              label: 'Field Mapping',
-              help: 'Map form field names to API field names. e.g., form field "full-name" → API field "full_name". Unmapped fields are excluded.',
-              titleField: 'formField',
+              label: 'External API Webhooks',
+              help: 'Add one or more webhooks to call on form submission. Drag to set execution order.',
+              titleField: 'label',
               fields: {
                 add: {
-                  formField: {
+                  label: {
                     type: 'string',
-                    label: 'Form Field Name',
-                    help: 'The field name from your form (e.g., full-name, email, phone-number)',
+                    label: 'Label',
+                    help: 'A name to identify this webhook (e.g., "Interakt track", "CRM sync")',
                     required: true
                   },
-                  apiField: {
+                  url: {
                     type: 'string',
-                    label: 'API Field Name',
-                    help: 'The key the external API expects (e.g., full_name, email_address, phone_number)',
+                    label: 'Webhook URL',
+                    help: 'Full URL to POST form data to',
                     required: true
                   },
-                  defaultValue: {
-                    type: 'string',
-                    label: 'Default Value (optional)',
-                    help: 'If form field is empty or not present, send this value instead'
+                  method: {
+                    type: 'select',
+                    label: 'HTTP Method',
+                    choices: [
+                      { label: 'POST', value: 'POST' },
+                      { label: 'PUT', value: 'PUT' },
+                      { label: 'PATCH', value: 'PATCH' }
+                    ],
+                    def: 'POST'
+                  },
+                  fieldMapping: {
+                    type: 'array',
+                    label: 'Field Mapping',
+                    help: 'Map form field names to API field names. e.g., form field "full-name" → API field "full_name". Unmapped fields are excluded.',
+                    titleField: 'formField',
+                    fields: {
+                      add: {
+                        formField: {
+                          type: 'string',
+                          label: 'Form Field Name',
+                          help: 'The field name from your form (e.g., full-name, email, phone-number)',
+                          required: true
+                        },
+                        apiField: {
+                          type: 'string',
+                          label: 'API Field Name',
+                          help: 'The key the external API expects (e.g., full_name, email_address, phone_number)',
+                          required: true
+                        },
+                        defaultValue: {
+                          type: 'string',
+                          label: 'Default Value (optional)',
+                          help: 'If form field is empty or not present, send this value instead'
+                        }
+                      }
+                    }
+                  },
+                  staticFields: {
+                    type: 'array',
+                    label: 'Static Fields',
+                    help: 'Extra key-value pairs to always send with the API call (e.g., event_name, payment_status)',
+                    titleField: 'key',
+                    fields: {
+                      add: {
+                        key: {
+                          type: 'string',
+                          label: 'Field Name',
+                          required: true
+                        },
+                        value: {
+                          type: 'string',
+                          label: 'Value',
+                          required: true
+                        }
+                      }
+                    }
                   }
                 }
-              },
-              if: {
-                externalApi: true
-              }
-            },
-            externalApiStaticFields: {
-              type: 'array',
-              label: 'Static Fields',
-              help: 'Extra key-value pairs to always send with the API call (e.g., event_name, payment_status)',
-              titleField: 'key',
-              fields: {
-                add: {
-                  key: {
-                    type: 'string',
-                    label: 'Field Name',
-                    required: true
-                  },
-                  value: {
-                    type: 'string',
-                    label: 'Value',
-                    required: true
-                  }
-                }
-              },
-              if: {
-                externalApi: true
               }
             },
             triggerPaymentModal: {
@@ -295,6 +295,20 @@ module.exports = {
                   }
                 }
               },
+              if: { triggerPaymentModal: true, interaktNotify: true }
+            },
+            interaktFormNameField: {
+              type: 'string',
+              label: 'Form Field for User Name (pre-payment track)',
+              help: 'Form submission field name for the user\'s name (e.g., full-name)',
+              def: 'full-name',
+              if: { triggerPaymentModal: true, interaktNotify: true }
+            },
+            interaktFormPhoneField: {
+              type: 'string',
+              label: 'Form Field for Phone (pre-payment track)',
+              help: 'Form submission field name for the user\'s phone (e.g., phone-number)',
+              def: 'phone-number',
               if: { triggerPaymentModal: true, interaktNotify: true }
             },
 
@@ -852,6 +866,45 @@ module.exports = {
         }
       },
 
+      // ─── Pre-Payment: Track user in Interakt using form submission data ───
+      async trackInteraktUser(integrations, formData) {
+        const apiKey = integrations.interaktApiKey;
+        if (!apiKey) return;
+
+        const nameFormField = integrations.interaktFormNameField || 'full-name';
+        const phoneFormField = integrations.interaktFormPhoneField || 'phone-number';
+
+        const name = formData[nameFormField] || '';
+        const phoneRaw = String(formData[phoneFormField] || '');
+        const phoneDigits = phoneRaw.replace(/[\s\-()+']+/g, '');
+        const countryCode = phoneDigits.startsWith('91') ? '91' : phoneDigits.slice(0, 2);
+        const phoneNumber = phoneDigits.startsWith(countryCode)
+          ? phoneDigits.slice(countryCode.length)
+          : phoneDigits;
+
+        if (!phoneNumber) {
+          console.warn('Interakt pre-payment track: No phone number found, skipping');
+          return;
+        }
+
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${apiKey}`
+        };
+
+        try {
+          await axios.post('https://api.interakt.ai/v1/public/track/users/', {
+            userId: phoneNumber,
+            phoneNumber,
+            countryCode: `+${countryCode}`,
+            traits: { name }
+          }, { headers, timeout: 10000 });
+          console.log('Interakt pre-payment user tracked');
+        } catch (error) {
+          console.warn('Interakt pre-payment track error:', error?.response?.data || error.message);
+        }
+      },
+
       // ─── Post-Payment: Send Interakt WhatsApp notification ───
       async sendInteraktNotification(integrations, pbRecord) {
         const apiKey = integrations.interaktApiKey;
@@ -881,14 +934,6 @@ module.exports = {
         };
 
         try {
-          // Track user
-          await axios.post('https://api.interakt.ai/v1/public/track/users/', {
-            userId: phoneNumber,
-            phoneNumber,
-            countryCode: `+${countryCode}`,
-            traits: { name }
-          }, { headers, timeout: 10000 });
-
           // Build body values from config
           const bodyValues = (integrations.interaktBodyValues || []).map(
             item => self.resolveValue(item.value, pbRecord)
@@ -1057,15 +1102,20 @@ module.exports = {
           );
         }
 
-        // Call external API
-        if (integrations.externalApi && integrations.externalApiUrl) {
-          await self.callExternalApi(
-            integrations.externalApiUrl,
-            integrations.externalApiMethod,
-            data,
-            integrations.externalApiFieldMapping,
-            integrations.externalApiStaticFields
-          );
+        // Call external API webhooks in order
+        if (integrations.externalApis && integrations.externalApis.length > 0) {
+          for (const api of integrations.externalApis) {
+            if (api.url) {
+              await self.callExternalApi(api.url, api.method, data, api.fieldMapping, api.staticFields);
+            }
+          }
+        }
+
+        // Track user in Interakt before payment opens (fire-and-forget)
+        if (integrations.interaktNotify && integrations.triggerPaymentModal) {
+          self.trackInteraktUser(integrations, data).catch(err => {
+            console.warn('Interakt pre-payment track failed:', err.message);
+          });
         }
       },
       async checkRecaptcha(req, input, formErrors, tokenParam) {
